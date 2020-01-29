@@ -15,12 +15,15 @@ public class User {
     @Column(columnDefinition = "text", name = "first_name")
     private String firstName;
 
+    @NotNull
     @Column(columnDefinition = "text", name = "last_name")
     private String lastName;
 
+    @NotNull
     @Column(columnDefinition = "text", name = "e_mail")
     private String eMail;
 
+    @NotNull
     @Column(columnDefinition = "integer", name = "user_type_id")
     private int userTypeId;
 
