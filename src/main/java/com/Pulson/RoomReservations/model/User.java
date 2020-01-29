@@ -18,7 +18,7 @@ public class User {
     @Column(columnDefinition = "text", name = "last_name")
     private String lastName;
 
-    @Column(columnDefinition = "text", name = "e-mail")
+    @Column(columnDefinition = "text", name = "e_mail")
     private String eMail;
 
     @Column(columnDefinition = "integer", name = "user_type_id")
