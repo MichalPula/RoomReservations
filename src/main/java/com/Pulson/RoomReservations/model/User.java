@@ -24,25 +24,26 @@ public class User {
     private String eMail;
 
     @NotNull
-    @Column(columnDefinition = "integer", name = "user_type_id")
-    private int userTypeId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "integer", name = "user_type_id")
+    private UserType userType;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String eMail, int userTypeId) {
+    public User(String firstName, String lastName, String eMail, UserType userType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.eMail = eMail;
-        this.userTypeId = userTypeId;
+        this.userType = userType;
     }
 
-    public User(long id, String firstName, String lastName, String eMail, int userTypeId) {
+    public User(long id, String firstName, String lastName, String eMail, UserType userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.eMail = eMail;
-        this.userTypeId = userTypeId;
+        this.userType = userType;
     }
 
     public long getId() {
@@ -73,11 +74,12 @@ public class User {
         this.eMail = eMail;
     }
 
-    public int getUserTypeId() {
-        return userTypeId;
+
+    public UserType getUserType() {
+        return userType;
     }
 
-    public void setUserTypeId(int userTypeId) {
-        this.userTypeId = userTypeId;
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 }
