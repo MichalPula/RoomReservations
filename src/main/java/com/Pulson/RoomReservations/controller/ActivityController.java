@@ -37,4 +37,13 @@ public class ActivityController {
         activityRepository.delete(activityRepository.findById(activityId).orElseThrow(() -> new Exception("Activity has NOT been removed")));
         return true;
     }
+
+    @PutMapping("/update/{id}")
+    public boolean update(@PathVariable("id") long activityId, @RequestBody Activity activityDetails) throws Exception {
+        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new Exception("Activity NOT found"));
+        activity.setName(activityDetails.getName());
+        activity.setUserTypeId(activityDetails.getUserTypeId());
+        activityRepository.save(activity);
+        return true;
+    }
 }
