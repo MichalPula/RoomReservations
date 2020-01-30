@@ -1,7 +1,6 @@
 package com.Pulson.RoomReservations.controller;
 
 import com.Pulson.RoomReservations.model.Reservation;
-import com.Pulson.RoomReservations.model.Room;
 import com.Pulson.RoomReservations.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

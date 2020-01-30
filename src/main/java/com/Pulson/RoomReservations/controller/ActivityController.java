@@ -41,7 +41,7 @@ public class ActivityController {
     public boolean update(@PathVariable("id") long activityId, @RequestBody Activity activityDetails) throws Exception {
         Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new Exception("Activity NOT found"));
         activity.setName(activityDetails.getName());
-        activity.setUserTypeId(activityDetails.getUserTypeId());
+        //activity.setUserTypeId(activityDetails.getUserTypeId());
         activityRepository.save(activity);
         return true;
     }

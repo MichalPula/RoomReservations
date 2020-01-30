@@ -16,16 +16,17 @@ public class Activity {
     private String name;
 
     @NotNull
-    @Column(columnDefinition = "integer", name = "user_type_id")
-    private int userTypeId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "integer", name = "user_type_id")
+    private UserType userType;
 
 
     public Activity() {
     }
 
-    public Activity(String name, int userTypeId){
+    public Activity(String name, UserType userType){
         this.name = name;
-        this.userTypeId = userTypeId;
+        this.userType = userType;
     }
 
     public long getId() {
@@ -40,11 +41,5 @@ public class Activity {
         this.name = name;
     }
 
-    public int getUserTypeId() {
-        return userTypeId;
-    }
 
-    public void setUserTypeId(int userTypeId) {
-        this.userTypeId = userTypeId;
-    }
 }

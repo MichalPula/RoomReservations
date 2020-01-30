@@ -1,41 +1,50 @@
 package com.Pulson.RoomReservations.service;
 
-import com.Pulson.RoomReservations.model.Activity;
-import com.Pulson.RoomReservations.model.Reservation;
-import com.Pulson.RoomReservations.model.Room;
-import com.Pulson.RoomReservations.model.User;
-import com.Pulson.RoomReservations.repository.ActivityRepository;
-import com.Pulson.RoomReservations.repository.ReservationRepository;
-import com.Pulson.RoomReservations.repository.RoomRepository;
-import com.Pulson.RoomReservations.repository.UserRepository;
+import com.Pulson.RoomReservations.model.*;
+import com.Pulson.RoomReservations.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class Initializer {
     public Initializer(UserRepository userRepository, RoomRepository roomRepository,
-                       ActivityRepository activityRepository, ReservationRepository reservationRepository){
-        userRepository.save(new User("LeBron", "James", "lebron@gmail.com", 2));
-        userRepository.save(new User("Kevin", "Durant", "kd@gmail.com", 1));
-        userRepository.save(new User("Stephen", "Curry", "steph_curry@gmail.com", 2));
-        userRepository.save(new User("Kyrie", "Irving", "kyrie_irvingh@gmail.com", 1));
-        userRepository.save(new User("Derrick", "Rose", "drose@gmail.com", 2));
+                       ActivityRepository activityRepository, ReservationRepository reservationRepository,
+                       UserTypeRepository userTypeRepository){
 
-        roomRepository.save(new Room("Small wood room 1"));
-        roomRepository.save(new Room("Small wood room 2"));
-        roomRepository.save(new Room("Jerzy's office"));
+        List<UserType> userTypes = new ArrayList<>(Arrays.asList(
+            new UserType("mentor"),
+            new UserType("student")
+        ));
+        userTypeRepository.saveAll(userTypes);
 
-        activityRepository.save(new Activity("learning",2));
-        activityRepository.save(new Activity("playing PS4",2));
-        activityRepository.save(new Activity("helping other student",2));
-        activityRepository.save(new Activity("reading a book",2));
-        activityRepository.save(new Activity("reading a book",2));
-        activityRepository.save(new Activity("playing board games",2));
-        activityRepository.save(new Activity("making my SI assignment",2));
-        activityRepository.save(new Activity("making TW assingment with my team",2));
-        activityRepository.save(new Activity("making a code review",1));
-        activityRepository.save(new Activity("having 1 on 1 talk",1));
-        activityRepository.save(new Activity("having QualityGate",1));
+        List<Room> rooms = new ArrayList<>(Arrays.asList(
+            new Room("Small wood room 1"),
+            new Room("Small wood room 2"),
+            new Room("Jerzy's office")
+        ));
+        roomRepository.saveAll(rooms);
+
+        List<Activity> activities = new ArrayList<>(Arrays.asList(
+            new Activity("learning", userTypes.get(2)),
+            new Activity("playing PS4",userTypes.get(2)),
+            new Activity("helping other student",userTypes.get(2)),
+            new Activity("reading a book",userTypes.get(2)),
+            new Activity("playing board games",userTypes.get(2)),
+            new Activity("making my SI assignment",userTypes.get(2)),
+            new Activity("having 1 on 1 conversation",userTypes.get(1)),
+            new Activity("hosting QualityGate",userTypes.get(1)),
+            new Activity("having code review",userTypes.get(1))
+        ));
+        activityRepository.saveAll(activities);
+
+
+        reservationRepository.save(new Reservation(1, 2, ZonedDateTime.now(), ZonedDateTime.now(),1));
+        reservationRepository.save(new Reservation(2, 1, ZonedDateTime.now(), ZonedDateTime.now(),1));
+        reservationRepository.save(new Reservation(3, 2, ZonedDateTime.now(), ZonedDateTime.now(),1));
+        reservationRepository.save(new Reservation(4, 3, ZonedDateTime.now(), ZonedDateTime.now(),1));
     }
 }
