@@ -15,11 +15,17 @@ public class Activity {
     @Column(columnDefinition = "text", name = "name")
     private String name;
 
+    @NotNull
+    @Column(columnDefinition = "integer", name = "user_type_id")
+    private int userTypeId;
+
+
     public Activity() {
     }
 
-    public Activity(String name){
+    public Activity(String name, int userTypeId){
         this.name = name;
+        this.userTypeId = userTypeId;
     }
 
     public long getId() {
@@ -32,5 +38,13 @@ public class Activity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getUserTypeId() {
+        return userTypeId;
+    }
+
+    public void setUserTypeId(int userTypeId) {
+        this.userTypeId = userTypeId;
     }
 }
