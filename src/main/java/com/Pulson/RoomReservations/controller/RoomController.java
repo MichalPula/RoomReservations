@@ -18,4 +18,9 @@ public class RoomController {
     public List<Room> getAll(){
         return roomRepository.findAll();
     }
+
+    @GetMapping("/{id}")
+    public Room getById(@PathVariable("id") long roomId) throws Exception {
+        return roomRepository.findById(roomId).orElseThrow(()-> new Exception("Room "+ roomId +" not found"));
+    }
 }
