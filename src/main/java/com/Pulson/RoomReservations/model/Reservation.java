@@ -13,12 +13,14 @@ public class Reservation {
     private long id;
 
     @NotNull
-    @Column(columnDefinition = "integer", name = "user_id")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "integer", name = "user_id")
+    private User user;
 
     @NotNull
-    @Column(columnDefinition = "integer", name = "room_id")
-    private int roomId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "integer", name = "room_id")
+    private Room room;
 
     @NotNull
     @Column(columnDefinition = "timestamp with time zone", name = "start_time")
@@ -29,34 +31,35 @@ public class Reservation {
     private ZonedDateTime endTime;
 
     @NotNull
-    @Column(columnDefinition = "integer", name = "activity_id")
-    private int activityId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "integer", name = "activity_id")
+    private Activity activity;
 
     public Reservation() {
     }
 
-    public Reservation(int userId, int roomId, ZonedDateTime startTime, ZonedDateTime endTime, int activityId) {
-        this.userId = userId;
-        this.roomId = roomId;
+    public Reservation(User user, Room room, ZonedDateTime startTime, ZonedDateTime endTime, Activity activity) {
+        this.user = user;
+        this.room = room;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.activityId = activityId;
+        this.activity = activity;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getRoomId() {
-        return roomId;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public ZonedDateTime getStartTime() {
@@ -75,11 +78,11 @@ public class Reservation {
         this.endTime = endTime;
     }
 
-    public int getActivityId() {
-        return activityId;
+    public Activity getActivity() {
+        return activity;
     }
 
-    public void setActivityId(int activityId) {
-        this.activityId = activityId;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 }

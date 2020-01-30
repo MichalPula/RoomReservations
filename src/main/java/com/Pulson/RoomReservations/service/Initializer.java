@@ -49,12 +49,15 @@ public class Initializer {
                 new User("Kyrie", "Irving", "kyrie_irvingh@gmail.com", userTypes.get(1)),
                 new User("Derrick", "Rose", "drose@gmail.com", userTypes.get(0))
         ));
-        roomRepository.saveAll(rooms);
+        userRepository.saveAll(users);
 
 
-        reservationRepository.save(new Reservation(1, 2, ZonedDateTime.now(), ZonedDateTime.now(),1));
-        reservationRepository.save(new Reservation(2, 1, ZonedDateTime.now(), ZonedDateTime.now(),1));
-        reservationRepository.save(new Reservation(3, 2, ZonedDateTime.now(), ZonedDateTime.now(),1));
-        reservationRepository.save(new Reservation(4, 3, ZonedDateTime.now(), ZonedDateTime.now(),1));
+        List<Reservation> reservations = new ArrayList<>(Arrays.asList(
+            new Reservation(users.get(0), rooms.get(0), ZonedDateTime.now(), ZonedDateTime.now(),activities.get(8)),
+            new Reservation(users.get(1), rooms.get(1), ZonedDateTime.now(), ZonedDateTime.now(),activities.get(4)),
+            new Reservation(users.get(2), rooms.get(2), ZonedDateTime.now(), ZonedDateTime.now(),activities.get(3)),
+            new Reservation(users.get(3), rooms.get(1), ZonedDateTime.now(), ZonedDateTime.now(),activities.get(6))
+        ));
+        reservationRepository.saveAll(reservations);
     }
 }
