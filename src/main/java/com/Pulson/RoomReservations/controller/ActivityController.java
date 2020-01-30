@@ -1,12 +1,16 @@
 package com.Pulson.RoomReservations.controller;
 
 import com.Pulson.RoomReservations.model.Activity;
+import com.Pulson.RoomReservations.model.User;
+import com.Pulson.RoomReservations.model.UserType;
 import com.Pulson.RoomReservations.repository.ActivityRepository;
+import com.Pulson.RoomReservations.repository.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("activities")
@@ -14,6 +18,9 @@ public class ActivityController {
 
     @Autowired
     private ActivityRepository activityRepository;
+
+    @Autowired
+    private UserTypeRepository userTypeRepository;
 
     @GetMapping("/all")
     public List<Activity> getAll(){
@@ -26,9 +33,10 @@ public class ActivityController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean create(@RequestBody Activity activity){
-        activityRepository.save(activity);
-        return true;
+    public Activity create(@RequestBody Activity activity){
+        UserType ut = userTypeRepository.findByName(activity.getUserType().getName());
+        activity.setUserType(ut);
+        return activityRepository.save(activity);
     }
 
     @DeleteMapping("/delete/{id}")

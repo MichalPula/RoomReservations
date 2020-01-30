@@ -20,7 +20,6 @@ public class Activity {
     @JoinColumn(columnDefinition = "integer", name = "user_type_id")
     private UserType userType;
 
-
     public Activity() {
     }
 
