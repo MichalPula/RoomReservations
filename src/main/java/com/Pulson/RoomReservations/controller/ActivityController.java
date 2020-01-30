@@ -31,4 +31,10 @@ public class ActivityController {
         activityRepository.save(activity);
         return true;
     }
+
+    @DeleteMapping("/delete/{id}")
+    public boolean delete(@PathVariable("id") long activityId) throws Exception {
+        activityRepository.delete(activityRepository.findById(activityId).orElseThrow(() -> new Exception("Activity has NOT been removed")));
+        return true;
+    }
 }
