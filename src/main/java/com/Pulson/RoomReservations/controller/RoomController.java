@@ -26,8 +26,14 @@ public class RoomController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Boolean create(@RequestBody Room room){
+    public boolean create(@RequestBody Room room){
         roomRepository.save(room);
+        return true;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public boolean delete(@PathVariable("id") long roomId) throws Exception {
+        roomRepository.delete(roomRepository.findById(roomId).orElseThrow(() -> new Exception("Room has NOT been removed")));
         return true;
     }
 }
