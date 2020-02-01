@@ -36,10 +36,7 @@ public class RoomController {
     }
 
     @PutMapping("/update/{id}")
-    public boolean update(@PathVariable("id") long roomId, @RequestBody Room roomDetails) throws Exception {
-        Room room = roomRepository.findById(roomId).orElseThrow(() -> new Exception("Room NOT found"));
-        room.setName(roomDetails.getName());
-        roomRepository.save(room);
-        return true;
+    public boolean update(@PathVariable("id") long id, @RequestBody Room roomDetails) throws Exception {
+        return roomService.update(id ,roomDetails);
     }
 }

@@ -11,4 +11,5 @@ public interface RoomService {
     Room getById(long id) throws Exception;
     Boolean create(Room room);
     Boolean delete(long id) throws Exception;
+    Boolean update(long id, Room roomDetails) throws Exception;
 }

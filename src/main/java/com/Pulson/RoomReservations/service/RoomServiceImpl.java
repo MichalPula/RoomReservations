@@ -39,4 +39,12 @@ public class RoomServiceImpl implements RoomService{
         repository.delete(repository.findById(id).orElseThrow(() -> new Exception("Room has NOT been removed")));
         return true;
     }
+
+    @Override
+    public Boolean update(long id, Room roomDetails) throws Exception {
+        Room room = repository.findById(id).orElseThrow(() -> new Exception("Room NOT found"));
+        room.setName(roomDetails.getName());
+        repository.save(room);
+        return true;
+    }
 }
