@@ -27,4 +27,10 @@ public class RoomServiceImpl implements RoomService{
     public Room getById(long id) throws Exception {
         return repository.findById(id).orElseThrow(() -> new Exception("User " + id + " not found"));
     }
+
+    @Override
+    public Boolean create(Room room) {
+        repository.save(room);
+        return true;
+    }
 }

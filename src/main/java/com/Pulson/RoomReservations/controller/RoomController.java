@@ -27,8 +27,7 @@ public class RoomController {
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean create(@RequestBody Room room){
-        roomRepository.save(room);
-        return true;
+        return roomService.create(room);
     }
 
     @DeleteMapping("/delete/{id}")
