@@ -1,5 +1,7 @@
 package com.Pulson.RoomReservations.model;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -20,9 +22,8 @@ public class Activity {
     @JoinColumn(columnDefinition = "integer", name = "user_type_id")
     private UserType userType;
 
-    @NotNull
-    @Column(columnDefinition = "boolean default yes", name = "is_available")
-    private Boolean isAvailable;
+    @Column(columnDefinition = "boolean", name = "is_available")
+    private Boolean isAvailable = true;
 
     public Activity() {
     }
