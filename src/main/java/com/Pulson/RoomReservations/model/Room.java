@@ -43,4 +43,12 @@ public class Room {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
+    }
 }
