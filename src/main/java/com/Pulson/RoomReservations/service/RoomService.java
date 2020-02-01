@@ -10,4 +10,5 @@ public interface RoomService {
     List<Room> getAll();
     Room getById(long id) throws Exception;
     Boolean create(Room room);
+    Boolean delete(long id) throws Exception;
 }

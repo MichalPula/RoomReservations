@@ -31,9 +31,8 @@ public class RoomController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable("id") long roomId) throws Exception {
-        roomRepository.delete(roomRepository.findById(roomId).orElseThrow(() -> new Exception("Room has NOT been removed")));
-        return true;
+    public boolean delete(@PathVariable("id") long id) throws Exception {
+        return roomService.delete(id);
     }
 
     @PutMapping("/update/{id}")
