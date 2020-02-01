@@ -1,7 +1,5 @@
 package com.Pulson.RoomReservations.model;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
