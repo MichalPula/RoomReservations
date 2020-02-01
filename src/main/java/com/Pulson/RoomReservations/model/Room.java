@@ -27,6 +27,11 @@ public class Room {
         this.isAvailable = isAvailable;
     }
 
+    public Room(String name){
+        this.name = name;
+    }
+
+
     public long getId() {
         return id;
     }
