@@ -33,6 +33,11 @@ public class Activity {
         this.isAvailable = isAvailable;
     }
 
+    public Activity(String name, UserType userType){
+        this.name = name;
+        this.userType = userType;
+    }
+
     public long getId() {
         return id;
     }
