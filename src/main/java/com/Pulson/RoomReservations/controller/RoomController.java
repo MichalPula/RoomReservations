@@ -1,7 +1,6 @@
 package com.Pulson.RoomReservations.controller;
 
 import com.Pulson.RoomReservations.model.Room;
-import com.Pulson.RoomReservations.repository.RoomRepository;
 import com.Pulson.RoomReservations.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,8 +21,8 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public Room getById(@PathVariable("id") long roomId) throws Exception {
-
+    public Room getById(@PathVariable("id") long id) throws Exception {
+        return roomService.getById(id);
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)

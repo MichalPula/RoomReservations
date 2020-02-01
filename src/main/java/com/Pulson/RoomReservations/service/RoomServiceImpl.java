@@ -3,11 +3,13 @@ package com.Pulson.RoomReservations.service;
 import com.Pulson.RoomReservations.model.Room;
 import com.Pulson.RoomReservations.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@Service
 public class RoomServiceImpl implements RoomService{
 
     @PersistenceContext
@@ -19,5 +21,10 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public List<Room> getAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Room getById(long id) throws Exception {
+        return repository.findById(id).orElseThrow(() -> new Exception("User " + id + " not found"));
     }
 }
