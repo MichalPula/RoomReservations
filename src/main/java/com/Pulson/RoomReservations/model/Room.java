@@ -15,11 +15,16 @@ public class Room {
     @Column(columnDefinition = "text", name = "name")
     private String name;
 
+    @NotNull
+    @Column(columnDefinition = "boolean default yes", name = "is_available")
+    private Boolean isAvailable;
+
     public Room() {
     }
 
-    public Room(String name){
+    public Room(String name, Boolean isAvailable){
         this.name = name;
+        this.isAvailable = isAvailable;
     }
 
     public long getId() {
