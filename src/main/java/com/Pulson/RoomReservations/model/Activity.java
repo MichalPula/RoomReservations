@@ -57,4 +57,12 @@ public class Activity {
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
+    }
 }
