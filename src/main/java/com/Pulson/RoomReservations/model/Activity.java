@@ -20,12 +20,17 @@ public class Activity {
     @JoinColumn(columnDefinition = "integer", name = "user_type_id")
     private UserType userType;
 
+    @NotNull
+    @Column(columnDefinition = "boolean default yes", name = "is_available")
+    private Boolean isAvailable;
+
     public Activity() {
     }
 
-    public Activity(String name, UserType userType){
+    public Activity(String name, UserType userType, Boolean isAvailable){
         this.name = name;
         this.userType = userType;
+        this.isAvailable = isAvailable;
     }
 
     public long getId() {
