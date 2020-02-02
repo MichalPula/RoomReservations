@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Service
@@ -35,8 +36,10 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public Boolean delete(long id) throws Exception {
-        repository.delete(repository.findById(id).orElseThrow(() -> new Exception("Room has NOT been removed")));
+    public Boolean deactivate(long id) throws Exception {
+        Query query = em.createNativeQuery("update rooms set is_available = false where id = ?");
+        query.setParameter(1, id);
+        query.executeUpdate();
         return true;
     }
 

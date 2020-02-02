@@ -30,9 +30,9 @@ public class RoomController {
         return roomService.create(room);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deactivate/{id}")
     public boolean delete(@PathVariable("id") long id) throws Exception {
-        return roomService.delete(id);
+        return roomService.deactivate(id);
     }
 
     @PutMapping("/update/{id}")
