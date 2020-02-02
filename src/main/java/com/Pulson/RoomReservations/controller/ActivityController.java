@@ -1,57 +1,42 @@
 package com.Pulson.RoomReservations.controller;
 
 import com.Pulson.RoomReservations.model.Activity;
-import com.Pulson.RoomReservations.model.User;
-import com.Pulson.RoomReservations.model.UserType;
-import com.Pulson.RoomReservations.repository.ActivityRepository;
-import com.Pulson.RoomReservations.repository.UserTypeRepository;
+import com.Pulson.RoomReservations.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("activities")
 public class ActivityController {
 
     @Autowired
-    private ActivityRepository activityRepository;
-
-    @Autowired
-    private UserTypeRepository userTypeRepository;
+    private ActivityService activityService;
 
     @GetMapping("/all")
     public List<Activity> getAll(){
-        return activityRepository.findAll();
+        return activityService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Activity getById(@PathVariable("id") long activityId) throws Exception {
-        return activityRepository.findById(activityId).orElseThrow(()-> new Exception("Activity "+ activityId +" not found"));
+    public Activity getById(@PathVariable("id") long id) throws Exception {
+        return activityService.getById(id);
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Activity create(@RequestBody Activity activity){
-        UserType ut = userTypeRepository.findByName(activity.getUserType().getName());
-        activity.setUserType(ut);
-        return activityRepository.save(activity);
+    public Boolean create(@RequestBody Activity activity){
+        return activityService.create(activity);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable("id") long activityId) throws Exception {
-        activityRepository.delete(activityRepository.findById(activityId).orElseThrow(() -> new Exception("Activity has NOT been removed")));
-        return true;
+    @DeleteMapping("/deactivate/{id}")
+    public boolean deactivate(@PathVariable("id") long id) throws Exception {
+        return activityService.deactivate(id);
     }
 
     @PutMapping("/update/{id}")
-    public boolean update(@PathVariable("id") long activityId, @RequestBody Activity activityDetails) throws Exception {
-        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new Exception("Activity NOT found"));
-        activity.setName(activityDetails.getName());
-        UserType ut = userTypeRepository.findByName(activityDetails.getUserType().getName());
-        activity.setUserType(ut);
-        activityRepository.save(activity);
-        return true;
+    public boolean update(@PathVariable("id") long id, @RequestBody Activity activityDetails) throws Exception {
+        return activityService.update(id, activityDetails);
     }
 }
