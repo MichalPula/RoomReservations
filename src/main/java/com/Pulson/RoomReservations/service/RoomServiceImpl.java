@@ -4,6 +4,7 @@ import com.Pulson.RoomReservations.model.Room;
 import com.Pulson.RoomReservations.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,12 +30,14 @@ public class RoomServiceImpl implements RoomService{
         return repository.findById(id).orElseThrow(() -> new Exception("User " + id + " not found"));
     }
 
+    @Transactional
     @Override
     public Boolean create(Room room) {
         repository.save(room);
         return true;
     }
 
+    @Transactional
     @Override
     public Boolean deactivate(long id) throws Exception {
         Query query = em.createNativeQuery("update rooms set is_available = false where id = ?");
@@ -43,6 +46,7 @@ public class RoomServiceImpl implements RoomService{
         return true;
     }
 
+    @Transactional
     @Override
     public Boolean update(long id, Room roomDetails) throws Exception {
         Room room = repository.findById(id).orElseThrow(() -> new Exception("Room NOT found"));
