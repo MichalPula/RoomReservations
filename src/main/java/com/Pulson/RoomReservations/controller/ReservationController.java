@@ -1,6 +1,5 @@
 package com.Pulson.RoomReservations.controller;
 
-import com.Pulson.RoomReservations.model.Activity;
 import com.Pulson.RoomReservations.model.Reservation;
 import com.Pulson.RoomReservations.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,11 @@ public class ReservationController {
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean create(@RequestBody Reservation reservation){
         return reservationService.create(reservation);
+    }
+
+    @DeleteMapping("/deactivate/{id}")
+    public boolean delete(@PathVariable("id") long id) throws Exception {
+        return reservationService.delete(id);
     }
 
 }
