@@ -47,14 +47,12 @@ public class User {
         this.isActive = isActive;
     }
 
-    public User(long id, String firstName, String lastName, String nickName, String eMail, UserType userType,  Boolean isActive) {
-        this.id = id;
+    public User(String firstName, String lastName, String nickName, String eMail, UserType userType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickName = nickName;
         this.eMail = eMail;
         this.userType = userType;
-        this.isActive = isActive;
     }
 
     public long getId() {

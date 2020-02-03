@@ -43,11 +43,11 @@ public class Initializer {
 
 
         List<User> users = new ArrayList<>(Arrays.asList(
-                new User("LeBron", "James", "lebron@gmail.com", userTypes.get(1)),
-                new User("Kevin", "Durant", "kd@gmail.com", userTypes.get(0)),
-                new User("Stephen", "Curry", "steph_curry@gmail.com", userTypes.get(1)),
-                new User("Kyrie", "Irving", "kyrie_irvingh@gmail.com", userTypes.get(1)),
-                new User("Derrick", "Rose", "drose@gmail.com", userTypes.get(0))
+                new User("LeBron", "James", "LB", "lebron@gmail.com", userTypes.get(1)),
+                new User("Kevin", "Durant", "KD", "kd@gmail.com", userTypes.get(0)),
+                new User("Stephen", "Curry", "SC", "steph_curry@gmail.com", userTypes.get(1)),
+                new User("Kyrie", "Irving","KI", "kyrie_irvingh@gmail.com", userTypes.get(1)),
+                new User("Derrick", "Rose","DR", "drose@gmail.com", userTypes.get(0))
         ));
         userRepository.saveAll(users);
 
