@@ -23,9 +23,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable("id") long userId) throws Exception {
-        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " not found"));
-        return ResponseEntity.ok().body(user);
+    public User getById(@PathVariable("id") long id) throws Exception {
+        return userService.getById(id);
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
