@@ -22,4 +22,10 @@ public class ReservationServiceImpl implements ReservationService{
     public List<Reservation> getAll() {
         return reservationRepository.findAll();
     }
+
+    @Override
+    public Reservation getById(long id) throws Exception {
+        return reservationRepository.findById(id).orElseThrow(() -> new Exception("Reservation " + id + " NOT found"));
+    }
+
 }
