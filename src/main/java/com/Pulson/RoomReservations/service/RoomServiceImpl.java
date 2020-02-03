@@ -27,7 +27,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public Room getById(long id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("User " + id + " not found"));
+        return repository.findById(id).orElseThrow(() -> new Exception("Room " + id + " NOT found"));
     }
 
     @Transactional
