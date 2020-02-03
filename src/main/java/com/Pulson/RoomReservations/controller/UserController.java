@@ -28,8 +28,9 @@ public class UserController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User create(@RequestBody User user) {
-        return this.userRepository.save(user);
+    public boolean create(@RequestBody User user) {
+        return userService.create(user);
+
     }
 
     @DeleteMapping("/delete/{id}")

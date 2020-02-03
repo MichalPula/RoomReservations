@@ -26,7 +26,7 @@ public class ActivityController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Boolean create(@RequestBody Activity activity){
+    public boolean create(@RequestBody Activity activity){
         return activityService.create(activity);
     }
 
