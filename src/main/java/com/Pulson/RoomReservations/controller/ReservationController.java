@@ -1,7 +1,7 @@
 package com.Pulson.RoomReservations.controller;
 
 import com.Pulson.RoomReservations.model.Reservation;
-import com.Pulson.RoomReservations.repository.ReservationRepository;
+import com.Pulson.RoomReservations.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +14,10 @@ import java.util.List;
 public class ReservationController {
 
     @Autowired
-    private ReservationRepository reservationRepository;
+    private ReservationService reservationService;
 
     @GetMapping("/all")
     public List<Reservation> getAll(){
-        return reservationRepository.findAll();
+        return reservationService.getAll();
     }
 }
