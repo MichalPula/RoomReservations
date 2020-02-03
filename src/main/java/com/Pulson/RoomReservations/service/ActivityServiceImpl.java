@@ -32,7 +32,7 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Override
     public Activity getById(long id) throws Exception {
-        return activityRepository.findById(id).orElseThrow(() -> new Exception("Activity " + id + " not found"));
+        return activityRepository.findById(id).orElseThrow(() -> new Exception("Activity " + id + " NOT found"));
     }
 
     @Transactional
@@ -46,7 +46,7 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Override
     @Transactional
-    public Boolean deactivate(long id) throws Exception {
+    public Boolean deactivate(long id) {
         Query query = em.createNativeQuery("update activities set is_available = false where id = ?");
         query.setParameter(1, id);
         query.executeUpdate();

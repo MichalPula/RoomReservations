@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getById(long id) throws Exception {
-        return userRepository.findById(id).orElseThrow(() -> new Exception("User " + id + " not found"));
+        return userRepository.findById(id).orElseThrow(() -> new Exception("User " + id + " NOT found"));
     }
 
     @Transactional
@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService{
 
     @Transactional
     @Override
-    public Boolean deactivate(long id) throws Exception {
-        Query query = em.createNativeQuery("update userst set is_active = false where id = ?");
+    public Boolean deactivate(long id) {
+        Query query = em.createNativeQuery("update users set is_active = false where id = ?");
         query.setParameter(1, id);
         query.executeUpdate();
         return true;
@@ -51,8 +51,9 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public Boolean update(long id, User userDetails) throws Exception {
-        User user = userRepository.findById(id).orElseThrow(() -> new Exception("Room NOT found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new Exception("User NOT found"));
         user.setEMail(userDetails.getEMail());
+        user.setNickName(userDetails.getNickName());
         user.setActive(userDetails.getActive());
         userRepository.save(user);
         return true;

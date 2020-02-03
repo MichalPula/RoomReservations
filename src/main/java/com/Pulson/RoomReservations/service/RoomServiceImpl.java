@@ -39,7 +39,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Transactional
     @Override
-    public Boolean deactivate(long id) throws Exception {
+    public Boolean deactivate(long id) {
         Query query = em.createNativeQuery("update rooms set is_available = false where id = ?");
         query.setParameter(1, id);
         query.executeUpdate();
