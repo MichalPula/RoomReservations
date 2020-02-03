@@ -20,6 +20,10 @@ public class User {
     private String lastName;
 
     @NotNull
+    @Column(columnDefinition = "text", name = "nick_name")
+    private String nickName;
+
+    @NotNull
     @Column(columnDefinition = "text", name = "e_mail")
     private String eMail;
 
@@ -34,18 +38,20 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String eMail, UserType userType, Boolean isActive) {
+    public User(String firstName, String lastName, String nickName, String eMail, UserType userType, Boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.nickName = nickName;
         this.eMail = eMail;
         this.userType = userType;
         this.isActive = isActive;
     }
 
-    public User(long id, String firstName, String lastName, String eMail, UserType userType,  Boolean isActive) {
+    public User(long id, String firstName, String lastName, String nickName, String eMail, UserType userType,  Boolean isActive) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.nickName = nickName;
         this.eMail = eMail;
         this.userType = userType;
         this.isActive = isActive;
@@ -94,5 +100,13 @@ public class User {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }
