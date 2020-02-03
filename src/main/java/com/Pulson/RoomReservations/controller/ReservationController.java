@@ -29,14 +29,14 @@ public class ReservationController {
     public boolean create(@RequestBody Reservation reservation) throws Exception {
         return reservationService.create(reservation);
     }
-//
-//    @DeleteMapping("/deactivate/{id}")
-//    public boolean delete(@PathVariable("id") long id) throws Exception {
-//        return reservationService.delete(id);
-//    }
-//
-//    @PutMapping("/update/{id}")
-//    public boolean update(@PathVariable("id") long id, @RequestBody Reservation reservationDetails) throws Exception {
-//        return reservationService.update(id, reservationDetails);
-//    }
+
+    @DeleteMapping("/delete/{id}")
+    public boolean delete(@PathVariable("id") long id) throws Exception {
+        return reservationService.delete(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public boolean update(@PathVariable("id") long id, @RequestBody Reservation reservationDetails) throws Exception {
+        return reservationService.update(id, reservationDetails);
+    }
 }

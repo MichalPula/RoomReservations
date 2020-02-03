@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Service
@@ -54,6 +55,15 @@ public class ReservationServiceImpl implements ReservationService{
         reservation.setRoom(room);
         reservation.setActivity(activity);
         reservationRepository.save(reservation);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean delete(long id) {
+        Query query = em.createNativeQuery("delete from reservations where id = ?");
+        query.setParameter(1, id);
+        query.executeUpdate();
         return true;
     }
 }

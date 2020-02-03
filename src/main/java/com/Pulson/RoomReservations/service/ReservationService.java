@@ -10,4 +10,5 @@ public interface ReservationService {
     List<Reservation> getAll();
     Reservation getById(long id) throws Exception;
     Boolean create(Reservation reservation) throws Exception;
+    Boolean delete(long id) throws Exception;
 }
