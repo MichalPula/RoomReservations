@@ -33,10 +33,9 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public Boolean delete(@PathVariable("id") long userId) throws Exception {
-        userRepository.delete(userRepository.findById(userId).orElseThrow(() -> new Exception("User has NOT been removed")));
-        return true;
+    @DeleteMapping("/deactivate/{id}")
+    public boolean delete(@PathVariable("id") long id) throws Exception {
+        return userService.deactivate(id);
     }
 
     @PutMapping("update/{id}")
