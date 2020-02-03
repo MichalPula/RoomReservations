@@ -87,4 +87,12 @@ public class User {
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }
