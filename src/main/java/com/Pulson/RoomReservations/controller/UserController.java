@@ -2,6 +2,7 @@ package com.Pulson.RoomReservations.controller;
 
 import com.Pulson.RoomReservations.model.User;
 import com.Pulson.RoomReservations.repository.UserRepository;
+import com.Pulson.RoomReservations.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,11 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/all")
     public List<User> getAll() {
-        return userRepository.findAll();
+        return userService.getAll();
     }
 
     @GetMapping("/{id}")
