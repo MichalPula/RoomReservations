@@ -1,12 +1,11 @@
 package com.Pulson.RoomReservations.controller;
 
+import com.Pulson.RoomReservations.model.Activity;
 import com.Pulson.RoomReservations.model.Reservation;
 import com.Pulson.RoomReservations.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,4 +25,10 @@ public class ReservationController {
     public Reservation getById(@PathVariable("id") long id) throws Exception {
         return reservationService.getById(id);
     }
+
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean create(@RequestBody Reservation reservation){
+        return reservationService.create(reservation);
+    }
+
 }
