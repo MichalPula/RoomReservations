@@ -1,9 +1,9 @@
 package com.Pulson.RoomReservations.service;
 
-import com.Pulson.RoomReservations.model.Activity;
 import com.Pulson.RoomReservations.model.User;
 import com.Pulson.RoomReservations.model.UserType;
 import com.Pulson.RoomReservations.repository.UserRepository;
+import com.Pulson.RoomReservations.repository.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +22,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserTypeRepository userTypeRepository;
+
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
@@ -35,6 +38,8 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public Boolean create(User user) {
+        UserType userType = userTypeRepository.findByName(user.getUserType().getName());
+        user.setUserType(userType);
         userRepository.save(user);
         return true;
     }
