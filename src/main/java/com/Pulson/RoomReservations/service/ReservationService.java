@@ -9,4 +9,5 @@ import java.util.List;
 public interface ReservationService {
     List<Reservation> getAll();
     Reservation getById(long id) throws Exception;
+    Boolean create(Reservation reservation) throws Exception;
 }

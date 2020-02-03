@@ -26,17 +26,17 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean create(@RequestBody Reservation reservation){
+    public boolean create(@RequestBody Reservation reservation) throws Exception {
         return reservationService.create(reservation);
     }
-
-    @DeleteMapping("/deactivate/{id}")
-    public boolean delete(@PathVariable("id") long id) throws Exception {
-        return reservationService.delete(id);
-    }
-
-    @PutMapping("/update/{id}")
-    public boolean update(@PathVariable("id") long id, @RequestBody Reservation reservationDetails) throws Exception {
-        return reservationService.update(id, reservationDetails);
-    }
+//
+//    @DeleteMapping("/deactivate/{id}")
+//    public boolean delete(@PathVariable("id") long id) throws Exception {
+//        return reservationService.delete(id);
+//    }
+//
+//    @PutMapping("/update/{id}")
+//    public boolean update(@PathVariable("id") long id, @RequestBody Reservation reservationDetails) throws Exception {
+//        return reservationService.update(id, reservationDetails);
+//    }
 }
