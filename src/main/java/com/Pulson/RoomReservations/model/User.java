@@ -28,22 +28,27 @@ public class User {
     @JoinColumn(columnDefinition = "integer", name = "user_type_id")
     private UserType userType;
 
+    @Column(columnDefinition = "boolean", name = "is_active")
+    private Boolean isActive = true;
+
     public User() {
     }
 
-    public User(String firstName, String lastName, String eMail, UserType userType) {
+    public User(String firstName, String lastName, String eMail, UserType userType, Boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.eMail = eMail;
         this.userType = userType;
+        this.isActive = isActive;
     }
 
-    public User(long id, String firstName, String lastName, String eMail, UserType userType) {
+    public User(long id, String firstName, String lastName, String eMail, UserType userType,  Boolean isActive) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.eMail = eMail;
         this.userType = userType;
+        this.isActive = isActive;
     }
 
     public long getId() {
