@@ -1,11 +1,13 @@
 package com.Pulson.RoomReservations.service;
 
+import com.Pulson.RoomReservations.model.Reservation;
 import com.Pulson.RoomReservations.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -15,4 +17,9 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Override
+    public List<Reservation> getAll() {
+        return reservationRepository.findAll();
+    }
 }
