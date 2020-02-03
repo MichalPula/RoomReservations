@@ -11,4 +11,5 @@ public interface UserService {
     User getById(long id) throws Exception;
     Boolean create(User user);
     Boolean deactivate(long id) throws Exception;
+    Boolean update(long id, User userDetails) throws Exception;
 }

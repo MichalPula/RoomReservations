@@ -1,6 +1,8 @@
 package com.Pulson.RoomReservations.service;
 
+import com.Pulson.RoomReservations.model.Activity;
 import com.Pulson.RoomReservations.model.User;
+import com.Pulson.RoomReservations.model.UserType;
 import com.Pulson.RoomReservations.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,16 @@ public class UserServiceImpl implements UserService{
         Query query = em.createNativeQuery("update userst set is_active = false where id = ?");
         query.setParameter(1, id);
         query.executeUpdate();
+        return true;
+    }
+
+    @Transactional
+    @Override
+    public Boolean update(long id, User userDetails) throws Exception {
+        User user = userRepository.findById(id).orElseThrow(() -> new Exception("Room NOT found"));
+        user.setEMail(userDetails.getEMail());
+        user.setActive(userDetails.getActive());
+        userRepository.save(user);
         return true;
     }
 }
