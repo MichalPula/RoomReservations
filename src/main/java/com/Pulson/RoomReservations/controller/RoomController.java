@@ -37,6 +37,6 @@ public class RoomController {
 
     @PutMapping("/update/{id}")
     public boolean update(@PathVariable("id") long id, @RequestBody Room roomDetails) throws Exception {
-        return roomService.update(id ,roomDetails);
+        return roomService.update(id, roomDetails);
     }
 }
