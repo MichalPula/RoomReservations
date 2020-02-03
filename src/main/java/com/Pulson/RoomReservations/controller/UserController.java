@@ -1,11 +1,9 @@
 package com.Pulson.RoomReservations.controller;
 
 import com.Pulson.RoomReservations.model.User;
-import com.Pulson.RoomReservations.repository.UserRepository;
 import com.Pulson.RoomReservations.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,12 +37,7 @@ public class UserController {
     }
 
     @PutMapping("update/{id}")
-    public Boolean update(@PathVariable("id") long userId, @RequestBody User userDetails) throws Exception {
-        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User NOT found"));
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setEMail(userDetails.getEMail());
-        userRepository.save(user);
-        return true;
+    public boolean update(@PathVariable("id") long id, @RequestBody User userDetails) throws Exception {
+        return userService.update(id, userDetails);
     }
 }
