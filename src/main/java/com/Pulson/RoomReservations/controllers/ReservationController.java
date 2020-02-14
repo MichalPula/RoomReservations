@@ -38,5 +38,6 @@ public class ReservationController {
     @PutMapping("/update/{id}")
     public boolean update(@PathVariable("id") long id, @RequestBody Reservation reservationDetails) throws Exception {
         //return reservationService.update(id, reservationDetails);
+        return false;
     }
 }
