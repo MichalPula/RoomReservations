@@ -49,7 +49,8 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public Boolean validateToken(String token, UserDetails userDetails) {
-        return null;
+        final String username = getUsernameFromToken(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     @Override
