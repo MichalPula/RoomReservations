@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.model;
+package com.Pulson.RoomReservations.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

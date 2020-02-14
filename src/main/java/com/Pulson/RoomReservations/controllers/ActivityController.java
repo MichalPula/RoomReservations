@@ -1,7 +1,7 @@
-package com.Pulson.RoomReservations.controller;
+package com.Pulson.RoomReservations.controllers;
 
-import com.Pulson.RoomReservations.model.Activity;
-import com.Pulson.RoomReservations.service.ActivityService;
+import com.Pulson.RoomReservations.entities.Activity;
+import com.Pulson.RoomReservations.services.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

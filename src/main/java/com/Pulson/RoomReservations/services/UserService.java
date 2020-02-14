@@ -1,6 +1,6 @@
-package com.Pulson.RoomReservations.service;
+package com.Pulson.RoomReservations.services;
 
-import com.Pulson.RoomReservations.model.User;
+import com.Pulson.RoomReservations.entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

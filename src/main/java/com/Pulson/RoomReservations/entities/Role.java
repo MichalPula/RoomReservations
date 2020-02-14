@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.model;
+package com.Pulson.RoomReservations.entities;
 
 import org.springframework.security.core.GrantedAuthority;
 

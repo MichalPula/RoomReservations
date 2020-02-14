@@ -1,10 +1,10 @@
-package com.Pulson.RoomReservations.service;
+package com.Pulson.RoomReservations.services;
 
-import com.Pulson.RoomReservations.model.*;
-import com.Pulson.RoomReservations.repository.ActivityRepository;
-import com.Pulson.RoomReservations.repository.ReservationRepository;
-import com.Pulson.RoomReservations.repository.RoomRepository;
-import com.Pulson.RoomReservations.repository.UserRepository;
+import com.Pulson.RoomReservations.entities.*;
+import com.Pulson.RoomReservations.repositories.ActivityRepository;
+import com.Pulson.RoomReservations.repositories.ReservationRepository;
+import com.Pulson.RoomReservations.repositories.RoomRepository;
+import com.Pulson.RoomReservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

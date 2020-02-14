@@ -1,11 +1,11 @@
-package com.Pulson.RoomReservations.model;
+package com.Pulson.RoomReservations.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "activities")
-public class Activity {
+@Table(name = "rooms")
+public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,27 +15,21 @@ public class Activity {
     @Column(columnDefinition = "text", name = "name")
     private String name;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(columnDefinition = "integer", name = "user_type_id")
-    private Role role;
-
     @Column(columnDefinition = "boolean", name = "is_available")
     private Boolean isAvailable = true;
 
-    public Activity() {
+    public Room() {
     }
 
-    public Activity(String name, Role role, Boolean isAvailable){
+    public Room(String name, Boolean isAvailable){
         this.name = name;
-        this.role = role;
         this.isAvailable = isAvailable;
     }
 
-    public Activity(String name, Role role){
+    public Room(String name){
         this.name = name;
-        this.role = role;
     }
+
 
     public long getId() {
         return id;
@@ -47,14 +41,6 @@ public class Activity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public Boolean getAvailable() {

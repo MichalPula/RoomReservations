@@ -1,7 +1,7 @@
-package com.Pulson.RoomReservations.service;
+package com.Pulson.RoomReservations.services;
 
-import com.Pulson.RoomReservations.model.*;
-import com.Pulson.RoomReservations.repository.*;
+import com.Pulson.RoomReservations.entities.*;
+import com.Pulson.RoomReservations.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
