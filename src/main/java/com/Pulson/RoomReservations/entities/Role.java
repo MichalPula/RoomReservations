@@ -27,11 +27,11 @@ public class Role implements GrantedAuthority {
         return id;
     }
 
-    public String getName() {
+    public String getRole() {
         return role;
     }
 
-    public void setName(String role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

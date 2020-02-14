@@ -1,9 +1,7 @@
 package com.Pulson.RoomReservations.services;
 
 import com.Pulson.RoomReservations.entities.Activity;
-import com.Pulson.RoomReservations.entities.Role;
 import com.Pulson.RoomReservations.repositories.ActivityRepository;
-import com.Pulson.RoomReservations.repositories.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +20,6 @@ public class ActivityServiceImpl implements ActivityService{
     @Autowired
     private ActivityRepository activityRepository;
 
-    @Autowired
-    private UserTypeRepository userTypeRepository;
-
     @Override
     public List<Activity> getAll() {
         return activityRepository.findAll();
@@ -38,8 +33,8 @@ public class ActivityServiceImpl implements ActivityService{
     @Transactional
     @Override
     public Boolean create(Activity activity) {
-        Role role = userTypeRepository.findByName(activity.getRole().getName());
-        activity.setRole(role);
+        //Role role = userTypeRepository.findByName(activity.getRole().getName());
+        //activity.setRole(role);
         activityRepository.save(activity);
         return true;
     }
@@ -57,8 +52,8 @@ public class ActivityServiceImpl implements ActivityService{
     @Override
     public Boolean update(long id, Activity activityDetails) throws Exception {
         Activity activity = activityRepository.findById(id).orElseThrow(() -> new Exception("Activity NOT found"));
-        Role role = userTypeRepository.findByName(activityDetails.getRole().getName());
-        activity.setRole(role);
+        //Role role = userTypeRepository.findByName(activityDetails.getRole().getName());
+        //activity.setRole(role);
         activity.setName(activityDetails.getName());
         activity.setAvailable(activityDetails.getAvailable());
         activityRepository.save(activity);
