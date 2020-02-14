@@ -2,6 +2,7 @@ package com.Pulson.RoomReservations.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,9 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public String doGenerateToken(Map<String, Object> claims, String subject) {
-        return null;
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 60 * 1000))
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
     @Override
