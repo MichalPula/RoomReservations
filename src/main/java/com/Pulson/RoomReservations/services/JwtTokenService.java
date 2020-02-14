@@ -10,7 +10,6 @@ import java.util.function.Function;
 
 @Component
 public interface JwtTokenService {
-
     Date getExpirationDateFromToken(String token);
     <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver);
     Claims getAllClaimsFromToken(String token);
