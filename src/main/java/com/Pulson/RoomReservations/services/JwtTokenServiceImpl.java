@@ -55,7 +55,8 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public Boolean isTokenExpired(String token) {
-        return null;
+        final Date expiration = getExpirationDateFromToken(token);
+        return expiration.before(new Date());
     }
 
     @Override
