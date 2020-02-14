@@ -1,6 +1,7 @@
 package com.Pulson.RoomReservations.services;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public Claims getAllClaimsFromToken(String token) {
-        return null;
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
     @Override
