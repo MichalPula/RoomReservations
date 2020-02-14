@@ -1,14 +1,21 @@
 package com.Pulson.RoomReservations.entities;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, updatable = false)
     private long id;
 
     @NotNull
@@ -20,43 +27,43 @@ public class User {
     private String lastName;
 
     @NotNull
-    @Column(columnDefinition = "text", name = "nick_name")
-    private String nickName;
+    @Column(columnDefinition = "text", name = "e_mail", unique = true)
+    private String email;
 
     @NotNull
-    @Column(columnDefinition = "text", name = "e_mail")
-    private String eMail;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(columnDefinition = "integer", name = "user_type_id")
-    private Role role;
+    @Column(columnDefinition = "text", name = "password")
+    private String password;
 
     @Column(columnDefinition = "boolean", name = "is_active")
-    private Boolean isActive = true;
+    private Boolean isEnabled = true;
+
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<GrantedAuthority> authorities;
 
     public User() {
+        this.authorities = new ArrayList<>();
     }
 
-    public User(String firstName, String lastName, String nickName, String eMail, Role role, Boolean isActive) {
+    public User(String firstName, String lastName, String email, String password, Boolean isEnabled, List<GrantedAuthority> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.nickName = nickName;
-        this.eMail = eMail;
-        this.role = role;
-        this.isActive = isActive;
+        this.email = email;
+        this.password = password;
+        this.isEnabled = isEnabled;
+        this.authorities = authorities;
     }
 
-    public User(String firstName, String lastName, String nickName, String eMail, Role role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nickName = nickName;
-        this.eMail = eMail;
-        this.role = role;
-    }
+
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -75,36 +82,62 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEMail() {
-        return eMail;
+    public Boolean getEnabled() {
+        return isEnabled;
     }
 
-    public void setEMail(String eMail) {
-        this.eMail = eMail;
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
     }
 
-
-    public Role getRole() {
-        return role;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setAuthorities(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
-    public Boolean getActive() {
-        return isActive;
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
-    public void setActive(Boolean active) {
-        isActive = active;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getNickName() {
-        return nickName;
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setUsername(String nickName) {
+        this.email = email;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isEnabled() {
+        return this.isEnabled;
     }
 }
