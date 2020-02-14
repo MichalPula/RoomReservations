@@ -66,16 +66,4 @@ public class ReservationServiceImpl implements ReservationService{
         query.executeUpdate();
         return true;
     }
-
-    @Transactional
-    @Override
-    public Boolean update(long id, Reservation reservationDetails) throws Exception {
-        Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new Exception("Activity NOT found"));
-        reservation.setRoom(reservationDetails.getRoom());
-        reservation.setActivity(reservationDetails.getActivity());
-        reservation.setStartTime(reservationDetails.getStartTime());
-        reservation.setEndTime(reservationDetails.getEndTime());
-        reservationRepository.save(reservation);
-        return true;
-    }
 }
