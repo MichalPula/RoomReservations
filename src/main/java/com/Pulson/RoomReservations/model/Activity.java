@@ -18,7 +18,7 @@ public class Activity {
     @NotNull
     @ManyToOne
     @JoinColumn(columnDefinition = "integer", name = "user_type_id")
-    private UserType userType;
+    private Role role;
 
     @Column(columnDefinition = "boolean", name = "is_available")
     private Boolean isAvailable = true;
@@ -26,15 +26,15 @@ public class Activity {
     public Activity() {
     }
 
-    public Activity(String name, UserType userType, Boolean isAvailable){
+    public Activity(String name, Role role, Boolean isAvailable){
         this.name = name;
-        this.userType = userType;
+        this.role = role;
         this.isAvailable = isAvailable;
     }
 
-    public Activity(String name, UserType userType){
+    public Activity(String name, Role role){
         this.name = name;
-        this.userType = userType;
+        this.role = role;
     }
 
     public long getId() {
@@ -49,12 +49,12 @@ public class Activity {
         this.name = name;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Boolean getAvailable() {

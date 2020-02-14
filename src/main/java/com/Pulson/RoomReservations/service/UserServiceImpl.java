@@ -1,7 +1,7 @@
 package com.Pulson.RoomReservations.service;
 
 import com.Pulson.RoomReservations.model.User;
-import com.Pulson.RoomReservations.model.UserType;
+import com.Pulson.RoomReservations.model.Role;
 import com.Pulson.RoomReservations.repository.UserRepository;
 import com.Pulson.RoomReservations.repository.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public Boolean create(User user) {
-        UserType userType = userTypeRepository.findByName(user.getUserType().getName());
-        user.setUserType(userType);
+        Role role = userTypeRepository.findByName(user.getRole().getName());
+        user.setRole(role);
         userRepository.save(user);
         return true;
     }

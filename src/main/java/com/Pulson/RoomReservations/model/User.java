@@ -30,7 +30,7 @@ public class User {
     @NotNull
     @ManyToOne
     @JoinColumn(columnDefinition = "integer", name = "user_type_id")
-    private UserType userType;
+    private Role role;
 
     @Column(columnDefinition = "boolean", name = "is_active")
     private Boolean isActive = true;
@@ -38,21 +38,21 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String nickName, String eMail, UserType userType, Boolean isActive) {
+    public User(String firstName, String lastName, String nickName, String eMail, Role role, Boolean isActive) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickName = nickName;
         this.eMail = eMail;
-        this.userType = userType;
+        this.role = role;
         this.isActive = isActive;
     }
 
-    public User(String firstName, String lastName, String nickName, String eMail, UserType userType) {
+    public User(String firstName, String lastName, String nickName, String eMail, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickName = nickName;
         this.eMail = eMail;
-        this.userType = userType;
+        this.role = role;
     }
 
     public long getId() {
@@ -84,12 +84,12 @@ public class User {
     }
 
 
-    public UserType getUserType() {
-        return userType;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Boolean getActive() {
