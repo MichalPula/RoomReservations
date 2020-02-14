@@ -1,16 +1,23 @@
 package com.Pulson.RoomReservations.services;
 
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
 
+@Component
 public class JwtTokenServiceImpl implements JwtTokenService {
+
+    @Value("${jwt.secret}")
+    private String secret;
+
     @Override
     public Date getExpirationDateFromToken(String token) {
-        return null;
+        return getClaimFromToken(token, Claims::getExpiration);
     }
 
     @Override

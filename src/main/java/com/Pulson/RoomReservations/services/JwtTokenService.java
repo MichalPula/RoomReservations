@@ -2,11 +2,13 @@ package com.Pulson.RoomReservations.services;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
 
+@Component
 public interface JwtTokenService {
 
     Date getExpirationDateFromToken(String token);
