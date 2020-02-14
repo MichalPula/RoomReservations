@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -34,7 +35,8 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public String generateToken(UserDetails userDetails) {
-        return null;
+        Map<String, Object> claims = new HashMap<>();
+        return doGenerateToken(claims, userDetails.getUsername());
     }
 
     @Override
