@@ -1,0 +1,42 @@
+package com.Pulson.RoomReservations.controllers;
+
+import com.Pulson.RoomReservations.entities.Activity;
+import com.Pulson.RoomReservations.services.ActivityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("activities")
+public class ActivityController {
+
+    @Autowired
+    private ActivityService activityService;
+
+    @GetMapping("/all")
+    public List<Activity> getAll(){
+        return activityService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Activity getById(@PathVariable("id") long id) throws Exception {
+        return activityService.getById(id);
+    }
+
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean create(@RequestBody Activity activity){
+        return activityService.create(activity);
+    }
+
+    @DeleteMapping("/deactivate/{id}")
+    public boolean deactivate(@PathVariable("id") long id) throws Exception {
+        return activityService.deactivate(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public boolean update(@PathVariable("id") long id, @RequestBody Activity activityDetails) throws Exception {
+        return activityService.update(id, activityDetails);
+    }
+}
