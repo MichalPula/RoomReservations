@@ -1,5 +1,7 @@
 package com.Pulson.RoomReservations.entities;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -37,7 +39,8 @@ public class User implements UserDetails {
     @Column(columnDefinition = "boolean", name = "is_active")
     private Boolean isEnabled = true;
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(targetEntity = Role.class)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
