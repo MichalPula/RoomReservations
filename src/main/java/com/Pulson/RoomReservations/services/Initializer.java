@@ -2,6 +2,7 @@ package com.Pulson.RoomReservations.services;
 
 import com.Pulson.RoomReservations.entities.*;
 import com.Pulson.RoomReservations.repositories.*;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,10 @@ import java.util.List;
 public class Initializer {
     public Initializer(UserRepository userRepository, RoomRepository roomRepository,
                        ActivityRepository activityRepository, ReservationRepository reservationRepository,
-                       RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
+                       RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
 
 
-
-        for(RoleType roleType : RoleType.values()){
+        for (RoleType roleType : RoleType.values()) {
             Role role = new Role();
             role.setRole(roleType.name());
             roleRepository.save(role);
@@ -35,34 +35,47 @@ public class Initializer {
         users.add(admin);
         users.add(user);
         userRepository.saveAll(users);
+
+
+
+
+
+
+
+        List<Room> rooms = new ArrayList<>(Arrays.asList(
+                new Room("Small wood room 1"),
+                new Room("Small wood room 2"),
+                new Room("Jerzy's office"),
+                new Room("Room")
+        ));
+        roomRepository.saveAll(rooms);
+
+
+        List<Role> adminOnly = new ArrayList<>(Arrays.asList(roleRepository.findRoleByRole(RoleType.ROLE_ADMIN.name())));
+        List<Role> userOnly = new ArrayList<>(Arrays.asList(roleRepository.findRoleByRole(RoleType.ROLE_USER.name())));
+        List<Role> adminAndUser = new ArrayList<>(Arrays.asList(roleRepository.findRoleByRole(RoleType.ROLE_ADMIN.name()),
+                roleRepository.findRoleByRole(RoleType.ROLE_USER.name())));
+        List<Activity> activities = new ArrayList<>(Arrays.asList(
+                new Activity("learning", userOnly),
+                new Activity("playing PS4", userOnly),
+                new Activity("helping other student", userOnly),
+                new Activity("reading a book", userOnly),
+                new Activity("playing board games", adminAndUser),
+                new Activity("making my SI assignment", userOnly),
+                new Activity("having 1 on 1 conversation", adminOnly),
+                new Activity("hosting QualityGate", adminOnly),
+                new Activity("having code review", adminOnly)
+        ));
+        activityRepository.saveAll(activities);
+
+
+        List<Reservation> reservations = new ArrayList<>(Arrays.asList(
+                new Reservation(users.get(0), rooms.get(0), ZonedDateTime.now(), ZonedDateTime.now(), activities.get(8)),
+                new Reservation(users.get(1), rooms.get(1), ZonedDateTime.now(), ZonedDateTime.now(), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(2), ZonedDateTime.now(), ZonedDateTime.now(), activities.get(3)),
+                new Reservation(users.get(1), rooms.get(1), ZonedDateTime.now(), ZonedDateTime.now(), activities.get(6))
+        ));
+        reservationRepository.saveAll(reservations);
     }
-
-//        List<Room> rooms = new ArrayList<>(Arrays.asList(
-//            new Room("Small wood room 1"),
-//            new Room("Small wood room 2"),
-//            new Room("Jerzy's office")
-//        ));
-//        roomRepository.saveAll(rooms);
-
-//        List<Activity> activities = new ArrayList<>(Arrays.asList(
-//            new Activity("learning", roles.get(1)),
-//            new Activity("playing PS4", roles.get(1)),
-//            new Activity("helping other student", roles.get(1)),
-//            new Activity("reading a book", roles.get(1)),
-//            new Activity("playing board games", roles.get(1)),
-//            new Activity("making my SI assignment", roles.get(1)),
-//            new Activity("having 1 on 1 conversation", roles.get(0)),
-//            new Activity("hosting QualityGate", roles.get(0)),
-//            new Activity("having code review", roles.get(0))
-//        ));
-//        activityRepository.saveAll(activities);
-//
-//
-//        List<Reservation> reservations = new ArrayList<>(Arrays.asList(
-//            new Reservation(users.get(0), rooms.get(0), ZonedDateTime.now(), ZonedDateTime.now(),activities.get(8)),
-//            new Reservation(users.get(1), rooms.get(1), ZonedDateTime.now(), ZonedDateTime.now(),activities.get(4)),
-//            new Reservation(users.get(2), rooms.get(2), ZonedDateTime.now(), ZonedDateTime.now(),activities.get(3)),
-//            new Reservation(users.get(3), rooms.get(1), ZonedDateTime.now(), ZonedDateTime.now(),activities.get(6))
-//        ));
-//        reservationRepository.saveAll(reservations);
 }
+
