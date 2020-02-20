@@ -3,6 +3,7 @@ package com.Pulson.RoomReservations.services;
 import com.Pulson.RoomReservations.entities.Room;
 import com.Pulson.RoomReservations.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public List<Room> getAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     @Override
