@@ -4,11 +4,13 @@ import com.Pulson.RoomReservations.entities.Room;
 import com.Pulson.RoomReservations.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("rooms")
 public class RoomController {
 
@@ -20,7 +22,7 @@ public class RoomController {
         return roomService.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Room getById(@PathVariable("id") long id) throws Exception {
         return roomService.getById(id);
     }
