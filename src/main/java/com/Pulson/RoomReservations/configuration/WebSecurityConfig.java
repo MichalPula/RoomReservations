@@ -14,10 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
-import org.springframework.security.web.session.SessionManagementFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -32,9 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
-
-//    @Autowired
-//    private CorsFilter corsFilter;
 
     @Bean
     @Override
@@ -55,26 +49,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        //httpSecurity.addFilterBefore(corsFilter, SessionManagementFilter.class);
         httpSecurity
-            .headers()
-            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"))
-            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT"))
-            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Max-Age", "3600"))
-            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "true"))
-            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization"))
-            .and()
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/authenticate").permitAll();
-            //.anyRequest().authenticated()
-            //.and().
-            //exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            //.and().
-            //sessionManagement()
-            //.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .csrf().disable()
+                .headers()
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"))
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS"))
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Max-Age", "3600"))
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "true"))
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization"))
+                .and()
+                .authorizeRequests()
+                .antMatchers("/authenticate").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and().
+                sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        //httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
-
 }
