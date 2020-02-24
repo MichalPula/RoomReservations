@@ -1,5 +1,6 @@
 package com.Pulson.RoomReservations.services;
 
+import com.Pulson.RoomReservations.entities.User;
 import com.Pulson.RoomReservations.models.JwtLoginRequest;
 import com.Pulson.RoomReservations.models.JwtRegisterRequest;
 import com.Pulson.RoomReservations.models.JwtResponse;
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,6 +28,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @Override
     public ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest) {
@@ -52,6 +57,4 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Override
     public ResponseEntity<?> handleRegistration(JwtRegisterRequest jwtRegisterRequest) {
-        if(userRe)
-    }
 }

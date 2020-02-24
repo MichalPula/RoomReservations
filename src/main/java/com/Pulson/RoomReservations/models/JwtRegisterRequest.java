@@ -1,5 +1,7 @@
 package com.Pulson.RoomReservations.models;
 
+import java.util.Set;
+
 public class JwtRegisterRequest {
 
     private String firstName;
@@ -7,12 +9,17 @@ public class JwtRegisterRequest {
     private String username;
     private String email;
     private String password;
+    private Set<String> roles;
 
     public JwtRegisterRequest() {}
 
-    public JwtRegisterRequest(String firstName, String lastName, String username, String email, String password) {
+    public JwtRegisterRequest(String firstName, String lastName, String username, String email, String password, Set<String> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
+        this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 
     public String getFirstName() {
@@ -53,5 +60,13 @@ public class JwtRegisterRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 }
