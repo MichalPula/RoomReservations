@@ -18,7 +18,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("jwt.expirationMs")
+    @Value("${jwt.expirationMs}")
     private int jwtExpirationMs;
 
     @Override
