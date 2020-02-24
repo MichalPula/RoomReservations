@@ -1,6 +1,7 @@
 package com.Pulson.RoomReservations.controllers;
 
 import com.Pulson.RoomReservations.models.JwtLoginRequest;
+import com.Pulson.RoomReservations.models.JwtRegisterRequest;
 import com.Pulson.RoomReservations.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,12 @@ public class JwtAuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody JwtLoginRequest authenticationRequest) throws Exception {
-        return authenticationService.handleLogin(authenticationRequest);
+    public ResponseEntity<?> login(@RequestBody JwtLoginRequest loginRequest) throws Exception {
+        return authenticationService.handleLogin(loginRequest);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody JwtRegisterRequest registerRequest) throws Exception {
+        return authenticationService.handleRegistration(registerRequest);
+    }
 }
