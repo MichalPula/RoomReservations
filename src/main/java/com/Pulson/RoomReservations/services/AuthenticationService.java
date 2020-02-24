@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface AuthenticationService {
-    ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest);
+    ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest) throws Exception;
     ResponseEntity<?> handleRegistration(JwtRegisterRequest jwtRegisterRequest);
 }

@@ -9,11 +9,12 @@ import com.Pulson.RoomReservations.models.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -37,19 +38,18 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private RoleService roleService;
 
     @Autowired
-    PasswordEncoder encoder;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest) {
+    public ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest) throws Exception {
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(jwtLoginRequest.getUsername(), jwtLoginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
         String token = jwtTokenService.generateToken(userDetails);
-
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
@@ -58,7 +58,6 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 token,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
                 roles));
     }
 
@@ -67,13 +66,6 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         if(userService.existsByUsername(jwtRegisterRequest.getUsername())) {
             return ResponseEntity.badRequest().body("Username is already taken!");
         }
-
-        if(userService.existsByEmail(jwtRegisterRequest.getEmail())) {
-            return ResponseEntity.badRequest().body("Email is already taken!");
-        }
-
-        User user = new User(jwtRegisterRequest.getFirstName(), jwtRegisterRequest.getLastName(),
-                jwtRegisterRequest.getUsername(), jwtRegisterRequest.getEmail(), encoder.encode(jwtRegisterRequest.getPassword()));
 
         Set<String> stringRoles  = jwtRegisterRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -92,7 +84,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 }
             });
         }
-        user.setRoles(roles);
+        User user = new User(jwtRegisterRequest.getFirstName(), jwtRegisterRequest.getLastName(),
+                jwtRegisterRequest.getUsername(), bCryptPasswordEncoder.encode(jwtRegisterRequest.getPassword()), roles);
         userService.create(user);
 
         return ResponseEntity.ok("Registration successful");
