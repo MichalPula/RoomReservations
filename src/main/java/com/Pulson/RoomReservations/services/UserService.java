@@ -12,4 +12,7 @@ public interface UserService {
     Boolean create(User user);
     Boolean deactivate(long id) throws Exception;
     Boolean update(long id, User userDetails) throws Exception;
+    User findUserByUsername(String username);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 }

@@ -24,6 +24,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Autowired
     private JwtTokenService jwtTokenService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -49,6 +52,6 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Override
     public ResponseEntity<?> handleRegistration(JwtRegisterRequest jwtRegisterRequest) {
-        return null;
+        if(userRe)
     }
 }
