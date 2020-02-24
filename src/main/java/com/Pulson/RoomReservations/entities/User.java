@@ -2,18 +2,15 @@ package com.Pulson.RoomReservations.entities;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +26,10 @@ public class User implements UserDetails {
     private String lastName;
 
     @NotNull
+    @Column(columnDefinition = "text", name = "username", unique = true)
+    private String username;
+
+    @NotNull
     @Column(columnDefinition = "text", name = "e_mail", unique = true)
     private String email;
 
@@ -36,27 +37,20 @@ public class User implements UserDetails {
     @Column(columnDefinition = "text", name = "password")
     private String password;
 
-    @Column(columnDefinition = "boolean", name = "is_active")
-    private Boolean isEnabled = true;
-
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Role.class)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<GrantedAuthority> authorities;
+    private Set<Role> roles = new HashSet<>();
 
-    public User() {
-        this.authorities = new ArrayList<>();
-    }
+    public User() { }
 
     public User(String firstName, String lastName, String email, String password, Boolean isEnabled, List<GrantedAuthority> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.password = password;
-        this.isEnabled = isEnabled;
-        this.authorities = authorities;
     }
 
 
