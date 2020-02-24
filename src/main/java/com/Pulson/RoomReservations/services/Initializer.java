@@ -20,26 +20,21 @@ public class Initializer {
 
         for (RoleType roleType : RoleType.values()) {
             Role role = new Role();
-            role.setRole(roleType.name());
+            role.setRoleType(roleType);
             roleRepository.save(role);
         }
 
         final String adminPassword = bCryptPasswordEncoder.encode("admin");
         final String userPassword = bCryptPasswordEncoder.encode("user");
         List<User> users = new ArrayList<>();
-        User admin = new User("LeBron", "James", "pulson@wp.pl", adminPassword,
-                true, List.of(roleRepository.findRoleByRole(RoleType.ROLE_USER.name()), roleRepository.findRoleByRole(RoleType.ROLE_ADMIN.name())));
-        User user = new User("Derrick", "Rose", "user", userPassword,
-                true, List.of(roleRepository.findRoleByRole(RoleType.ROLE_USER.name())));
-
-        users.add(admin);
-        users.add(user);
+//        User admin = new User("LeBron", "James", "pulson@wp.pl", adminPassword,
+//                true, List.of(roleRepository.findByRoleType(RoleType.ROLE_USER), roleRepository.findByRoleType(RoleType.ROLE_ADMIN)));
+//        User user = new User("Derrick", "Rose", "user", userPassword,
+//                true, List.of(roleRepository.findByRoleType(RoleType.ROLE_USER)));
+//
+//        users.add(admin);
+//        users.add(user);
         userRepository.saveAll(users);
-
-
-
-
-
 
 
         List<Room> rooms = new ArrayList<>(Arrays.asList(
@@ -51,10 +46,10 @@ public class Initializer {
         roomRepository.saveAll(rooms);
 
 
-        List<Role> adminOnly = new ArrayList<>(Arrays.asList(roleRepository.findRoleByRole(RoleType.ROLE_ADMIN.name())));
-        List<Role> userOnly = new ArrayList<>(Arrays.asList(roleRepository.findRoleByRole(RoleType.ROLE_USER.name())));
-        List<Role> adminAndUser = new ArrayList<>(Arrays.asList(roleRepository.findRoleByRole(RoleType.ROLE_ADMIN.name()),
-                roleRepository.findRoleByRole(RoleType.ROLE_USER.name())));
+        List<Role> adminOnly = new ArrayList<>(Arrays.asList(roleRepository.findByRoleType(RoleType.ROLE_ADMIN)));
+        List<Role> userOnly = new ArrayList<>(Arrays.asList(roleRepository.findByRoleType(RoleType.ROLE_USER)));
+        List<Role> adminAndUser = new ArrayList<>(Arrays.asList(roleRepository.findByRoleType(RoleType.ROLE_ADMIN),
+                roleRepository.findByRoleType(RoleType.ROLE_USER)));
         List<Activity> activities = new ArrayList<>(Arrays.asList(
                 new Activity("learning", userOnly),
                 new Activity("playing PS4", userOnly),

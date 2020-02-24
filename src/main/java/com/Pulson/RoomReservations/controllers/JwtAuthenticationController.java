@@ -3,6 +3,7 @@ package com.Pulson.RoomReservations.controllers;
 import com.Pulson.RoomReservations.models.JwtRequest;
 import com.Pulson.RoomReservations.models.JwtResponse;
 import com.Pulson.RoomReservations.services.JwtTokenService;
+import com.Pulson.RoomReservations.services.UserDetailsService;
 import com.Pulson.RoomReservations.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,12 @@ public class JwtAuthenticationController {
     private JwtTokenService jwtTokenService;
 
     @Autowired
-    private UserService userService;
+    private UserDetailsService userDetailsService;
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenService.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
