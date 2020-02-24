@@ -30,10 +30,6 @@ public class User {
     private String username;
 
     @NotNull
-    @Column(columnDefinition = "text", name = "e_mail", unique = true)
-    private String email;
-
-    @NotNull
     @Column(columnDefinition = "text", name = "password")
     private String password;
 
@@ -50,8 +46,8 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 
 
