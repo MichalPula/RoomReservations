@@ -12,31 +12,31 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "text", name = "role", unique = true)
-    private String role;
+    private RoleType roleType;
 
     public Role() {
-    }
-
-    public Role(String role){
-        this.role = role;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getRole() {
-        return role;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
 
     @Override
     public String getAuthority() {
-        return this.role;
+        return this.roleType.name();
     }
 }
