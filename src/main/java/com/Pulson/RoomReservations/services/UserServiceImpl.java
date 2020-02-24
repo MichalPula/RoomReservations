@@ -3,6 +3,8 @@ package com.Pulson.RoomReservations.services;
 import com.Pulson.RoomReservations.entities.User;
 import com.Pulson.RoomReservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +14,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @PersistenceContext
     private EntityManager em;
@@ -60,17 +62,31 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User findUserByUsername(String username) {
        return userRepository.findUserByUsername(username);
     }
 
     @Override
+    @Transactional
     public Boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
 
     @Override
+    @Transactional
     public Boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        try{
+            User user = userRepository.findUserByUsername(username);
+            return UserDetailsImpl.build(user);
+        }catch (Exception e){
+            throw new UsernameNotFoundException("User Not Found with username: " + username);
+        }
     }
 }
