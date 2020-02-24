@@ -18,6 +18,9 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("jwt.expirationMs")
+    private int jwtExpirationMs;
+
     @Override
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
@@ -42,9 +45,13 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 10 * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
     @Override
