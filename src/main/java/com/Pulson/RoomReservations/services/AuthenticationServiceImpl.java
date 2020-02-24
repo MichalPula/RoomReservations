@@ -1,5 +1,7 @@
 package com.Pulson.RoomReservations.services;
 
+import com.Pulson.RoomReservations.entities.Role;
+import com.Pulson.RoomReservations.entities.RoleType;
 import com.Pulson.RoomReservations.entities.User;
 import com.Pulson.RoomReservations.models.JwtLoginRequest;
 import com.Pulson.RoomReservations.models.JwtRegisterRequest;
@@ -14,7 +16,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -28,6 +32,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -57,4 +64,37 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Override
     public ResponseEntity<?> handleRegistration(JwtRegisterRequest jwtRegisterRequest) {
+        if(userService.existsByUsername(jwtRegisterRequest.getUsername())) {
+            return ResponseEntity.badRequest().body("Username is already taken!");
+        }
+
+        if(userService.existsByEmail(jwtRegisterRequest.getEmail())) {
+            return ResponseEntity.badRequest().body("Email is already taken!");
+        }
+
+        User user = new User(jwtRegisterRequest.getFirstName(), jwtRegisterRequest.getLastName(),
+                jwtRegisterRequest.getUsername(), jwtRegisterRequest.getEmail(), encoder.encode(jwtRegisterRequest.getPassword()));
+
+        Set<String> stringRoles  = jwtRegisterRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
+
+        if (stringRoles == null) {
+            Role userRole = roleService.findByRoleType(RoleType.ROLE_USER);
+            roles.add(userRole);
+        } else {
+            stringRoles.forEach(role ->{
+                if ("admin".equals(role)) {
+                    Role adminRole = roleService.findByRoleType(RoleType.ROLE_ADMIN);
+                    roles.add(adminRole);
+                } else {
+                    Role userRole = roleService.findByRoleType(RoleType.ROLE_USER);
+                    roles.add(userRole);
+                }
+            });
+        }
+        user.setRoles(roles);
+        userService.create(user);
+
+        return ResponseEntity.ok("Registration successful");
+    }
 }
