@@ -5,22 +5,20 @@ import java.util.List;
 
 public class JwtResponse implements Serializable {
 
-    private final String jwttoken;
+    private final String jwtToken;
     private Long id;
     private String username;
-    private String email;
     private List<String> roles;
 
-    public JwtResponse(String jwttoken, Long id, String username, String email, List<String> roles) {
-        this.jwttoken = jwttoken;
+    public JwtResponse(String jwtToken, Long id, String username, List<String> roles) {
+        this.jwtToken = jwtToken;
         this.id = id;
         this.username = username;
-        this.email = email;
         this.roles = roles;
     }
 
-    public String getJwttoken() {
-        return jwttoken;
+    public String getJwtToken() {
+        return jwtToken;
     }
 
     public Long getId() {
@@ -37,14 +35,6 @@ public class JwtResponse implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public List<String> getRoles() {
