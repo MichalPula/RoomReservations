@@ -1,14 +1,14 @@
 package com.Pulson.RoomReservations.models;
 
-public class JwtRequest {
+public class JwtLoginRequest {
 
     private String username;
 
     private String password;
 
-    public JwtRequest() {}
+    public JwtLoginRequest() {}
 
-    public JwtRequest(String username, String password) {
+    public JwtLoginRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
