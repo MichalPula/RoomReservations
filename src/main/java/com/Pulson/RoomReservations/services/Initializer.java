@@ -2,7 +2,6 @@ package com.Pulson.RoomReservations.services;
 
 import com.Pulson.RoomReservations.entities.*;
 import com.Pulson.RoomReservations.repositories.*;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +9,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class Initializer {
@@ -27,13 +27,13 @@ public class Initializer {
         final String adminPassword = bCryptPasswordEncoder.encode("admin");
         final String userPassword = bCryptPasswordEncoder.encode("user");
         List<User> users = new ArrayList<>();
-//        User admin = new User("LeBron", "James", "pulson@wp.pl", adminPassword,
-//                true, List.of(roleRepository.findByRoleType(RoleType.ROLE_USER), roleRepository.findByRoleType(RoleType.ROLE_ADMIN)));
-//        User user = new User("Derrick", "Rose", "user", userPassword,
-//                true, List.of(roleRepository.findByRoleType(RoleType.ROLE_USER)));
-//
-//        users.add(admin);
-//        users.add(user);
+        User admin = new User("LeBron", "James", "pulson@wp.pl", adminPassword,
+                Set.of(roleRepository.findByRoleType(RoleType.ROLE_USER), roleRepository.findByRoleType(RoleType.ROLE_ADMIN)));
+        User user = new User("Derrick", "Rose", "pleb@wp.pl", userPassword,
+                 Set.of(roleRepository.findByRoleType(RoleType.ROLE_USER)));
+
+        users.add(admin);
+        users.add(user);
         userRepository.saveAll(users);
 
 

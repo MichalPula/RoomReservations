@@ -45,6 +45,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public String doGenerateToken(Map<String, Object> claims, String subject) {
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
