@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,6 +36,12 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public List<Reservation> getAll() {
         return reservationRepository.findAll();
+    }
+
+    @Override
+    public List<Reservation> getByUser(long userId) throws Exception {
+        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
+        return reservationRepository.findAllByUser(user);
     }
 
     @Override

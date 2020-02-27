@@ -24,8 +24,8 @@ public class Initializer {
             roleRepository.save(role);
         }
 
-        final String adminPassword = bCryptPasswordEncoder.encode("admin");
-        final String userPassword = bCryptPasswordEncoder.encode("user");
+        final String adminPassword = bCryptPasswordEncoder.encode("admin123");
+        final String userPassword = bCryptPasswordEncoder.encode("user123");
         List<User> users = new ArrayList<>();
         User admin = new User("LeBron", "James", "pulson@wp.pl", adminPassword,
                 Set.of(roleRepository.findByRoleType(RoleType.ROLE_USER), roleRepository.findByRoleType(RoleType.ROLE_ADMIN)));
