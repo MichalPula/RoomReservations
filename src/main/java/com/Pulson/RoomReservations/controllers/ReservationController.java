@@ -20,6 +20,11 @@ public class ReservationController {
         return reservationService.getAll();
     }
 
+    @GetMapping("/my")
+    public List<Reservation> getUsersReservations(@PathVariable("id") long id) throws Exception {
+        return reservationService.getByUser(id);
+    }
+
     @GetMapping("/{id}")
     public Reservation getById(@PathVariable("id") long id) throws Exception {
         return reservationService.getById(id);
