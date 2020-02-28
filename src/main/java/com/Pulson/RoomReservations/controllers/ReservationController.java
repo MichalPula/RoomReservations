@@ -1,7 +1,9 @@
 package com.Pulson.RoomReservations.controllers;
 
 import com.Pulson.RoomReservations.entities.Reservation;
+import com.Pulson.RoomReservations.entities.dtos.ReservationAddDTO;
 import com.Pulson.RoomReservations.services.ReservationService;
+import com.Pulson.RoomReservations.services.mappers.CreateReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,9 @@ public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private CreateReservationMapper createReservationMapper;
 
     @GetMapping("/all")
     public List<Reservation> getAll(){
@@ -30,10 +35,16 @@ public class ReservationController {
         return reservationService.getById(id);
     }
 
+
+
+
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean create(@RequestBody Reservation reservation) throws Exception {
-        return reservationService.create(reservation);
+    public boolean create(@RequestBody ReservationAddDTO reservationAddDTO) throws Exception {
+        return reservationService.create(createReservationMapper.mapToReservation(reservationAddDTO));
     }
+
+
+
 
     @DeleteMapping("/delete/{id}")
     public boolean delete(@PathVariable("id") long id) throws Exception {

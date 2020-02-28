@@ -52,15 +52,6 @@ public class ReservationServiceImpl implements ReservationService{
     @Transactional
     @Override
     public Boolean create(Reservation reservation) throws Exception {
-        long userId = reservation.getUser().getId();
-        long roomId = reservation.getRoom().getId();
-        long activityId = reservation.getActivity().getId();
-        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
-        Room room = roomRepository.findById(roomId).orElseThrow(() -> new Exception("Room " + roomId + " NOT found"));
-        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new Exception("Activity " + activityId + " NOT found"));
-        reservation.setUser(user);
-        reservation.setRoom(room);
-        reservation.setActivity(activity);
         reservationRepository.save(reservation);
         return true;
     }
