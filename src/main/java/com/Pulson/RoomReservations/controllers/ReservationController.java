@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,37 +29,28 @@ public class ReservationController {
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ReservationReadDTO> getAll(){
-        return readReservationMapper.mapToReservationReadDTO(reservationService.getAll());
+        return readReservationMapper.mapToReservationReadDTOsList(reservationService.getAll());
     }
 
-    @GetMapping("/my")
-    public List<Reservation> getUsersReservations(@PathVariable("id") long id) throws Exception {
-        return reservationService.getByUser(id);
+    @GetMapping(value = "/my", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ReservationReadDTO> getUsersReservations(@PathVariable("id") long id) throws Exception {
+        return readReservationMapper.mapToReservationReadDTOsList(reservationService.getByUser(id));
     }
 
-    @GetMapping("/{id}")
-    public Reservation getById(@PathVariable("id") long id) throws Exception {
-        return reservationService.getById(id);
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ReservationReadDTO getById(@PathVariable("id") long id) throws Exception {
+        return readReservationMapper.mapToReservationReadDTOsList(Arrays.asList(reservationService.getById(id))).get(0);
     }
-
-
-
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean create(@RequestBody ReservationAddDTO reservationAddDTO) throws Exception {
         return reservationService.create(createReservationMapper.mapToReservation(reservationAddDTO));
     }
 
-
     @DeleteMapping("/delete/{id}")
     public boolean delete(@PathVariable("id") long id) throws Exception {
         return reservationService.delete(id);
     }
-
-
-
-
-
 
     @PutMapping("/update/{id}")
     public boolean update(@PathVariable("id") long id, @RequestBody Reservation reservationDetails) throws Exception {
