@@ -6,7 +6,7 @@ public class ReservationAddDTO {
 
     private Long userId;
     private Long roomId;
-    private java.time.ZonedDateTime startTime;
+    private ZonedDateTime startTime;
     private ZonedDateTime endTime;
     private Long activityId;
 
