@@ -1,9 +1,7 @@
 package com.Pulson.RoomReservations.services;
 
 import com.Pulson.RoomReservations.entities.*;
-import com.Pulson.RoomReservations.repositories.ActivityRepository;
 import com.Pulson.RoomReservations.repositories.ReservationRepository;
-import com.Pulson.RoomReservations.repositories.RoomRepository;
 import com.Pulson.RoomReservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +24,6 @@ public class ReservationServiceImpl implements ReservationService{
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
-
-    @Autowired
-    private ActivityRepository activityRepository;
-
     @Override
     public List<Reservation> getAll() {
         return reservationRepository.findAll();
@@ -48,10 +40,22 @@ public class ReservationServiceImpl implements ReservationService{
         return reservationRepository.findById(id).orElseThrow(() -> new Exception("Reservation " + id + " NOT found"));
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Boolean create(Reservation reservation) throws Exception {
+        reservationRepository.save(reservation);
+        return true;
+    }
 
+    @Override
+    @Transactional
+    public Boolean update(long id, Reservation reservationDetails) throws Exception {
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new Exception("Reservation NOT found"));
+        reservation.setUser(reservationDetails.getUser());
+        reservation.setRoom(reservationDetails.getRoom());
+        reservation.setStartTime(reservationDetails.getStartTime());
+        reservation.setEndTime(reservationDetails.getEndTime());
+        reservation.setActivity(reservationDetails.getActivity());
         reservationRepository.save(reservation);
         return true;
     }
