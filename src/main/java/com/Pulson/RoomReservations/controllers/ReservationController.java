@@ -1,16 +1,14 @@
 package com.Pulson.RoomReservations.controllers;
 
-import com.Pulson.RoomReservations.entities.Reservation;
-import com.Pulson.RoomReservations.entities.dtos.ReservationAddDTO;
+import com.Pulson.RoomReservations.entities.dtos.ReservationCreateUpdateDTO;
 import com.Pulson.RoomReservations.entities.dtos.ReservationReadDTO;
 import com.Pulson.RoomReservations.services.ReservationService;
-import com.Pulson.RoomReservations.services.mappers.CreateReservationMapper;
+import com.Pulson.RoomReservations.services.mappers.CreateUpdateReservationMapper;
 import com.Pulson.RoomReservations.services.mappers.ReadReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @Autowired
-    private CreateReservationMapper createReservationMapper;
+    private CreateUpdateReservationMapper createUpdateReservationMapper;
 
     @Autowired
     private ReadReservationMapper readReservationMapper;
@@ -43,8 +41,8 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean create(@RequestBody ReservationAddDTO reservationAddDTO) throws Exception {
-        return reservationService.create(createReservationMapper.mapToReservation(reservationAddDTO));
+    public boolean create(@RequestBody ReservationCreateUpdateDTO reservationAddDTO) throws Exception {
+        return reservationService.create(createUpdateReservationMapper.mapToReservation(reservationAddDTO));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -53,8 +51,7 @@ public class ReservationController {
     }
 
     @PutMapping("/update/{id}")
-    public boolean update(@PathVariable("id") long id, @RequestBody Reservation reservationDetails) throws Exception {
-        //return reservationService.update(id, reservationDetails);
-        return false;
+    public boolean update(@PathVariable("id") long id ,@RequestBody ReservationCreateUpdateDTO reservationDetails) throws Exception {
+        return reservationService.update(id, createUpdateReservationMapper.mapToReservation(reservationDetails));
     }
 }

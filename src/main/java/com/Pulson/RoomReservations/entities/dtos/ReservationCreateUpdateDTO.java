@@ -2,7 +2,7 @@ package com.Pulson.RoomReservations.entities.dtos;
 
 import java.time.ZonedDateTime;
 
-public class ReservationAddDTO {
+public class ReservationCreateUpdateDTO {
 
     private Long userId;
     private Long roomId;
@@ -10,7 +10,7 @@ public class ReservationAddDTO {
     private ZonedDateTime endTime;
     private Long activityId;
 
-    public ReservationAddDTO(Long userId, Long roomId, ZonedDateTime startTime, ZonedDateTime endTime, Long activityId) {
+    public ReservationCreateUpdateDTO(Long userId, Long roomId, ZonedDateTime startTime, ZonedDateTime endTime, Long activityId) {
         this.userId = userId;
         this.roomId = roomId;
         this.startTime = startTime;

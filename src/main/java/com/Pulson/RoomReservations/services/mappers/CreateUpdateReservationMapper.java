@@ -4,19 +4,15 @@ import com.Pulson.RoomReservations.entities.Activity;
 import com.Pulson.RoomReservations.entities.Reservation;
 import com.Pulson.RoomReservations.entities.Room;
 import com.Pulson.RoomReservations.entities.User;
-import com.Pulson.RoomReservations.entities.dtos.ReservationAddDTO;
+import com.Pulson.RoomReservations.entities.dtos.ReservationCreateUpdateDTO;
 import com.Pulson.RoomReservations.repositories.ActivityRepository;
-import com.Pulson.RoomReservations.repositories.ReservationRepository;
 import com.Pulson.RoomReservations.repositories.RoomRepository;
 import com.Pulson.RoomReservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateReservationMapper {
-
-    @Autowired
-    private ReservationRepository reservationRepository;
+public class CreateUpdateReservationMapper {
 
     @Autowired
     private UserRepository userRepository;
@@ -27,7 +23,7 @@ public class CreateReservationMapper {
     @Autowired
     private ActivityRepository activityRepository;
 
-    public Reservation mapToReservation(ReservationAddDTO reservationAddDTO) throws Exception {
+    public Reservation mapToReservation(ReservationCreateUpdateDTO reservationAddDTO) throws Exception {
         Reservation reservation = new Reservation();
         User user = userRepository.findById(reservationAddDTO.getUserId()).orElseThrow(()-> new Exception("User NOT found"));
         Room room = roomRepository.findById(reservationAddDTO.getRoomId()).orElseThrow(() -> new Exception("Room NOT found"));
