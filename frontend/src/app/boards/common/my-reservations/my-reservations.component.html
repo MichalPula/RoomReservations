@@ -1,0 +1,26 @@
+<div class="container-fluid p-0" id="reservationsHistoryContainer">
+  <div class="col-md-7">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Room</th>
+        <th>Activity</th>
+        <th>Start time</th>
+        <th>End time</th>
+        <th *ngIf="activeReservations === true"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let reservation of reservationsHistoryList | paginate : config">
+        <td>{{reservation.roomName}}</td>
+        <td>{{reservation.activityName}}</td>
+        <td>{{reservation.startTime}}</td>
+        <td>{{reservation.endTime}}</td>
+        <td *ngIf="activeReservations === true"><button class="btn btn-danger" (click)="cancelReservation(reservation.id)">Cancel</button></td>
+        <td *ngIf="activeReservations === true"><button class="btn btn-success">Update</button></td>
+      </tr>
+      <pagination-controls (pageChange)="changePage($event)" class="my-pagination"></pagination-controls>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+#registerContainer {
+  width: 100%;
+  height: 95.9vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#loginForm {
+  width: 300px;
+  height: auto;
+}

@@ -1,0 +1,69 @@
+<div class="container-fluid p-0" id="reservationAddContainer">
+  <form id="loginForm" (ngSubmit)="reservationForm.valid && onSubmit()" #reservationForm="ngForm">
+
+    <div class="form-group">
+      <label for="roomSelect">Select room:</label><br>
+      <select class="custom-select" id="roomSelect" name="roomSelect" [(ngModel)]="reservationAddForm.roomName" required #roomSelect="ngModel">
+        <option hidden></option>
+        <option *ngFor="let room of rooms" >{{room.name}}</option>
+      </select>
+      <div class="alert alert-danger" role="alert" *ngIf="reservationForm.submitted && roomSelect.invalid">Room is required!</div>
+    </div>
+
+    <div class="form-group">
+      <label for="activitySelect">Select activity: </label><br>
+      <select class="custom-select" id="activitySelect" name="activitySelect" [(ngModel)]="reservationAddForm.activityName" required #activitySelect="ngModel">
+        <option hidden></option>
+        <option *ngFor="let activity of activities">{{activity.name}}</option>
+      </select>
+      <div class="alert alert-danger" role="alert" *ngIf="reservationForm.submitted && activitySelect.invalid">Activity is required!</div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd"
+               [startDate]="{year: thisYear, month: thisMonth, day: thisDay}"
+               [minDate]="{year: thisYear, month: thisMonth, day: minDay}"
+               [maxDate]="{year: thisYear, month: maxMonth, day: maxDay}"
+               [markDisabled]="markDisabled"
+               name="dp" [(ngModel)]="reservationDate" ngbDatepicker #d="ngbDatepicker" required #dateSelect="ngModel">
+        <div class="input-group-append">
+          <button class="btn btn-primary btn-block" (click)="d.toggle()" type="button">
+            <span class="fa fa-calendar"></span>
+          </button>
+        </div>
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="reservationForm.submitted && dateSelect.invalid">Date is required!</div>
+    </div>
+
+    <div class="form-group" id="startEndTimePicker" *ngIf="reservationDate != null">
+      <ng-container *ngIf="reservationDate != null; then getReservationsByPickedDate()"></ng-container>
+      <ng-container *ngIf="reservationDate != null; then getAmountOfReservationsByPickedDateByUser()"></ng-container>
+      <mat-label>Time range </mat-label>
+      <mat-form-field>
+        <mat-select [(ngModel)]="selectedTimeRange" placeholder=""  name="timeRange" required #timeSelect="ngModel">
+          <ng-container  *ngFor="let slot of userSlots">
+           <ng-container *ngIf="!todayReservationsStartingHours.includes(slot.hourStartNumber)">
+             <ng-template [ngIf]="thisDay == reservationDate.day" [ngIfElse]="elseBlock">
+               <mat-option *ngIf=" slot.hourStartNumber > thisHour" (click)="selectedHourStartNumber = slot.hourStartNumber" [value]="slot.startTime +'-'+ slot.endTime">{{slot.viewValue}}</mat-option>
+             </ng-template>
+             <ng-template #elseBlock>
+               <mat-option (click)="selectedHourStartNumber = slot.hourStartNumber" [value]="slot.startTime +'-'+ slot.endTime">{{slot.viewValue}}</mat-option>
+             </ng-template>
+           </ng-container>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <div class="alert alert-danger" role="alert" *ngIf="reservationForm.submitted && timeSelect.invalid">Time range is required!</div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-block">Book this room!</button>
+    </div>
+
+
+<!--  <div class="alert alert-danger" role="alert" *ngIf="reservationForm.submitted && isAdmin() === false && maxAmountOfReservationsPerUser >= 3">Time range is required!</div>-->
+
+  </form>
+
+</div>
