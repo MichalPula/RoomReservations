@@ -35,8 +35,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public Boolean create(User user) {
-        Role role = userTypeRepository.findByName(user.getRole().getName());
-        user.setRole(role);
         userRepository.save(user);
         return true;
     }
@@ -53,11 +51,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public Boolean update(long id, User userDetails) throws Exception {
-        User user = userRepository.findById(id).orElseThrow(() -> new Exception("User NOT found"));
-        user.setEMail(userDetails.getEMail());
-        user.setNickName(userDetails.getNickName());
-        user.setActive(userDetails.getActive());
-        userRepository.save(user);
+//        User user = userRepository.findById(id).orElseThrow(() -> new Exception("User NOT found"));
+//        user.setUsername(userDetails.getUsername());
+//        user.setEnabled(userDetails.getEnabled());
+//        userRepository.save(user);
         return true;
     }
 
