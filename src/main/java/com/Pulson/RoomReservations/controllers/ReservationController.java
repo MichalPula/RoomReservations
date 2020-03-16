@@ -31,6 +31,11 @@ public class ReservationController {
         return readReservationMapper.mapToReservationReadDTOsList(reservationService.getAll());
     }
 
+    @GetMapping(value = "/active", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ReservationReadDTO> getAllActive(){
+        return readReservationMapper.mapToReservationReadDTOsList(reservationService.getActive());
+    }
+
     @GetMapping(value = "/active/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ReservationReadDTO> getUsersActiveReservations(@PathVariable("id") long id) throws Exception {
         return readReservationMapper.mapToReservationReadDTOsList(reservationService.getActiveByUser(id));
