@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../services/user.service';
+import {ReservationRead, UserService} from '../services/user.service';
 import {TokenStorageService} from '../services/token-storage.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,23 +10,31 @@ import {TokenStorageService} from '../services/token-storage.service';
 })
 export class HomeComponent implements OnInit {
 
-  content: '';
-  roles: string[] = [];
+  public config: any;
+  public activeReservations: ReservationRead[];
 
-  constructor(private userService: UserService, private tokenStorageService: TokenStorageService) { }
+  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
+    this.config =  {
+      currentPage: 1,
+      itemsPerPage: 7,
+      totalItems: 0
+    };
+    route.queryParams.subscribe(
+      params => this.config.currentPage = params.page ? params.page : 1);
+  }
 
   ngOnInit(): void {
-    if (this.tokenStorageService.getToken()) {
-      this.roles = this.tokenStorageService.getUser().roles;
-    }
-    // this.userService.getPublicContent().subscribe(
-    //   data => {
-    //     console.log(data + ' LOG OF DATA');
-    //     this.content = JSON.parse(data);
-    //   }, error => {
-    //      this.content = error.error.message;
-    //   }
-    // );
+    this.fetchData();
+  }
+
+  private fetchData() {
+    this.userService.getActiveReservations().subscribe(data => {
+      this.activeReservations = data as ReservationRead[];
+    });
+  }
+
+  changePage(newPage: number) {
+    this.router.navigate(['/reservations/active/'], {queryParams: {page: newPage}});
   }
 
 }

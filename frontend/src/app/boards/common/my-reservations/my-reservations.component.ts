@@ -35,7 +35,7 @@ export class MyReservationsComponent implements OnInit {
 
   private fetchData() {
     if (this.activeReservations === true) {
-      this.userService.getActiveReservations(this.tokenStorageService.getUser().id).subscribe(data => {
+      this.userService.getUsersActiveReservations(this.tokenStorageService.getUser().id).subscribe(data => {
         this.reservationsHistoryList = data as ReservationRead[];
       });
     }

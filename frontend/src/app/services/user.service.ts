@@ -86,8 +86,11 @@ export class UserService {
   addReservation(reservation: ReservationAddUpdate) {
     return this.http.post(API_URL + 'reservations/add', reservation);
   }
-  getActiveReservations(userId: number): Observable<any> {
+  getUsersActiveReservations(userId: number): Observable<any> {
     return this.http.get(API_URL + 'reservations/active/' + userId);
+  }
+  getActiveReservations(): Observable<any> {
+    return this.http.get(API_URL + 'reservations/active');
   }
   getReservationsHistory(userId: number): Observable<any> {
     return this.http.get(API_URL + 'reservations/history/' + userId);
