@@ -2,7 +2,7 @@ package com.Pulson.RoomReservations.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reservations")
@@ -24,11 +24,11 @@ public class Reservation {
 
     @NotNull
     @Column(columnDefinition = "timestamp with time zone", name = "start_time")
-    private ZonedDateTime startTime;
+    private LocalDateTime startTime;
 
     @NotNull
     @Column(columnDefinition = "timestamp with time zone", name = "end_time")
-    private ZonedDateTime endTime;
+    private LocalDateTime endTime;
 
     @NotNull
     @ManyToOne
@@ -38,12 +38,16 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(User user, Room room, ZonedDateTime startTime, ZonedDateTime endTime, Activity activity) {
+    public Reservation(User user, Room room, LocalDateTime startTime, LocalDateTime endTime, Activity activity) {
         this.user = user;
         this.room = room;
         this.startTime = startTime;
         this.endTime = endTime;
         this.activity = activity;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public User getUser() {
@@ -62,19 +66,19 @@ public class Reservation {
         this.room = room;
     }
 
-    public ZonedDateTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(ZonedDateTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public ZonedDateTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(ZonedDateTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
