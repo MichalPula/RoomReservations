@@ -35,6 +35,17 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
+    public List<Reservation> getActive() {
+        List<Reservation> activeReservations = new ArrayList<>();
+        reservationRepository.findAll().forEach(reservation -> {
+            if(reservation.getStartTime().isAfter(LocalDateTime.now())){
+                activeReservations.add(reservation);
+            }
+        });
+        return activeReservations;
+    }
+
+    @Override
     public List<Reservation> getActiveByUser(long userId) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
         List<Reservation> activeReservations = new ArrayList<>();
