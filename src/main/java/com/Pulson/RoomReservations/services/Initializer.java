@@ -5,17 +5,14 @@ import com.Pulson.RoomReservations.repositories.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class Initializer {
     public Initializer(UserRepository userRepository, RoomRepository roomRepository,
                        ActivityRepository activityRepository, ReservationRepository reservationRepository,
-                       RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+                       RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ReservationService reservationService) throws Exception {
 
 
         for (RoleType roleType : RoleType.values()) {
@@ -65,12 +62,26 @@ public class Initializer {
 
 
         List<Reservation> reservations = new ArrayList<>(Arrays.asList(
-                new Reservation(users.get(0), rooms.get(0), ZonedDateTime.now(), ZonedDateTime.now(), activities.get(8)),
-                new Reservation(users.get(1), rooms.get(1), ZonedDateTime.now(), ZonedDateTime.now(), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(2), ZonedDateTime.now(), ZonedDateTime.now(), activities.get(3)),
-                new Reservation(users.get(1), rooms.get(1), ZonedDateTime.now(), ZonedDateTime.now(), activities.get(6))
+                new Reservation(users.get(1), rooms.get(2), LocalDateTime.of(2019, 5, 10, 15, 0), LocalDateTime.of(2019, 5, 10, 17, 0), activities.get(1)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2021, 8, 22, 10, 30), LocalDateTime.of(2021, 8, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2021, 8, 22, 10, 30), LocalDateTime.of(2021, 8, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 11, 14, 0), LocalDateTime.of(2020, 3, 11, 15, 0), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 11, 13, 0), LocalDateTime.of(2020, 3, 11, 14, 0), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 12, 9, 0), LocalDateTime.of(2020, 3, 12, 10, 0), activities.get(0)),
+                new Reservation(users.get(0), rooms.get(1), LocalDateTime.of(2020, 3, 12, 13, 0), LocalDateTime.of(2020, 3, 12, 14, 0), activities.get(0)),
+                new Reservation(users.get(0), rooms.get(1), LocalDateTime.of(2020, 3, 12, 14, 0), LocalDateTime.of(2020, 3, 12, 15, 0), activities.get(0))
         ));
         reservationRepository.saveAll(reservations);
+
+
+//        List<Integer> xd = reservationService.getTodayReservationsStartingHours(2020, 3, 10);
+//        xd.forEach(integer -> {
+//            System.out.println(xd);
+//        });
     }
 }
 
