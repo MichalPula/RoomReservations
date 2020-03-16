@@ -42,15 +42,13 @@ public class User {
 
     public User() { }
 
-    public User(String firstName, String lastName, String email, String password, Boolean isEnabled, List<GrantedAuthority> authorities) {
+    public User(String firstName, String lastName, String username, String password, Set<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
-
-
 
     public long getId() {
         return id;
@@ -76,62 +74,27 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Boolean getEnabled() {
-        return isEnabled;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
-    }
-
-    public void setAuthorities(List<GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
-    @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Override
-    public String getUsername() {
-        return this.email;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setUsername(String nickName) {
-        this.email = email;
-    }
-
-    @Override
-    @Transient
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    @Transient
-    public boolean isEnabled() {
-        return this.isEnabled;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
