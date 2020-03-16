@@ -1,6 +1,7 @@
 package com.Pulson.RoomReservations.services;
 
 import com.Pulson.RoomReservations.entities.*;
+import com.Pulson.RoomReservations.repositories.ActivityRepository;
 import com.Pulson.RoomReservations.repositories.ReservationRepository;
 import com.Pulson.RoomReservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,15 +26,52 @@ public class ReservationServiceImpl implements ReservationService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ActivityRepository activityRepository;
+
     @Override
     public List<Reservation> getAll() {
         return reservationRepository.findAll();
     }
 
     @Override
-    public List<Reservation> getByUser(long userId) throws Exception {
+    public List<Reservation> getActiveByUser(long userId) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
-        return reservationRepository.findAllByUser(user);
+        List<Reservation> activeReservations = new ArrayList<>();
+        reservationRepository.findAllByUser(user).forEach(reservation -> {
+            if(reservation.getStartTime().isAfter(LocalDateTime.now())){
+                activeReservations.add(reservation);
+            }
+        });
+        return activeReservations;
+    }
+
+    @Override
+    public List<Reservation> getHistoryByUser(long userId) throws Exception {
+        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
+        List<Reservation> reservationsHistory = new ArrayList<>();
+        reservationRepository.findAllByUser(user).forEach(reservation -> {
+            if(reservation.getEndTime().isBefore(LocalDateTime.now())){
+                reservationsHistory.add(reservation);
+            }
+        });
+        return reservationsHistory;
+    }
+
+    @Override
+    public List<Integer> getStartingHoursListByDate(int year, int month, int day) throws Exception {
+        List<Reservation> todayReservations = reservationRepository.findAllByStartTimeBetween(LocalDateTime.of(year,month,day,0,0), LocalDateTime.of(year,month,day,23,59));
+        List<Integer> todayReservationsStartingHours = new ArrayList<>();
+        todayReservations.forEach(reservation -> {
+            todayReservationsStartingHours.add(reservation.getStartTime().getHour());
+        });
+        return todayReservationsStartingHours;
+    }
+
+    @Override
+    public Integer getAmountByDateByUser(int year, int month, int day, long userId) throws Exception {
+        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
+        return reservationRepository.countAllByStartTimeBetweenAndUser(LocalDateTime.of(year,month,day,0,0), LocalDateTime.of(year,month,day,23,59), user);
     }
 
     @Override
@@ -63,9 +102,7 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     @Transactional
     public Boolean delete(long id) {
-        Query query = em.createNativeQuery("delete from reservations where id = ?");
-        query.setParameter(1, id);
-        query.executeUpdate();
+        reservationRepository.deleteById(id);
         return true;
     }
 }
