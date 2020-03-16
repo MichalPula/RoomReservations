@@ -82,7 +82,7 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public Integer getAmountByDateByUser(int year, int month, int day, long userId) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
-        return reservationRepository.countAllByStartTimeBetweenAndUser(LocalDateTime.of(year,month,day,0,0), LocalDateTime.of(year,month,day,23,59), user);
+        return reservationRepository.findAllByUser(user);
     }
 
     @Override
