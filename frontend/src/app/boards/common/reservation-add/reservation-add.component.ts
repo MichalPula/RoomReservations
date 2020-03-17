@@ -173,10 +173,11 @@ export class ReservationAddComponent implements OnInit {
     }
   }
 
-  getReservationsByPickedDate() {
+  getReservationsStartingHoursByPickedDate() {
     if (this.previouslyCheckedDay !== this.reservationDate.day) {
       this.previouslyCheckedDay = this.reservationDate.day;
-      this.userService.getReservationsByPickedDate(this.reservationDate.year, this.reservationDate.month, this.reservationDate.day)
+      this.userService.getReservationsStartingHoursByPickedDate(this.reservationDate.year,
+        this.reservationDate.month, this.reservationDate.day)
         .subscribe(data => {
           this.todayReservationsStartingHours = data as number[];
         });

@@ -30,6 +30,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { StatisticsComponent } from './profile/statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ReservationAddComponent,
     TimepickerComponent,
     MyReservationsComponent,
+    StatisticsComponent,
   ],
   entryComponents: [TimepickerComponent],
   exports: [ReservationAddComponent],

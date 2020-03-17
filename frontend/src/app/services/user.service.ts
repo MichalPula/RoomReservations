@@ -95,7 +95,7 @@ export class UserService {
   getReservationsHistory(userId: number): Observable<any> {
     return this.http.get(API_URL + 'reservations/history/' + userId);
   }
-  getReservationsByPickedDate(year: number, month: number, day: number): Observable<any> {
+  getReservationsStartingHoursByPickedDate(year: number, month: number, day: number): Observable<any> {
     return this.http.get(API_URL + 'reservations/date/' + year + '/' + month + '/' + day);
   }
   getAmountOfReservationsByPickedDateByUser(year: number, month: number, day: number, userId: number): Observable<any> {

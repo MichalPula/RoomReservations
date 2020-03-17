@@ -37,7 +37,7 @@
     </div>
 
     <div class="form-group" id="startEndTimePicker" *ngIf="reservationDate != null">
-      <ng-container *ngIf="reservationDate != null; then getReservationsByPickedDate()"></ng-container>
+      <ng-container *ngIf="reservationDate != null; then getReservationsStartingHoursByPickedDate()"></ng-container>
       <ng-container *ngIf="reservationDate != null; then getAmountOfReservationsByPickedDateByUser()"></ng-container>
       <mat-label>Time range </mat-label>
       <mat-form-field>

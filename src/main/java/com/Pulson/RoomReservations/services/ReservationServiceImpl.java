@@ -36,13 +36,9 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public List<Reservation> getActive() {
-        List<Reservation> activeReservations = new ArrayList<>();
-        reservationRepository.findAll().forEach(reservation -> {
-            if(reservation.getStartTime().isAfter(LocalDateTime.now())){
-                activeReservations.add(reservation);
-            }
-        });
-        return activeReservations;
+        LocalDateTime todayDate = LocalDateTime.now();
+        return reservationRepository.findAllByStartTimeBetween(LocalDateTime.of(todayDate.getYear(),todayDate.getMonth(), todayDate.getDayOfMonth(),0,0),
+                LocalDateTime.of(todayDate.getYear(),todayDate.getMonth(), todayDate.getDayOfMonth(),23,59));
     }
 
     @Override
@@ -82,7 +78,7 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public Integer getAmountByDateByUser(int year, int month, int day, long userId) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
-        return reservationRepository.findAllByUser(user);
+        return reservationRepository.countAllByStartTimeBetweenAndUser(LocalDateTime.of(year,month,day,0,0), LocalDateTime.of(year,month,day,23,59), user);
     }
 
     @Override

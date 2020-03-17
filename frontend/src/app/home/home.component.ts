@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ReservationRead, UserService} from '../services/user.service';
-import {TokenStorageService} from '../services/token-storage.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
