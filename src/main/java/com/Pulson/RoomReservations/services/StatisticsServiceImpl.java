@@ -9,20 +9,24 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
 
     private ReservationRepository reservationRepository;
     private UserRepository userRepository;
+    private EntityManager entityManager;
 
     @Autowired
-    public StatisticsServiceImpl(ReservationRepository reservationRepository, UserRepository userRepository) {
+    public StatisticsServiceImpl(ReservationRepository reservationRepository, UserRepository userRepository, EntityManager entityManager) {
         this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
+        this.entityManager = entityManager;
     }
 
 
@@ -31,7 +35,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
         List<Reservation> reservations = reservationRepository.findAllByUser(user);
 
-        JSONArray array = new JSONArray();
+        JSONArray objectsArray = new JSONArray();
         Map<String, Integer> map = new HashMap<>();
 
         reservations.forEach(reservation -> {
@@ -49,8 +53,45 @@ public class StatisticsServiceImpl implements StatisticsService {
             JSONObject json = new JSONObject();
             json.put("y", amountOfHours);
             json.put("activity", activityName);
-            array.put(json);
+            objectsArray.put(json);
         }
-        return array.toString();
+        return objectsArray.toString();
+    }
+
+    @Override
+    public String getAmountOfHoursSpentInRoomsByMonth(long userId) throws Exception {
+        Query query = entityManager.createNativeQuery("select" +
+                " date_trunc('month', start_time)," +
+                " count(1) as hours" +
+                " from reservations" +
+                " where user_id = ?" +
+                " AND start_time >= ?" +
+                " AND start_time < ?" +
+                " group by 1");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedStartDate = dateFormat.parse(LocalDateTime.now().getYear() + "-01-01");
+        Date parsedEndDate = dateFormat.parse(LocalDateTime.now().getYear() + "-12-31");
+        Timestamp startTimestamp = new Timestamp(parsedStartDate.getTime());
+        Timestamp endTimestamp = new Timestamp(parsedEndDate.getTime());
+
+        query.setParameter(1, userId);
+        query.setParameter(2, startTimestamp);
+        query.setParameter(3, endTimestamp);
+
+        JSONArray objectsArray = new JSONArray();
+        List<Object[]> resultList = query.getResultList();
+
+        for (int i = 0; i <= 11; i++){
+            JSONObject json = new JSONObject();
+            if(i < resultList.size()){
+                Object[] record = resultList.get(i);
+                json.put("hours", record[1]);
+            }else{
+                json.put("hours", 0);
+            }
+            objectsArray.put(json);
+        }
+
+        return objectsArray.toString();
     }
 }

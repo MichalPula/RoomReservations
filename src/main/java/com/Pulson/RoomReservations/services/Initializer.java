@@ -12,7 +12,8 @@ import java.util.*;
 public class Initializer {
     public Initializer(UserRepository userRepository, RoomRepository roomRepository,
                        ActivityRepository activityRepository, ReservationRepository reservationRepository,
-                       RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ReservationService reservationService) throws Exception {
+                       RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ReservationService reservationService,
+                       StatisticsService statisticsService) throws Exception {
 
 
         for (RoleType roleType : RoleType.values()) {
@@ -62,35 +63,35 @@ public class Initializer {
 
 
         List<Reservation> reservations = new ArrayList<>(Arrays.asList(
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(0)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(1)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(2)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(3)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(0)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(1)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(2)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(2)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(1)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(1)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(2)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(3)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(3)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(1)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(1)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(4)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(2)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(2)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(2)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 22, 10, 30), LocalDateTime.of(2019, 8, 22, 11, 30), activities.get(0)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2019, 8, 16, 10, 30), LocalDateTime.of(2019, 8, 16, 11, 30), activities.get(1)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(1)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(3)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(1)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(2)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(1)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(1)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(3)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(3)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(1)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(1)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(4)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 16, 10, 30), LocalDateTime.of(2020, 2, 16, 11, 30), activities.get(1)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2021, 8, 22, 10, 30), LocalDateTime.of(2021, 8, 22, 11, 30), activities.get(0)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2021, 8, 22, 10, 30), LocalDateTime.of(2021, 8, 22, 11, 30), activities.get(0)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 11, 14, 0), LocalDateTime.of(2020, 3, 11, 15, 0), activities.get(0)),
@@ -102,10 +103,7 @@ public class Initializer {
         reservationRepository.saveAll(reservations);
 
 
-//        List<Integer> xd = reservationService.getTodayReservationsStartingHours(2020, 3, 10);
-//        xd.forEach(integer -> {
-//            System.out.println(xd);
-//        });
+        statisticsService.getAmountOfHoursSpentInRoomsByMonth(2);
     }
 }
 

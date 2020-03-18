@@ -1,14 +1,9 @@
 package com.Pulson.RoomReservations.controllers;
 
-import com.Pulson.RoomReservations.entities.dtos.reservation.ReservationReadDTO;
 import com.Pulson.RoomReservations.services.StatisticsService;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -23,8 +18,13 @@ public class StatisticsController {
     }
 
     @GetMapping(value = "/timeByActivity/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getAll(@PathVariable("id") long userId) throws Exception { ;
+    public String getHoursByActivityByUser(@PathVariable("id") long userId) throws Exception { ;
         return statisticsService.getAmountOfHoursSpentOnParticularActivitiesByUser(userId);
+    }
+
+    @GetMapping(value = "/timeByMonth/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getHoursByMonthByUser(@PathVariable("id") long userId) throws Exception { ;
+        return statisticsService.getAmountOfHoursSpentInRoomsByMonth(userId);
     }
 }
 
