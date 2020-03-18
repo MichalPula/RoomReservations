@@ -105,4 +105,11 @@ export class UserService {
     return this.http.delete(API_URL + 'reservations/delete/' + reservationId);
   }
 
+
+  getAmountOfHoursSpentOnParticularActivitiesByUser(userId: number) {
+    return this.http.get(API_URL + 'statistics/timeByActivity/' + userId);
+  }
+  getAmountOfHoursSpentByMonthByUser(userId: number) {
+    return this.http.get(API_URL + 'statistics/timeByMonth/' + userId);
+  }
 }

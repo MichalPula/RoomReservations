@@ -11,6 +11,7 @@
       </tr>
       </thead>
       <tbody>
+
       <tr *ngFor="let reservation of reservationsHistoryList | paginate : config">
         <td>{{reservation.roomName}}</td>
         <td>{{reservation.activityName}}</td>

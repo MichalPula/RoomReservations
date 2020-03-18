@@ -1,5 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import * as CanvasJS from 'src/app/lib/canvasjs.min.js';
+import {TokenStorageService} from '../../services/token-storage.service';
+import {UserService} from '../../services/user.service';
+
+export interface ActivityAndHour {
+  y: number;
+  activity: string;
+}
+
+export interface Hours {
+  hours: number;
+}
 
 @Component({
   selector: 'app-statistics',
@@ -8,16 +19,25 @@ import * as CanvasJS from 'src/app/lib/canvasjs.min.js';
 })
 export class StatisticsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tokenStorageService: TokenStorageService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.createChart();
-
-
+    this.fetchData();
   }
 
-  private createChart() {
-    const chart = new CanvasJS.Chart('chartContainer', {
+
+  private fetchData() {
+    this.userService.getAmountOfHoursSpentOnParticularActivitiesByUser(this.tokenStorageService.getUser().id).subscribe(data => {
+      this.createTimePerActivityChart(data as ActivityAndHour[]);
+    });
+    this.userService.getAmountOfHoursSpentByMonthByUser(this.tokenStorageService.getUser().id).subscribe(data => {
+      this.createTimePerMonthChart(data as Hours[]);
+    });
+  }
+
+
+  private createTimePerActivityChart(activitiesAndHours: ActivityAndHour[]) {
+    const averageTimePerActivityChart = new CanvasJS.Chart('averageTimePerActivityChart', {
       theme: 'light3',
       animationEnabled: true,
       exportEnabled: true,
@@ -27,20 +47,51 @@ export class StatisticsComponent implements OnInit {
       data: [{
         type: 'pie',
         showInLegend: false,
-        toolTipContent: '<b>{name}</b>: ${y} (#percent%)',
-        indexLabel: '{name} - #percent%',
+        toolTipContent: '<b>{activity}</b>: {y}h (#percent%)',
+        indexLabel: '{activity} - #percent%',
+        dataPoints: activitiesAndHours
+      }]
+    });
+    averageTimePerActivityChart.render();
+  }
+
+  private createTimePerMonthChart(hours: Hours[]) {
+    const todayDate = new Date();
+    const thisYear = todayDate.getFullYear();
+
+    const monthlyHoursChart = new CanvasJS.Chart('monthlyHoursChart', {
+      animationEnabled: true,
+      title: {
+        text: 'Time spent in rooms in particular months'
+      },
+      axisY: {
+        title: 'Hours spent in rooms',
+        suffix: 'h',
+        stripLines: [{
+          value: 3,
+          label: 'Average'
+        }]
+      },
+      data: [{
+        type: 'spline',
         dataPoints: [
-          { y: 450, name: 'Food' },
-          { y: 120, name: 'Insurance' },
-          { y: 300, name: 'Traveling' },
-          { y: 2000, name: 'Housing' },
-          { y: 150, name: 'Education' },
-          { y: 150, name: 'Shopping'},
-          { y: 250, name: 'Others' }
+          {x: new Date(thisYear, 0), y: hours[0].hours},
+          {x: new Date(thisYear, 1), y: hours[1].hours},
+          {x: new Date(thisYear, 2), y: hours[2].hours},
+          {x: new Date(thisYear, 3), y: hours[3].hours},
+          {x: new Date(thisYear, 4), y: hours[4].hours},
+          {x: new Date(thisYear, 5), y: hours[5].hours},
+          {x: new Date(thisYear, 6), y: hours[6].hours},
+          {x: new Date(thisYear, 7), y: hours[7].hours},
+          {x: new Date(thisYear, 8), y: hours[8].hours},
+          {x: new Date(thisYear, 9), y: hours[9].hours},
+          {x: new Date(thisYear, 10), y: hours[10].hours},
+          {x: new Date(thisYear, 11), y: hours[11].hours}
         ]
       }]
     });
 
-    chart.render();
+    monthlyHoursChart.render();
   }
+
 }
