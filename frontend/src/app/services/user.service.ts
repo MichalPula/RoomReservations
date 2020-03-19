@@ -112,4 +112,8 @@ export class UserService {
   getAmountOfHoursSpentByMonthByUser(userId: number) {
     return this.http.get(API_URL + 'statistics/timeByMonth/' + userId);
   }
+  getAverageTimeByMonthOfAllUsers() {
+    return this.http.get(API_URL + 'statistics/averageTimeByMonthOfAllUsers');
+  }
+
 }

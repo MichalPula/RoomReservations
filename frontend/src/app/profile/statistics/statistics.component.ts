@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as CanvasJS from 'src/app/lib/canvasjs.min.js';
 import {TokenStorageService} from '../../services/token-storage.service';
 import {UserService} from '../../services/user.service';
@@ -8,7 +8,7 @@ export interface ActivityAndHour {
   activity: string;
 }
 
-export interface Hours {
+export interface Hour {
   hours: number;
 }
 
@@ -22,19 +22,20 @@ export class StatisticsComponent implements OnInit {
   constructor(private tokenStorageService: TokenStorageService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.fetchData();
+    this.fetchDataAndCreateCharts();
   }
 
-
-  private fetchData() {
-    this.userService.getAmountOfHoursSpentOnParticularActivitiesByUser(this.tokenStorageService.getUser().id).subscribe(data => {
-      this.createTimePerActivityChart(data as ActivityAndHour[]);
+  private fetchDataAndCreateCharts() {
+    this.userService.getAverageTimeByMonthOfAllUsers().subscribe(average => {
+      this.userService.getAmountOfHoursSpentByMonthByUser(this.tokenStorageService.getUser().id).subscribe(hours => {
+        this.createTimePerMonthChart(hours as Hour[], average as number);
+      });
     });
-    this.userService.getAmountOfHoursSpentByMonthByUser(this.tokenStorageService.getUser().id).subscribe(data => {
-      this.createTimePerMonthChart(data as Hours[]);
+    this.userService.getAmountOfHoursSpentOnParticularActivitiesByUser(this.tokenStorageService.getUser().id)
+      .subscribe(activitiesAndHours => {
+      this.createTimePerActivityChart(activitiesAndHours as ActivityAndHour[]);
     });
   }
-
 
   private createTimePerActivityChart(activitiesAndHours: ActivityAndHour[]) {
     const averageTimePerActivityChart = new CanvasJS.Chart('averageTimePerActivityChart', {
@@ -55,7 +56,7 @@ export class StatisticsComponent implements OnInit {
     averageTimePerActivityChart.render();
   }
 
-  private createTimePerMonthChart(hours: Hours[]) {
+  private createTimePerMonthChart(hours: Hour[], average: number) {
     const todayDate = new Date();
     const thisYear = todayDate.getFullYear();
 
@@ -68,7 +69,7 @@ export class StatisticsComponent implements OnInit {
         title: 'Hours spent in rooms',
         suffix: 'h',
         stripLines: [{
-          value: 3,
+          value: average,
           label: 'Average'
         }]
       },
@@ -93,5 +94,4 @@ export class StatisticsComponent implements OnInit {
 
     monthlyHoursChart.render();
   }
-
 }

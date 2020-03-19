@@ -94,4 +94,16 @@ public class StatisticsServiceImpl implements StatisticsService {
 
         return objectsArray.toString();
     }
+
+    @Override
+    public String getAverageHoursPerMonthOfAllUsers() throws Exception {
+        Query query = entityManager.createNativeQuery("select avg(total_hours) as total_hours_avg from" +
+                " (select count(*) as total_hours" +
+                " from reservations" +
+                " WHERE start_time >= '2020-01-01'" +
+                " AND start_time < '2020-12-31'" +
+                " group by user_id) OK");
+        Object result = query.getSingleResult();
+        return String.valueOf(result);
+    }
 }

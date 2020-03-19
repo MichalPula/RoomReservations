@@ -84,7 +84,7 @@ export class ReservationAddComponent implements OnInit {
       this.activities = data as Activity[];
       if (this.isAdmin() === false) {
          for (const activity of this.activities) {
-            if (activity.authorities.includes('ROLE_ADMIN') && activity.authorities.includes('ROLE_USER') &&
+            if (activity.authorities.includes('ROLE_USER') &&
              activity.available) {
               continue;
             }

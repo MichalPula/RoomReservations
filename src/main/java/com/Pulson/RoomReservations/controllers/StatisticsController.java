@@ -26,6 +26,11 @@ public class StatisticsController {
     public String getHoursByMonthByUser(@PathVariable("id") long userId) throws Exception { ;
         return statisticsService.getAmountOfHoursSpentInRoomsByMonth(userId);
     }
+
+    @GetMapping(value = "/averageTimeByMonthOfAllUsers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAverageHoursByMonthOfAllUsers() throws Exception { ;
+        return statisticsService.getAverageHoursPerMonthOfAllUsers();
+    }
 }
 
 

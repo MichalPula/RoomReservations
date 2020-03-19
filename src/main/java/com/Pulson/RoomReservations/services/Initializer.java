@@ -98,12 +98,13 @@ public class Initializer {
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 11, 13, 0), LocalDateTime.of(2020, 3, 11, 14, 0), activities.get(0)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 16, 9, 0), LocalDateTime.of(2020, 3, 16, 10, 0), activities.get(0)),
                 new Reservation(users.get(0), rooms.get(1), LocalDateTime.of(2020, 3, 16, 13, 0), LocalDateTime.of(2020, 3, 16, 14, 0), activities.get(0)),
+                new Reservation(users.get(0), rooms.get(1), LocalDateTime.of(2020, 3, 16, 14, 0), LocalDateTime.of(2020, 3, 16, 15, 0), activities.get(0)),
                 new Reservation(users.get(0), rooms.get(1), LocalDateTime.of(2020, 3, 16, 14, 0), LocalDateTime.of(2020, 3, 16, 15, 0), activities.get(0))
         ));
         reservationRepository.saveAll(reservations);
 
 
-        statisticsService.getAmountOfHoursSpentInRoomsByMonth(2);
+
     }
 }
 
