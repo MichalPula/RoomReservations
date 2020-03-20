@@ -28,9 +28,9 @@ export class ReservationAddComponent implements OnInit {
 
   errorMessage: string;
 
+  pickedRoomName: string;
   reservationDate: NgbDateStruct;
   reservationAddForm: any = {};
-  previouslyCheckedDay = 0;
 
   thisYear: number;
   thisMonth: number;
@@ -67,6 +67,7 @@ export class ReservationAddComponent implements OnInit {
 
   onSubmit() {
     this.reservationAddForm.userId = this.tokenStorageService.getUser().id;
+    this.reservationAddForm.roomName = this.pickedRoomName;
     this.reservationAddForm.startTime = this.parseDateAndTime(this.selectedTimeRange, true);
     this.reservationAddForm.endTime = this.parseDateAndTime(this.selectedTimeRange, false);
 
@@ -164,23 +165,28 @@ export class ReservationAddComponent implements OnInit {
   }
 
   getAmountOfReservationsByPickedDateByUser() {
-    if (this.previouslyCheckedDay !== this.reservationDate.day) {
-      this.userService.getAmountOfReservationsByPickedDateByUser(this.reservationDate.year, this.reservationDate.month,
-        this.reservationDate.day, this.tokenStorageService.getUser().id)
-        .subscribe(data => {
-          this.amountOfReservationsByPickedDateByUser = data as number;
-        });
-    }
+    this.userService.getAmountOfReservationsByPickedDateByUser(this.reservationDate.year, this.reservationDate.month,
+      this.reservationDate.day, this.tokenStorageService.getUser().id)
+      .subscribe(data => {
+        this.amountOfReservationsByPickedDateByUser = data as number;
+      });
   }
 
-  getReservationsStartingHoursByPickedDate() {
-    if (this.previouslyCheckedDay !== this.reservationDate.day) {
-      this.previouslyCheckedDay = this.reservationDate.day;
-      this.userService.getReservationsStartingHoursByPickedDate(this.reservationDate.year,
-        this.reservationDate.month, this.reservationDate.day)
-        .subscribe(data => {
-          this.todayReservationsStartingHours = data as number[];
-        });
-    }
+  getReservationsStartingHoursByPickedDateByRoom() {
+    this.userService.getReservationsStartingHoursByPickedDateByRoom(this.reservationDate.year,
+      this.reservationDate.month, this.reservationDate.day, this.getRoomIdByName(this.pickedRoomName))
+      .subscribe(data => {
+        this.todayReservationsStartingHours = data as number[];
+      });
+  }
+
+  private getRoomIdByName(roomName: string): number {
+    let roomId = null;
+    this.rooms.forEach(room => {
+      if (room.name === roomName) {
+        roomId = room.id;
+      }
+    });
+    return roomId;
   }
 }

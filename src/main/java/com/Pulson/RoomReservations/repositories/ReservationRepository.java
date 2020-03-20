@@ -12,5 +12,6 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findAllByUser(User user);
     List<Reservation> findAllByStartTimeBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<Reservation> findAllByStartTimeBetweenAndRoom_Id(LocalDateTime startDate, LocalDateTime endDate, long roomId);
     Integer countAllByStartTimeBetweenAndUser(LocalDateTime startDate, LocalDateTime endDate, User user);
 }

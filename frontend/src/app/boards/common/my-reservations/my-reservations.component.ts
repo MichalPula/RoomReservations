@@ -37,7 +37,6 @@ export class MyReservationsComponent implements OnInit {
     if (this.activeReservations === true) {
       this.userService.getUsersActiveReservations(this.tokenStorageService.getUser().id).subscribe(data => {
         this.reservationsHistoryList = data as ReservationRead[];
-        console.log(this.reservationsHistoryList);
       });
     }
     if (this.reservationsHistory === true) {
@@ -72,5 +71,4 @@ export class MyReservationsComponent implements OnInit {
       this.fetchData();
     });
   }
-
 }

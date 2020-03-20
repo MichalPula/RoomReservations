@@ -46,10 +46,10 @@ public class ReservationController {
         return readReservationMapper.mapToReservationReadDTOsList(reservationService.getHistoryByUser(id));
     }
 
-    @GetMapping(value = "/date/{year}/{month}/{day}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Integer> getTodayReservationsStartingHours(@PathVariable("year") int year, @PathVariable("month") int month,
-                                                           @PathVariable("day") int day) throws Exception {
-        return reservationService.getStartingHoursListByDate(year, month, day);
+    @GetMapping(value = "/date/{year}/{month}/{day}/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Integer> getTodayReservationsStartingHoursByRoom(@PathVariable("year") int year, @PathVariable("month") int month,
+                                                           @PathVariable("day") int day, @PathVariable("id") int roomId) throws Exception {
+        return reservationService.getStartingHoursListByDateByRoom(year, month, day, roomId);
     }
 
     @GetMapping(value = "/date/{year}/{month}/{day}/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)

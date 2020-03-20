@@ -3,7 +3,7 @@
 
     <div class="form-group">
       <label for="roomSelect">Select room:</label><br>
-      <select class="custom-select" id="roomSelect" name="roomSelect" [(ngModel)]="reservationAddForm.roomName" required #roomSelect="ngModel">
+      <select class="custom-select" id="roomSelect" name="roomSelect" [(ngModel)]="pickedRoomName" (ngModelChange)="getReservationsStartingHoursByPickedDateByRoom()" required #roomSelect="ngModel">
         <option hidden></option>
         <option *ngFor="let room of rooms" >{{room.name}}</option>
       </select>
@@ -26,7 +26,8 @@
                [minDate]="{year: thisYear, month: thisMonth, day: minDay}"
                [maxDate]="{year: thisYear, month: maxMonth, day: maxDay}"
                [markDisabled]="markDisabled"
-               name="dp" [(ngModel)]="reservationDate" ngbDatepicker #d="ngbDatepicker" required #dateSelect="ngModel">
+               name="dp" [(ngModel)]="reservationDate" (ngModelChange)="getReservationsStartingHoursByPickedDateByRoom()"
+               ngbDatepicker #d="ngbDatepicker" required #dateSelect="ngModel">
         <div class="input-group-append">
           <button class="btn btn-primary btn-block" (click)="d.toggle()" type="button">
             <span class="fa fa-calendar"></span>
@@ -37,8 +38,6 @@
     </div>
 
     <div class="form-group" id="startEndTimePicker" *ngIf="reservationDate != null">
-      <ng-container *ngIf="reservationDate != null; then getReservationsStartingHoursByPickedDate()"></ng-container>
-      <ng-container *ngIf="reservationDate != null; then getAmountOfReservationsByPickedDateByUser()"></ng-container>
       <mat-label>Time range </mat-label>
       <mat-form-field>
         <mat-select [(ngModel)]="selectedTimeRange" placeholder=""  name="timeRange" required #timeSelect="ngModel">
