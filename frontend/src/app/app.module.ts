@@ -20,7 +20,6 @@ import { RoomUpdateComponent } from './boards/admin/room-update/room-update.comp
 import { ReservationAddComponent } from './boards/common/reservation-add/reservation-add.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TimepickerComponent } from './timepicker/timepicker.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MyReservationsComponent } from './boards/common/my-reservations/my-reservations.component';
@@ -31,6 +30,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StatisticsComponent } from './profile/statistics/statistics.component';
+import {RouteGuardService} from './services/route-guard.service';
 
 @NgModule({
   declarations: [
@@ -44,11 +44,9 @@ import { StatisticsComponent } from './profile/statistics/statistics.component';
     RoomAddComponent,
     RoomUpdateComponent,
     ReservationAddComponent,
-    TimepickerComponent,
     MyReservationsComponent,
     StatisticsComponent,
   ],
-  entryComponents: [TimepickerComponent],
   exports: [ReservationAddComponent],
     imports: [
         BrowserModule,
@@ -65,7 +63,7 @@ import { StatisticsComponent } from './profile/statistics/statistics.component';
         MatSelectModule,
         BrowserAnimationsModule
     ],
-  providers: [AuthenticationInterceptorService, LoginComponent, TimepickerComponent],
+  providers: [AuthenticationInterceptorService, LoginComponent, RouteGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
