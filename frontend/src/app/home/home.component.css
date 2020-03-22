@@ -6,3 +6,13 @@
   align-items: center;
   flex-direction: column;
 }
+
+mark.red {
+  color: red;
+  background: none;
+}
+
+mark.green {
+  color: green;
+  background: none;
+}
