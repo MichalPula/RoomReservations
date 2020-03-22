@@ -12,20 +12,21 @@ import { RoomsComponent } from './boards/common/rooms/rooms.component';
 
 import { ReservationAddComponent } from './boards/common/reservation-add/reservation-add.component';
 import { MyReservationsComponent } from './boards/common/my-reservations/my-reservations.component';
+import {RouteGuardService} from './services/route-guard.service';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'statistics', component: StatisticsComponent},
-  { path: 'rooms', component: RoomsComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [RouteGuardService]},
+  { path: 'statistics', component: StatisticsComponent, canActivate: [RouteGuardService]},
+  { path: 'rooms', component: RoomsComponent, canActivate: [RouteGuardService]},
 
 
-  { path: 'reservations/active', component:  MyReservationsComponent},
-  { path: 'reservations/history', component:  MyReservationsComponent},
-  { path: 'reservations/date', component:  MyReservationsComponent},
-  { path: 'reservations/add', component:  ReservationAddComponent},
+  { path: 'reservations/active', component:  MyReservationsComponent, canActivate: [RouteGuardService]},
+  { path: 'reservations/history', component:  MyReservationsComponent, canActivate: [RouteGuardService]},
+  { path: 'reservations/date', component:  MyReservationsComponent, canActivate: [RouteGuardService]},
+  { path: 'reservations/add', component:  ReservationAddComponent, canActivate: [RouteGuardService]},
 
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
