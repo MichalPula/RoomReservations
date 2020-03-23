@@ -37,8 +37,13 @@ public class UserController {
         return userService.deactivate(id);
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public boolean update(@PathVariable("id") long id, @RequestBody User userDetails) throws Exception {
         return userService.update(id, userDetails);
+    }
+
+    @GetMapping(value = "/getBasicAccountData/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getBasicAccountData(@PathVariable("id") long userId) throws Exception { ;
+        return userService.getBasicAccountData(userId);
     }
 }
