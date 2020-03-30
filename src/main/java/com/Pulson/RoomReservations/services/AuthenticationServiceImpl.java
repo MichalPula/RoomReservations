@@ -84,7 +84,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 }
             });
         }
-        User user = new User(jwtRegisterRequest.getFirstName(), jwtRegisterRequest.getLastName(),
+        User user = new User(jwtRegisterRequest.getFirstName(), jwtRegisterRequest.getLastName(), jwtRegisterRequest.getPhoneNumber(),
                 jwtRegisterRequest.getUsername(), bCryptPasswordEncoder.encode(jwtRegisterRequest.getPassword()), roles);
         userService.create(user);
 
