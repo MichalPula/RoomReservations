@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {BasicDataChangeForm, EmailChangeForm, PasswordChangeForm} from '../profile/profile.component';
 
 const API_URL = 'http://localhost:8080/';
 
@@ -112,8 +113,20 @@ export class UserService {
   getAmountOfHoursSpentByMonthByUser(userId: number) {
     return this.http.get(API_URL + 'statistics/timeByMonth/' + userId);
   }
-  getAverageTimeByMonthOfAllUsers() {
-    return this.http.get(API_URL + 'statistics/averageTimeByMonthOfAllUsers');
+  getAverageHoursSpentInRoomsPerUser() {
+    return this.http.get(API_URL + 'statistics/averageHoursSpentInRoomsPerUser');
   }
 
+  getBasicAccountData(userId: number) {
+    return this.http.get(API_URL + 'users/getBasicAccountData/' + userId);
+  }
+  updateBasicAccountData(basicDataChangeForm: BasicDataChangeForm) {
+    return this.http.put(API_URL + 'users/update/basicInfo', basicDataChangeForm);
+  }
+  updateEmail(emailChangeForm: EmailChangeForm) {
+    return this.http.put(API_URL + 'users/update/email', emailChangeForm);
+  }
+  updatePassword(passwordChangeForm: PasswordChangeForm) {
+    return this.http.put(API_URL + 'users/update/password', passwordChangeForm);
+  }
 }
