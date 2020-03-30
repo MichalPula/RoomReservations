@@ -26,6 +26,10 @@ public class User {
     private String lastName;
 
     @NotNull
+    @Column(columnDefinition = "text", name = "phone_number", length = 6)
+    private long phoneNumber;
+
+    @NotNull
     @Column(columnDefinition = "text", name = "username", unique = true)
     private String username;
 
@@ -42,9 +46,10 @@ public class User {
 
     public User() { }
 
-    public User(String firstName, String lastName, String username, String password, Set<Role> roles) {
+    public User(String firstName, String lastName, long phoneNumber, String username, String password, Set<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
         this.username = username;
         this.password = password;
         this.roles = roles;
@@ -72,6 +77,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getUsername() {
