@@ -13,7 +13,7 @@ public class Initializer {
     public Initializer(UserRepository userRepository, RoomRepository roomRepository,
                        ActivityRepository activityRepository, ReservationRepository reservationRepository,
                        RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ReservationService reservationService,
-                       StatisticsService statisticsService) throws Exception {
+                       StatisticsService statisticsService, UserService userService) throws Exception {
 
 
         for (RoleType roleType : RoleType.values()) {
@@ -25,13 +25,19 @@ public class Initializer {
         final String adminPassword = bCryptPasswordEncoder.encode("admin123");
         final String userPassword = bCryptPasswordEncoder.encode("user123");
         List<User> users = new ArrayList<>();
-        User admin = new User("LeBron", "James", "pulson@wp.pl", adminPassword,
+        User admin = new User("LeBron", "James", 123456789, "pulson@wp.pl", adminPassword,
                 Set.of(roleRepository.findByRoleType(RoleType.ROLE_USER), roleRepository.findByRoleType(RoleType.ROLE_ADMIN)));
-        User user = new User("Derrick", "Rose", "pleb@wp.pl", userPassword,
+        User user1 = new User("Derrick", "Rose", 987654321, "pleb@wp.pl", userPassword,
                  Set.of(roleRepository.findByRoleType(RoleType.ROLE_USER)));
+        User user2 = new User("Kawhi", "Leonard", 653276178, "kawhi", userPassword,
+                Set.of(roleRepository.findByRoleType(RoleType.ROLE_USER)));
+        User user3 = new User("Stephen", "Curry", 924167356, "steph", userPassword,
+                Set.of(roleRepository.findByRoleType(RoleType.ROLE_USER)));
 
         users.add(admin);
-        users.add(user);
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
         userRepository.saveAll(users);
 
 
@@ -63,8 +69,8 @@ public class Initializer {
 
 
         List<Reservation> reservations = new ArrayList<>(Arrays.asList(
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(0)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(1)),
+                new Reservation(users.get(2), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(0)),
+                new Reservation(users.get(3), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(1)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(3)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(4)),
@@ -92,8 +98,6 @@ public class Initializer {
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(0)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 2, 16, 10, 30), LocalDateTime.of(2020, 2, 16, 11, 30), activities.get(1)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2021, 8, 22, 10, 30), LocalDateTime.of(2021, 8, 22, 11, 30), activities.get(0)),
-                new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2021, 8, 22, 10, 30), LocalDateTime.of(2021, 8, 22, 11, 30), activities.get(0)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 11, 14, 0), LocalDateTime.of(2020, 3, 11, 15, 0), activities.get(0)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 11, 13, 0), LocalDateTime.of(2020, 3, 11, 14, 0), activities.get(0)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 16, 9, 0), LocalDateTime.of(2020, 3, 16, 10, 0), activities.get(0)),
