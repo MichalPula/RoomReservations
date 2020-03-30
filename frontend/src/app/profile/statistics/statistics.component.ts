@@ -26,7 +26,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   private fetchDataAndCreateCharts() {
-    this.userService.getAverageTimeByMonthOfAllUsers().subscribe(average => {
+    this.userService.getAverageHoursSpentInRoomsPerUser().subscribe(average => {
       this.userService.getAmountOfHoursSpentByMonthByUser(this.tokenStorageService.getUser().id).subscribe(hours => {
         this.createTimePerMonthChart(hours as Hour[], average as number);
       });
