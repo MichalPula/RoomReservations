@@ -6,15 +6,17 @@ public class JwtRegisterRequest {
 
     private String firstName;
     private String lastName;
+    private long phoneNumber;
     private String username;
     private String password;
     private Set<String> roles;
 
     public JwtRegisterRequest() {}
 
-    public JwtRegisterRequest(String firstName, String lastName, String username, String password, Set<String> roles) {
+    public JwtRegisterRequest(String firstName, String lastName, long phoneNumber, String username, String password, Set<String> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
         this.username = username;
         this.password = password;
         this.roles = roles;
@@ -34,6 +36,14 @@ public class JwtRegisterRequest {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getUsername() {
