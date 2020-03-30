@@ -96,7 +96,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public String getAverageHoursPerMonthOfAllUsers() throws Exception {
+    public String getAverageHoursSpentInRoomsPerUser() throws Exception {
         Query query = entityManager.createNativeQuery("select avg(total_hours) as total_hours_avg from" +
                 " (select count(*) as total_hours" +
                 " from reservations" +
