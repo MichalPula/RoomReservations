@@ -1,9 +1,13 @@
 package com.Pulson.RoomReservations.controllers;
 
 import com.Pulson.RoomReservations.entities.User;
+import com.Pulson.RoomReservations.models.BasicAccountDataChangeRequest;
+import com.Pulson.RoomReservations.models.EmailChangeRequest;
+import com.Pulson.RoomReservations.models.PasswordChangeRequest;
 import com.Pulson.RoomReservations.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +33,6 @@ public class UserController {
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean create(@RequestBody User user) {
         return userService.create(user);
-
     }
 
     @DeleteMapping("/deactivate/{id}")
@@ -37,13 +40,23 @@ public class UserController {
         return userService.deactivate(id);
     }
 
-    @PutMapping("/update/{id}")
-    public boolean update(@PathVariable("id") long id, @RequestBody User userDetails) throws Exception {
-        return userService.update(id, userDetails);
+    @GetMapping(value = "/getBasicAccountData/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public BasicAccountDataChangeRequest getBasicAccountData(@PathVariable("id") long userId) throws Exception {
+        return userService.getBasicAccountData(userId);
     }
 
-    @GetMapping(value = "/getBasicAccountData/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getBasicAccountData(@PathVariable("id") long userId) throws Exception { ;
-        return userService.getBasicAccountData(userId);
+    @PutMapping(value = "/update/basicInfo", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean updateBasicInfo(@RequestBody BasicAccountDataChangeRequest basicAccountDataChangeRequest) throws Exception {
+        return userService.updateBasicInfo(basicAccountDataChangeRequest);
+    }
+
+    @PutMapping(value = "/update/email", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean updateEmail(@RequestBody EmailChangeRequest emailChangeRequest) throws Exception {
+        return userService.updateEmail(emailChangeRequest);
+    }
+
+    @PutMapping(value = "/update/password", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updatePassword(@RequestBody PasswordChangeRequest passwordChangeRequest) throws Exception {
+        return userService.updatePassword(passwordChangeRequest);
     }
 }
