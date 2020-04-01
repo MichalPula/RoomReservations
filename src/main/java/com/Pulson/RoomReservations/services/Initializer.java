@@ -42,10 +42,10 @@ public class Initializer {
 
 
         List<Room> rooms = new ArrayList<>(Arrays.asList(
-                new Room("Small wood room 1"),
-                new Room("Small wood room 2"),
-                new Room("Jerzy's office"),
-                new Room("Room")
+                new Room("Small wood room 1", true),
+                new Room("Small wood room 2", true),
+                new Room("Jerzy's office", true),
+                new Room("Room", true)
         ));
         roomRepository.saveAll(rooms);
 
