@@ -30,8 +30,7 @@ export interface PasswordChangeForm {
 })
 export class ProfileComponent implements OnInit {
 
-  @ViewChild('passwordChangeSuccessModal') passwordChangeSuccessModalContent: TemplateRef<any>;
-  @ViewChild('emailChangeSuccessModal') emailChangeSuccessModalContent: TemplateRef<any>;
+  @ViewChild('successModal') successModal: TemplateRef<any>;
 
   basicDataChangeForm: BasicDataChangeForm = {
     userId: null,
@@ -50,9 +49,10 @@ export class ProfileComponent implements OnInit {
     oldPassword: '',
     newPassword: ''
   };
-
   newPasswordRepeat: '';
+
   showPasswordChangeErrorMessage: boolean;
+  showEmailChangeErrorMessage: boolean;
   message: string;
 
   constructor(private modalService: NgbModal, private tokenStorageService: TokenStorageService,
@@ -81,12 +81,8 @@ export class ProfileComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
-  openPasswordChangeSuccessModal() {
-    this.modalService.open(this.passwordChangeSuccessModalContent, { centered: true });
-  }
-
-  openEmailChangeSuccessModal() {
-    this.modalService.open(this.passwordChangeSuccessModalContent, { centered: true });
+  openSuccessModal() {
+    this.modalService.open(this.successModal, { centered: true });
   }
 
   basicDataSubmit() {
@@ -112,21 +108,28 @@ export class ProfileComponent implements OnInit {
     if (error.status === 200) {
       this.message = 'Password changed';
       this.showPasswordChangeErrorMessage = false;
-      this.openPasswordChangeSuccessModal();
+      this.openSuccessModal();
     }
   }
 
   emailSubmit() {
     this.emailChangeForm.userId = this.tokenStorageService.getUser().id;
-    this.userService.updateEmail(this.emailChangeForm).subscribe(data => {
-      this.handleEmailChange();
-    });
+    this.userService.updateEmail(this.emailChangeForm).subscribe(
+      result => console.log(result),
+        error => this.handleEmailChange(error));
   }
 
-  handleEmailChange() {
-    this.message = 'Login with new credentials';
-    this.openPasswordChangeSuccessModal();
-    this.tokenStorageService.signOut();
+  handleEmailChange(error) {
+    if (error.status === 409) {
+      this.message = 'Email is already taken!';
+      this.showEmailChangeErrorMessage = true;
+    }
+    if (error.status === 200) {
+      this.message = 'Email changed. Login with new credentials.';
+      this.showEmailChangeErrorMessage = false;
+      this.tokenStorageService.signOut();
+      this.openSuccessModal();
+    }
   }
 
   refreshPage() {
