@@ -1,19 +1,62 @@
-<div class="col-md-6">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>id</th>
-      <th>name</th>
-      <th>available</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let room of rooms">
-      <td>{{room.id}}</td>
-      <td>{{room.name}}</td>
-      <td>{{room.available}}</td>
-      <td><button class="btn btn-danger" (click)="deactivateRoom(room.id)">Deactivate room</button></td>
-    </tr>
-    </tbody>
-  </table>
+<ng-template #addRoomModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add room</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form id="addRoom" (ngSubmit)="addRoomForm.form.valid && newRoomFromSubmit()" #addRoomForm="ngForm" novalidate>
+
+
+
+      <div class="form-group">
+        <label for="roomName">Room name</label>
+          <input type="text" class="form-control" id="roomName" name="roomName" [(ngModel)]="roomAddUpdateForm.name" required #roomName="ngModel" appRoomNameValidateDirective/>
+          <div  class="alert alert-danger" *ngIf=" roomName.invalid && (roomName.dirty || roomName.touched)">
+            <div *ngIf="roomName.errors.required">Room name is required!</div>
+            <div *ngIf="roomName.errors?.roomNameInvalid && (roomName.touched || roomName.dirty)">Room name has to be unique!</div>
+          </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="isAvailable">Is available from beginning</label>
+        <select class="custom-select" id="isAvailable" name="isAvailable" [(ngModel)]="roomAddUpdateForm.available" required #isAvailableSelect="ngModel">
+          <option ngValue="true">true</option>
+          <option ngValue="false">false</option>
+        </select>
+        <div class="alert alert-danger" role="alert" *ngIf="addRoomForm.submitted && isAvailableSelect.invalid">Choose availability!</div>
+      </div>
+      <div class="form-group">
+        <button type="submit"  class="btn btn-primary btn-block">Confirm</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<div class="container-fluid p-0" id="roomsContainer">
+  <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Availability</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let room of rooms">
+        <td>{{room.name}}</td>
+        <td>{{room.available}}</td>
+        <td><button class="btn btn-danger" (click)="deactivateRoom(room.id)">Deactivate room</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-success" (click)="openAddRoomModal(addRoomModal)">Add room</button>
 </div>
