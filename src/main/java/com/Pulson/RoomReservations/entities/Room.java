@@ -12,11 +12,11 @@ public class Room {
     private long id;
 
     @NotNull
-    @Column(columnDefinition = "text", name = "name")
+    @Column(columnDefinition = "text", name = "name", unique = true)
     private String name;
 
     @Column(columnDefinition = "boolean", name = "is_available")
-    private Boolean isAvailable = true;
+    private Boolean isAvailable;
 
     public Room() {
     }
