@@ -68,11 +68,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateEmail(EmailChangeRequest emailChangeRequest) throws Exception {
-        User user = userRepository.findById(emailChangeRequest.getUserId()).orElseThrow(() -> new Exception("User NOT found"));
-        user.setUsername(emailChangeRequest.getEmail());
-        userRepository.save(user);
-        return true;
+    public ResponseEntity<?> updateEmail(EmailChangeRequest emailChangeRequest) throws Exception {
+        if (userRepository.existsByUsername(emailChangeRequest.getEmail())) {
+            return new ResponseEntity<>("Username is taken", HttpStatus.CONFLICT);
+        } else {
+            User user = userRepository.findById(emailChangeRequest.getUserId()).orElseThrow(() -> new Exception("User NOT found"));
+            user.setUsername(emailChangeRequest.getEmail());
+            userRepository.save(user);
+        }
+        return new ResponseEntity<>("Username changed", HttpStatus.OK);
     }
 
     @Override

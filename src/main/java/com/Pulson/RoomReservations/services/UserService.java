@@ -17,7 +17,7 @@ public interface UserService extends UserDetailsService {
     Boolean create(User user);
     Boolean deactivate(long id) throws Exception;
     Boolean updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo) throws Exception;
-    Boolean updateEmail(EmailChangeRequest emailChangeRequest) throws Exception;
+    ResponseEntity<?> updateEmail(EmailChangeRequest emailChangeRequest) throws Exception;
     ResponseEntity<?> updatePassword(PasswordChangeRequest passwordChangeRequest) throws Exception;
     Boolean existsByUsername(String username);
     BasicAccountDataChangeRequest getBasicAccountData(long id);
