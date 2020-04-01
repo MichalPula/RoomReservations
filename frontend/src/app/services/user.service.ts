@@ -74,15 +74,10 @@ export class UserService {
   getAllRooms(): Observable<any> {
     return this.http.get(API_URL + 'rooms/all');
   }
-  deactivateRoom(roomId: number) {
-    return this.http.delete(API_URL + 'rooms/deactivate/' + roomId);
-  }
-
 
   getAllActivities(): Observable<any> {
     return this.http.get(API_URL + 'activities/all');
   }
-
 
   addReservation(reservation: ReservationAddUpdate) {
     return this.http.post(API_URL + 'reservations/add', reservation);
@@ -105,7 +100,6 @@ export class UserService {
   cancelReservation(reservationId: number) {
     return this.http.delete(API_URL + 'reservations/delete/' + reservationId);
   }
-
 
   getAmountOfHoursSpentOnParticularActivitiesByUser(userId: number) {
     return this.http.get(API_URL + 'statistics/timeByActivity/' + userId);
