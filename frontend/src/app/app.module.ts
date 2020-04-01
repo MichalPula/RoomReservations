@@ -31,6 +31,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StatisticsComponent } from './profile/statistics/statistics.component';
 import {RouteGuardService} from './services/route-guard.service';
+import {RoomNameValidateDirective} from './boards/common/rooms/room-name-validator';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {RouteGuardService} from './services/route-guard.service';
     ReservationAddComponent,
     MyReservationsComponent,
     StatisticsComponent,
+    RoomNameValidateDirective,
   ],
   exports: [ReservationAddComponent],
     imports: [
@@ -63,7 +65,7 @@ import {RouteGuardService} from './services/route-guard.service';
         MatSelectModule,
         BrowserAnimationsModule
     ],
-  providers: [AuthenticationInterceptorService, LoginComponent, RouteGuardService],
+  providers: [AuthenticationInterceptorService, LoginComponent, RouteGuardService, RoomsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
