@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/update/email", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean updateEmail(@RequestBody EmailChangeRequest emailChangeRequest) throws Exception {
+    public ResponseEntity<?> updateEmail(@RequestBody EmailChangeRequest emailChangeRequest) throws Exception {
         return userService.updateEmail(emailChangeRequest);
     }
 
