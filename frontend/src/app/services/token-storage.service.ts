@@ -35,4 +35,11 @@ export class TokenStorageService {
   public isLoggedIn(): boolean {
     return !!this.getUser();
   }
+
+  public isAdmin(): boolean {
+    let roles: string[] = [];
+    const user = this.getUser();
+    roles = user.roles;
+    return roles.includes('ROLE_ADMIN');
+  }
 }

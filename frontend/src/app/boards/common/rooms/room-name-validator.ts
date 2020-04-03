@@ -1,12 +1,12 @@
 import {Directive, OnInit} from '@angular/core';
 import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
-import {UserService} from '../../../services/user.service';
+import {CommonService} from '../../../services/common.service';
 import {AdminService} from '../../../services/admin.service';
 
 @Directive({
   selector: '[appRoomNameValidateDirective]',
   providers: [
-    UserService,
+    CommonService,
     {
     provide: NG_VALIDATORS,
     useExisting: RoomNameValidateDirective,

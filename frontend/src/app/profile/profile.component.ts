@@ -1,9 +1,7 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {TokenStorageService} from '../services/token-storage.service';
-import {UserService} from '../services/user.service';
-import {catchError} from 'rxjs/operators';
-import {ok} from 'assert';
+import {CommonService} from '../services/common.service';
 
 export interface BasicDataChangeForm {
   userId: null;
@@ -56,7 +54,7 @@ export class ProfileComponent implements OnInit {
   message: string;
 
   constructor(private modalService: NgbModal, private tokenStorageService: TokenStorageService,
-              private userService: UserService) { }
+              private userService: CommonService) { }
 
   ngOnInit(): void {
     this.fetchData();

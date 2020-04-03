@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Activity, Room, UserService} from '../../../services/user.service';
+import {Activity, Room, CommonService} from '../../../services/common.service';
 import {TokenStorageService} from '../../../services/token-storage.service';
 import {NgbCalendar, NgbDate, NgbDatepickerConfig, NgbDateStruct, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
 
@@ -55,8 +55,8 @@ export class ReservationAddComponent implements OnInit {
   selectedTimeRange: string;
   selectedHourStartNumber: number;
 
-  constructor(private userService: UserService, private tokenStorageService: TokenStorageService,
-              private calendar: NgbCalendar, private config: NgbDatepickerConfig) { }
+  constructor(private commonService: CommonService, private tokenStorageService: TokenStorageService,
+              private calendar: NgbCalendar) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -71,7 +71,7 @@ export class ReservationAddComponent implements OnInit {
     this.reservationAddForm.startTime = this.parseDateAndTime(this.selectedTimeRange, true);
     this.reservationAddForm.endTime = this.parseDateAndTime(this.selectedTimeRange, false);
 
-    this.userService.addReservation(this.reservationAddForm).subscribe(
+    this.commonService.addReservation(this.reservationAddForm).subscribe(
        data => {
          this.redirectToMyReservations();
        }, error => {
@@ -81,7 +81,7 @@ export class ReservationAddComponent implements OnInit {
   }
 
   fetchData() {
-    this.userService.getAllActivities().subscribe(data => {
+    this.commonService.getAllActivities().subscribe(data => {
       this.activities = data as Activity[];
       if (this.isAdmin() === false) {
          for (const activity of this.activities) {
@@ -96,7 +96,7 @@ export class ReservationAddComponent implements OnInit {
       }
     });
 
-    this.userService.getAllRooms().subscribe(data => {
+    this.commonService.getAllRooms().subscribe(data => {
       this.rooms = data as Room[];
       for (const room of this.rooms) {
         if (room.available === false) {
@@ -165,7 +165,7 @@ export class ReservationAddComponent implements OnInit {
   }
 
   getAmountOfReservationsByPickedDateByUser() {
-    this.userService.getAmountOfReservationsByPickedDateByUser(this.reservationDate.year, this.reservationDate.month,
+    this.commonService.getAmountOfReservationsByPickedDateByUser(this.reservationDate.year, this.reservationDate.month,
       this.reservationDate.day, this.tokenStorageService.getUser().id)
       .subscribe(data => {
         this.amountOfReservationsByPickedDateByUser = data as number;
@@ -173,11 +173,13 @@ export class ReservationAddComponent implements OnInit {
   }
 
   getReservationsStartingHoursByPickedDateByRoom() {
-    this.userService.getReservationsStartingHoursByPickedDateByRoom(this.reservationDate.year,
-      this.reservationDate.month, this.reservationDate.day, this.getRoomIdByName(this.pickedRoomName))
-      .subscribe(data => {
-        this.todayReservationsStartingHours = data as number[];
-      });
+    if (this.pickedRoomName != null) {
+      this.commonService.getReservationsStartingHoursByPickedDateByRoom(this.reservationDate.year,
+        this.reservationDate.month, this.reservationDate.day, this.getRoomIdByName(this.pickedRoomName))
+        .subscribe(data => {
+          this.todayReservationsStartingHours = data as number[];
+        });
+    }
   }
 
   private getRoomIdByName(roomName: string): number {

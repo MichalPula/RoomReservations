@@ -12,21 +12,25 @@ import { RoomsComponent } from './boards/common/rooms/rooms.component';
 
 import { ReservationAddComponent } from './boards/common/reservation-add/reservation-add.component';
 import { MyReservationsComponent } from './boards/common/my-reservations/my-reservations.component';
-import {RouteGuardService} from './services/route-guard.service';
+import { UsersReservationsByDateComponent } from './boards/admin/users-reservations-by-date/users-reservations-by-date.component';
+
+import { LoginRouteGuardService } from './services/login-route-guard.service';
+import { AdminRouteGuardService } from './services/admin-route-guard.service';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [RouteGuardService]},
-  { path: 'statistics', component: StatisticsComponent, canActivate: [RouteGuardService]},
-  { path: 'rooms', component: RoomsComponent, canActivate: [RouteGuardService]},
+  { path: 'profile', component: ProfileComponent, canActivate: [LoginRouteGuardService]},
+  { path: 'statistics', component: StatisticsComponent, canActivate: [LoginRouteGuardService]},
+  { path: 'rooms', component: RoomsComponent, canActivate: [LoginRouteGuardService, AdminRouteGuardService]},
 
 
-  { path: 'reservations/active', component:  MyReservationsComponent, canActivate: [RouteGuardService]},
-  { path: 'reservations/history', component:  MyReservationsComponent, canActivate: [RouteGuardService]},
-  { path: 'reservations/date', component:  MyReservationsComponent, canActivate: [RouteGuardService]},
-  { path: 'reservations/add', component:  ReservationAddComponent, canActivate: [RouteGuardService]},
+  { path: 'reservations/active', component:  MyReservationsComponent, canActivate: [LoginRouteGuardService]},
+  { path: 'reservations/history', component:  MyReservationsComponent, canActivate: [LoginRouteGuardService]},
+  { path: 'reservations/date', component:  MyReservationsComponent, canActivate: [LoginRouteGuardService]},
+  { path: 'reservations/add', component:  ReservationAddComponent, canActivate: [LoginRouteGuardService]},
+  { path: 'reservations/all/date', component:  UsersReservationsByDateComponent, canActivate: [LoginRouteGuardService, AdminRouteGuardService]},
 
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
