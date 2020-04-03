@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as CanvasJS from 'src/app/lib/canvasjs.min.js';
 import {TokenStorageService} from '../../services/token-storage.service';
-import {UserService} from '../../services/user.service';
+import {CommonService} from '../../services/common.service';
 
 export interface ActivityAndHour {
   y: number;
@@ -19,7 +19,7 @@ export interface Hour {
 })
 export class StatisticsComponent implements OnInit {
 
-  constructor(private tokenStorageService: TokenStorageService, private userService: UserService) { }
+  constructor(private tokenStorageService: TokenStorageService, private userService: CommonService) { }
 
   ngOnInit(): void {
     this.fetchDataAndCreateCharts();

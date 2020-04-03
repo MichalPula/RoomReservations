@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Room, UserService} from '../../../services/user.service';
+import {Room, CommonService} from '../../../services/common.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AdminService} from '../../../services/admin.service';
 import {NG_VALIDATORS} from '@angular/forms';
@@ -30,7 +30,7 @@ export class RoomsComponent implements OnInit {
     available: null
   };
 
-  constructor(private adminService: AdminService, private userService: UserService, private modalService: NgbModal) { }
+  constructor(private adminService: AdminService, private userService: CommonService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.fetchData();

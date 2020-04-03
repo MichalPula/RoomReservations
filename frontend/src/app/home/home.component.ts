@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ReservationRead, UserService} from '../services/user.service';
+import {ReservationRead, CommonService} from '../services/common.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TokenStorageService} from '../services/token-storage.service';
 
 export interface MarkedReservation {
   reservation: ReservationRead;
@@ -15,11 +16,13 @@ export interface MarkedReservation {
 export class HomeComponent implements OnInit {
 
   public config: any;
-  public activeReservations: ReservationRead[];
 
   public markedActiveReservations: MarkedReservation[] = [];
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  isAdmin: boolean;
+
+  constructor(private commonService: CommonService, private route: ActivatedRoute, private router: Router,
+              private tokenStorageService: TokenStorageService) {
     this.config =  {
       currentPage: 1,
       itemsPerPage: 7,
@@ -31,40 +34,23 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchData();
+    this.isAdmin = this.tokenStorageService.isAdmin();
   }
 
   private fetchData() {
-    const todayDate = new Date();
-    let startingHourNumber = 0;
-    let color = '';
-    this.userService.getActiveReservations().subscribe(data => {
-      this.activeReservations = data as ReservationRead[];
-      this.activeReservations.forEach(reservation => {
-        const startingHourString = reservation.startTime.substring(11, 13);
-        if (startingHourString === '09') {
-            startingHourNumber = 9;
-        } else {
-          startingHourNumber = +startingHourString;
-        }
-        if (startingHourNumber >= todayDate.getHours()) {
-          color = 'green';
-        } else {
-          color = 'red';
-        }
-        const markedReservation: MarkedReservation = {
-          reservation,
-          color
-        };
-        this.markedActiveReservations.push(markedReservation);
-      });
+    this.commonService.getActiveReservations().subscribe(data => {
+      this.markedActiveReservations = data as MarkedReservation[];
     });
   }
 
-  changePage(newPage: number) {
-    this.router.navigate(['/reservations/active/'], {queryParams: {page: newPage}});
+  cancelReservation(reservationId: number) {
+    // this.commonService.cancelReservation(reservationId).subscribe(data => {
+    //   this.fetchData();
+    // });
   }
 
-  private markReservationsToPastAndFuture() {
 
+  changePage(newPage: number) {
+    this.router.navigate(['/reservations/active/'], {queryParams: {page: newPage}});
   }
 }

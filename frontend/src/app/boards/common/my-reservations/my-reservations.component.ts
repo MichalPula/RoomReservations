@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ReservationRead, ReservationAddUpdate, UserService} from '../../../services/user.service';
+import {ReservationRead, ReservationAddUpdate, CommonService} from '../../../services/common.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from '../../../services/token-storage.service';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-my-reservations',
@@ -12,13 +12,12 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 export class MyReservationsComponent implements OnInit {
 
   public config: any;
-  public reservationsHistoryList: ReservationRead[];
+  public reservationsList: ReservationRead[];
   public reservationsHistory: boolean;
   public activeReservations: boolean;
 
-  constructor(private userService: UserService, private tokenStorageService: TokenStorageService,
-              private route: ActivatedRoute, private router: Router,
-              public dialog: MatDialog) {
+  constructor(private userService: CommonService, private tokenStorageService: TokenStorageService,
+              private route: ActivatedRoute, private router: Router) {
     this.config =  {
       currentPage: 1,
       itemsPerPage: 7,
@@ -36,12 +35,12 @@ export class MyReservationsComponent implements OnInit {
   private fetchData() {
     if (this.activeReservations === true) {
       this.userService.getUsersActiveReservations(this.tokenStorageService.getUser().id).subscribe(data => {
-        this.reservationsHistoryList = data as ReservationRead[];
+        this.reservationsList = data as ReservationRead[];
       });
     }
     if (this.reservationsHistory === true) {
       this.userService.getReservationsHistory(this.tokenStorageService.getUser().id).subscribe(data => {
-        this.reservationsHistoryList = data as ReservationRead[];
+        this.reservationsList = data as ReservationRead[];
       });
     }
   }

@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {RoomAddUpdateForm} from '../boards/common/rooms/rooms.component';
 import {Observable} from 'rxjs';
 import {RoomsComponent} from '../boards/common/rooms/rooms.component';
-import {Room} from './user.service';
+import {Room} from './common.service';
 
 const API_URL = 'http://localhost:8080/';
 
@@ -33,5 +33,9 @@ export class AdminService {
       });
     });
     return roomsNames;
+  }
+
+  getReservationsByPickedDate(year: number, month: number, day: number): Observable<any> {
+    return this.http.get(API_URL + 'reservations/date/' + year + '/' + month + '/' + day);
   }
 }

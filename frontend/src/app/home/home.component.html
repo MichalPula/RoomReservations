@@ -1,6 +1,6 @@
 <div class="container-fluid p-0" id="homeContainer">
   <h1>Todays reservations(<mark class="red">past</mark>-<mark class="green">future</mark>):</h1>
-  <div class="col-md-7">
+  <div class="col-md-8">
     <table class="table table-striped">
       <thead>
       <tr>
@@ -9,6 +9,7 @@
         <th>Activity</th>
         <th>Start time</th>
         <th>End time</th>
+        <th *ngIf="isAdmin"></th>
       </tr>
       </thead>
       <tbody>
@@ -19,6 +20,7 @@
         <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.activityName}}</td>
         <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.startTime}}</td>
         <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.endTime}}</td>
+        <td *ngIf="markedReservation.color =='green' && isAdmin"><button class="btn btn-danger" (click)="cancelReservation(markedReservation.reservation.id)">Cancel</button></td>
       </tr>
       <pagination-controls (pageChange)="changePage($event)" class="my-pagination"></pagination-controls>
       </tbody>
