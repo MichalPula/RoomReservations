@@ -1,0 +1,71 @@
+<ng-template #confirmCancelReservationModal let-modal>
+  <div class="modal-body">
+    <h1>Do you want to cancel this reservation?</h1>
+  </div>
+  <div class="modal-footer">
+    <div class="row w-100">
+      <div class="col text-center">
+        <button type="button" class="btn btn-success" (click)="modal.close('Close click'); cancelReservation()">Yes</button>
+      </div>
+      <div class="col text-center">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">No</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="container p-0" id="container">
+  <div id="datePicker">
+    <div class="input-group w-25">
+      <input class="form-control" placeholder="yyyy-mm-dd"
+             [startDate]="{year: thisYear, month: thisMonth, day: thisDay}"
+             [minDate]="{year: thisYear, month: thisMonth, day: minDay}"
+             [maxDate]="{year: thisYear, month: maxMonth, day: maxDay}"
+             [markDisabled]="markDisabled"
+             name="dp" [(ngModel)]="reservationDate" (ngModelChange)="getReservationsByPickedDate()"
+             ngbDatepicker #d="ngbDatepicker">
+    </div>
+    <div class="input-group-append">
+      <button class="btn btn-primary btn-block" (click)="d.toggle()" type="button">
+        <span class="fa fa-calendar"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container" id="resultContainer">
+    <ng-template [ngIf]="reservationDate != null && markedReservationsList.length > 0" [ngIfElse]="noReservationsOnPickedDay">
+      <div id="reservationsByDateContainer">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Room</th>
+            <th>Activity</th>
+            <th>Start time</th>
+            <th>End time</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let markedReservation of markedReservationsList">
+            <td>{{markedReservation.reservation.firstName + ' ' + markedReservation.reservation.lastName}}</td>
+            <td>{{markedReservation.reservation.roomName}}</td>
+            <td>{{markedReservation.reservation.activityName}}</td>
+            <td>{{markedReservation.reservation.startTime}}</td>
+            <td>{{markedReservation.reservation.endTime}}</td>
+            <td *ngIf="markedReservation.color =='green'">
+              <button class="btn btn-danger" (click)="openConfirmCancelReservationModal(confirmCancelReservationModal,
+               markedReservation.reservation.id)">Cancel</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+    <ng-template #noReservationsOnPickedDay>
+      <div id="message">
+        <h1>No reservations for this day.</h1>
+      </div>
+    </ng-template>
+  </div>
+</div>
