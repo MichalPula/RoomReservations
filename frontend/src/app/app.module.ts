@@ -14,9 +14,6 @@ import { ProfileComponent } from './profile/profile.component';
 
 import { AuthenticationInterceptorService } from './services/authentication-interceptor.service';
 import { RoomsComponent } from './boards/common/rooms/rooms.component';
-import { RoomDeactivateComponent } from './boards/admin/room-deactivate/room-deactivate.component';
-import { RoomAddComponent } from './boards/admin/room-add/room-add.component';
-import { RoomUpdateComponent } from './boards/admin/room-update/room-update.component';
 import { ReservationAddComponent } from './boards/common/reservation-add/reservation-add.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -30,8 +27,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StatisticsComponent } from './profile/statistics/statistics.component';
-import {RouteGuardService} from './services/route-guard.service';
+import {LoginRouteGuardService} from './services/login-route-guard.service';
 import {RoomNameValidateDirective} from './boards/common/rooms/room-name-validator';
+import { UsersReservationsByDateComponent } from './boards/admin/users-reservations-by-date/users-reservations-by-date.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -41,13 +40,11 @@ import {RoomNameValidateDirective} from './boards/common/rooms/room-name-validat
     HomeComponent,
     ProfileComponent,
     RoomsComponent,
-    RoomDeactivateComponent,
-    RoomAddComponent,
-    RoomUpdateComponent,
     ReservationAddComponent,
     MyReservationsComponent,
     StatisticsComponent,
     RoomNameValidateDirective,
+    UsersReservationsByDateComponent,
   ],
   exports: [ReservationAddComponent],
     imports: [
@@ -63,9 +60,10 @@ import {RoomNameValidateDirective} from './boards/common/rooms/room-name-validat
         MatButtonModule,
         MatInputModule,
         MatSelectModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        DragDropModule
     ],
-  providers: [AuthenticationInterceptorService, LoginComponent, RouteGuardService, RoomsComponent],
+  providers: [AuthenticationInterceptorService, LoginComponent, LoginRouteGuardService, RoomsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
