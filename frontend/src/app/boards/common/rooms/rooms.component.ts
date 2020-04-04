@@ -25,10 +25,17 @@ export class RoomsComponent implements OnInit {
 
   rooms: Room[];
 
-  roomAddUpdateForm: RoomAddUpdateForm = {
+  roomAddForm: RoomAddUpdateForm = {
     name: '',
     available: null
   };
+
+  roomUpdateForm: RoomAddUpdateForm = {
+    name: '',
+    available: null
+  };
+
+  idOfRoomToUpdate: number;
 
   constructor(private adminService: AdminService, private userService: CommonService, private modalService: NgbModal) { }
 
@@ -52,8 +59,20 @@ export class RoomsComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
-  newRoomFromSubmit() {
-    this.adminService.addRoom(this.roomAddUpdateForm).subscribe(data => {
+  addRoom() {
+    this.adminService.addRoom(this.roomAddForm).subscribe(data => {
+      this.refreshPage();
+    });
+  }
+
+  openUpdateRoomModal(content, roomId, roomName, isAvailable) {
+    this.idOfRoomToUpdate = roomId;
+    this.roomUpdateForm.name = roomName;
+    this.modalService.open(content, { centered: true });
+  }
+
+  updateRoom() {
+    this.adminService.updateRoom(this.idOfRoomToUpdate, this.roomUpdateForm).subscribe(data => {
       this.refreshPage();
     });
   }
