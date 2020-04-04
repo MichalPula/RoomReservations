@@ -1,5 +1,6 @@
 package com.Pulson.RoomReservations.controllers;
 
+import com.Pulson.RoomReservations.entities.dtos.reservation.MarkedReservation;
 import com.Pulson.RoomReservations.entities.dtos.reservation.ReservationCreateUpdateDTO;
 import com.Pulson.RoomReservations.entities.dtos.reservation.ReservationReadDTO;
 import com.Pulson.RoomReservations.services.ReservationService;
@@ -32,8 +33,9 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/active", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ReservationReadDTO> getAllActive(){
-        return readReservationMapper.mapToReservationReadDTOsList(reservationService.getActive());
+    public List<MarkedReservation> getAllActive(){
+        return readReservationMapper.mapToMarkedReservationsList(readReservationMapper.mapToReservationReadDTOsList(
+                reservationService.getActive()));
     }
 
     @GetMapping(value = "/active/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,6 +52,13 @@ public class ReservationController {
     public List<Integer> getTodayReservationsStartingHoursByRoom(@PathVariable("year") int year, @PathVariable("month") int month,
                                                            @PathVariable("day") int day, @PathVariable("id") int roomId) throws Exception {
         return reservationService.getStartingHoursListByDateByRoom(year, month, day, roomId);
+    }
+
+    @GetMapping(value = "/date/{year}/{month}/{day}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MarkedReservation> getReservationsByDate(@PathVariable("year") int year, @PathVariable("month") int month,
+                                                                 @PathVariable("day") int day) throws Exception {
+        return readReservationMapper.mapToMarkedReservationsList(readReservationMapper.mapToReservationReadDTOsList(
+                reservationService.getByDate(year, month, day)));
     }
 
     @GetMapping(value = "/date/{year}/{month}/{day}/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
