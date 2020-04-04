@@ -4,6 +4,7 @@ import {RoomAddUpdateForm} from '../boards/common/rooms/rooms.component';
 import {Observable} from 'rxjs';
 import {RoomsComponent} from '../boards/common/rooms/rooms.component';
 import {Room} from './common.service';
+import {EmailChangeForm} from '../profile/profile.component';
 
 const API_URL = 'http://localhost:8080/';
 
@@ -19,6 +20,9 @@ export class AdminService {
   }
   addRoom(room: RoomAddUpdateForm) {
     return this.http.post(API_URL + 'rooms/add', room);
+  }
+  updateRoom(roomId, room: RoomAddUpdateForm) {
+    return this.http.put(API_URL + 'rooms/update/' + roomId, room);
   }
   deactivateRoom(roomId: number) {
     return this.http.delete(API_URL + 'rooms/deactivate/' + roomId);
