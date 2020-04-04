@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ReservationRead, CommonService} from '../services/common.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from '../services/token-storage.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 export interface MarkedReservation {
   reservation: ReservationRead;
@@ -21,8 +22,10 @@ export class HomeComponent implements OnInit {
 
   isAdmin: boolean;
 
+  pickedReservationId: number;
+
   constructor(private commonService: CommonService, private route: ActivatedRoute, private router: Router,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService, private modalService: NgbModal) {
     this.config =  {
       currentPage: 1,
       itemsPerPage: 7,
@@ -43,10 +46,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  cancelReservation(reservationId: number) {
-    // this.commonService.cancelReservation(reservationId).subscribe(data => {
-    //   this.fetchData();
-    // });
+  openConfirmCancelReservationModal(content, reservationId) {
+    this.pickedReservationId = reservationId;
+    this.modalService.open(content, { centered: true });
+  }
+
+  cancelReservation() {
+    this.commonService.cancelReservation(this.pickedReservationId).subscribe(data => {
+      this.fetchData();
+    });
   }
 
 
