@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Activity, Room, CommonService} from '../../../services/common.service';
 import {TokenStorageService} from '../../../services/token-storage.service';
-import {NgbCalendar, NgbDate, NgbDatepickerConfig, NgbDateStruct, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCalendar, NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 export interface ReservationAddTimeHelper {
   startTime: string;
@@ -173,7 +173,7 @@ export class ReservationAddComponent implements OnInit {
   }
 
   getReservationsStartingHoursByPickedDateByRoom() {
-    if (this.pickedRoomName != null) {
+    if (this.pickedRoomName != null && this.reservationDate != null) {
       this.commonService.getReservationsStartingHoursByPickedDateByRoom(this.reservationDate.year,
         this.reservationDate.month, this.reservationDate.day, this.getRoomIdByName(this.pickedRoomName))
         .subscribe(data => {
