@@ -89,7 +89,7 @@ export class CommonService {
   getActiveReservations(): Observable<any> {
     return this.http.get(API_URL + 'reservations/active');
   }
-  getReservationsHistory(userId: number): Observable<any> {
+  getUsersReservationsHistory(userId: number): Observable<any> {
     return this.http.get(API_URL + 'reservations/history/' + userId);
   }
   getReservationsStartingHoursByPickedDateByRoom(year: number, month: number, day: number, roomId: number): Observable<any> {

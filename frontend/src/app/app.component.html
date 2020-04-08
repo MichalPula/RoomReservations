@@ -18,6 +18,16 @@
     <li class="nav-item">
       <a class="nav-link" *ngIf="loggedUserIsAdmin" routerLink="rooms">Rooms</a>
     </li>
+
+    <li class="nav-item dropdown" *ngIf="loggedUserIsAdmin">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Users</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" routerLink="users/students/all">All students</a>
+        <a class="dropdown-item" routerLink="users/students/search">Search student by name</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item"  routerLink="users/add/admin">Add admin account</a>
+      </div>
+    </li>
   </ul>
 
   <ul class="nav nav-pills" *ngIf="!isLoggedIn">
