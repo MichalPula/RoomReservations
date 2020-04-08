@@ -1,10 +1,13 @@
 package com.Pulson.RoomReservations.controllers;
 
+import com.Pulson.RoomReservations.entities.RoleType;
 import com.Pulson.RoomReservations.entities.User;
+import com.Pulson.RoomReservations.entities.dtos.user.UserReadDTO;
 import com.Pulson.RoomReservations.models.BasicAccountDataChangeRequest;
 import com.Pulson.RoomReservations.models.EmailChangeRequest;
 import com.Pulson.RoomReservations.models.PasswordChangeRequest;
 import com.Pulson.RoomReservations.services.UserService;
+import com.Pulson.RoomReservations.services.mappers.user.ReadUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +20,24 @@ import java.util.List;
 @RequestMapping("users")
 public class UserController {
 
-    @Autowired
+
     private UserService userService;
+    private ReadUserMapper readUserMapper;
+
+    @Autowired
+    public UserController(UserService userService, ReadUserMapper readUserMapper) {
+        this.userService = userService;
+        this.readUserMapper = readUserMapper;
+    }
 
     @GetMapping("/all")
     public List<User> getAll() {
         return userService.getAll();
+    }
+
+    @GetMapping("/all/students")
+    public List<UserReadDTO> getAllStudents() {
+        return readUserMapper.mapToUserReadDTOsList(userService.getAllStudents());
     }
 
     @GetMapping("/{id}")
