@@ -69,8 +69,8 @@ public class Initializer {
 
 
         List<Reservation> reservations = new ArrayList<>(Arrays.asList(
-                new Reservation(users.get(2), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(0)),
-                new Reservation(users.get(3), rooms.get(3), LocalDateTime.of(2020, 2, 22, 10, 30), LocalDateTime.of(2020, 2, 22, 11, 30), activities.get(1)),
+                new Reservation(users.get(2), rooms.get(3), LocalDateTime.of(2020, 4, 9, 10, 30), LocalDateTime.of(2020, 4, 9, 11, 30), activities.get(0)),
+                new Reservation(users.get(3), rooms.get(3), LocalDateTime.of(2020, 4, 10, 10, 30), LocalDateTime.of(2020, 4, 10, 11, 30), activities.get(1)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(2)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 3, 22, 10, 30), LocalDateTime.of(2020, 3, 22, 11, 30), activities.get(3)),
                 new Reservation(users.get(1), rooms.get(3), LocalDateTime.of(2020, 1, 22, 10, 30), LocalDateTime.of(2020, 1, 22, 11, 30), activities.get(4)),
