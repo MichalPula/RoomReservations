@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 const API_AUTH = 'http://localhost:8080/';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +16,19 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  login(loginForm): Observable<any> {
-    return this.http.post(API_AUTH + 'login', loginForm);
+  login(credentials): Observable<any> {
+    return this.http.post(API_AUTH + 'login', {
+      username: credentials.username,
+      password: credentials.password
+    }, httpOptions);
   }
 
-  register(registerForm): Observable<any> {
-    return this.http.post(API_AUTH + 'register', registerForm);
+  register(user): Observable<any> {
+    return this.http.post(API_AUTH + 'register', {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      password: user.password
+    }, httpOptions);
   }
 }

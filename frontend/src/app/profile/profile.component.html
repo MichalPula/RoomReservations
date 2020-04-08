@@ -17,7 +17,7 @@
         <input type="password" [(ngModel)]="passwordChangeForm.newPassword" name="password" class="form-control" required #newPassword="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
         <div  class="alert alert-danger" *ngIf="newPassword.invalid && (changePasswordForm.submitted || newPassword.touched)">
           <div *ngIf="newPassword.errors.required"> Password is required!</div>
-          <div *ngIf="newPassword.errors.pattern"> Must contain at least one number, <br> one uppercase and lowercase letter, <br> and at least 8 or more character.</div>
+          <div *ngIf="newPassword.errors.pattern"> Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</div>
         </div>
       </div>
       <div class="form-group">

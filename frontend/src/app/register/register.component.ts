@@ -1,18 +1,7 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
 import {TokenStorageService} from '../services/token-storage.service';
 import {LoginComponent} from '../login/login.component';
-import {Router} from '@angular/router';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
-export interface RegisterForm {
-  firstName: string;
-  lastName: string;
-  phoneNumber: number;
-  username: string;
-  password: string;
-  roles: string[];
-}
 
 @Component({
   selector: 'app-register',
@@ -21,66 +10,41 @@ export interface RegisterForm {
 })
 export class RegisterComponent implements OnInit {
 
-  @ViewChild('registerSuccessModal') registerSuccessModal: TemplateRef<any>;
-
-  registerForm: RegisterForm = {
-    firstName: '',
-    lastName: '',
-    phoneNumber: null,
-    username: '',
-    password: '',
-    roles: [],
-  };
-  isRegistrationFailed: boolean;
-  addingAdmin: boolean;
-  message = '';
+  form: any = {};
+  isRegistrationSuccessful = false;
+  isRegistrationFailed = false;
+  errorMessage = '';
 
   constructor(private authenticationService: AuthenticationService, private tokenStorageService: TokenStorageService,
-              private loginComponent: LoginComponent, private router: Router, private modalService: NgbModal) { }
+              private loginComponent: LoginComponent) { }
 
   ngOnInit(): void {
-    {{ this.router.url === '/users/add/admin' ? this.addingAdmin = true : this.addingAdmin = false; }}
-    if (this.tokenStorageService.isLoggedIn() && !this.addingAdmin) {
-      this.redirectToHomePage();
-    }
   }
 
-  registerSubmit() {
-    if (this.addingAdmin) {
-      this.registerForm.roles.push('admin');
-    }
-    this.authenticationService.register(this.registerForm).subscribe(
+  onSubmit() {
+    this.authenticationService.register(this.form).subscribe(
       data => {
-        console.log();
+        this.isRegistrationFailed = false;
+        this.isRegistrationSuccessful = true;
+
       },
       error => {
-        this.handleRegistration(error);
+        this.errorMessage = error.error.message;
+        this.isRegistrationFailed = false;
+        console.log(this.errorMessage);
+        // throws undefined error with 200 OK code...
+        this.automaticLoginAfterRegistration(this.form);
       }
     );
-  }
-
-  handleRegistration(error) {
-    if (error.status === 409) {
-      this.isRegistrationFailed = true;
-      this.message = 'Email is already taken!';
-    }
-    if (error.status === 200) {
-      this.message = 'Registration successful.';
-      this.openSuccessModal();
-    }
-  }
-
-  openSuccessModal() {
-    this.modalService.open(this.registerSuccessModal, { centered: true });
   }
 
   redirectToHomePage() {
     window.location.replace('/home');
   }
 
-  automaticLoginAfterRegistration() {
-    this.loginComponent.form.username = this.registerForm.username;
-    this.loginComponent.form.password = this.registerForm.password;
+  automaticLoginAfterRegistration(form) {
+    this.loginComponent.form.username = this.form.username;
+    this.loginComponent.form.password = this.form.password;
     this.loginComponent.onSubmit();
   }
 }

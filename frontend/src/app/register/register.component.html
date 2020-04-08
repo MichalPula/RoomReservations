@@ -1,72 +1,53 @@
-<ng-template #registerSuccessModal let-modal>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col">
-        <p class="alert alert-success">
-          <strong>{{message}}</strong>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <ng-template [ngIf]="this.addingAdmin" [ngIfElse]="regularRegistration">
-      <button type="button" class="btn btn-light" (click)="redirectToHomePage()">OK</button>
-    </ng-template>
-    <ng-template #regularRegistration>
-      <button type="button" class="btn btn-light" (click)="automaticLoginAfterRegistration()">OK</button>
-    </ng-template>
-  </div>
-</ng-template>
-
 <div class="container-fluid p-0" id="registerContainer">
-  <form name="form" (ngSubmit)="registerFormElement.form.valid && registerSubmit()" #registerFormElement="ngForm" novalidate>
+
+  <form *ngIf="!isRegistrationSuccessful" name="form" (ngSubmit)="loginForm.form.valid && onSubmit()" #loginForm="ngForm" novalidate>
+
     <div class="form-group">
       <label for="firstName">First name</label>
-      <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="registerForm.firstName" required minlength="3" maxlength="20" #firstName="ngModel"/>
-      <div class="alert-danger" *ngIf="registerFormElement.submitted && firstName.invalid">
+      <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="form.firstName" required minlength="3" maxlength="20" #firstName="ngModel"/>
+      <div class="alert-danger" *ngIf="loginForm.submitted && firstName.invalid">
         <div *ngIf="firstName.errors.required">First name is required</div>
         <div *ngIf="firstName.errors.minLength">First name must be at least 3 characters</div>
         <div *ngIf="firstName.errors.maxLength">First name must be at most 20 characters</div>
       </div>
     </div>
+
     <div class="form-group">
       <label for="lastName">Last name</label>
-      <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="registerForm.lastName" required minlength="3" maxlength="20" #lastName="ngModel"/>
-      <div class="alert-danger" *ngIf="registerFormElement.submitted && lastName.invalid">
+      <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="form.lastName" required minlength="3" maxlength="20" #lastName="ngModel"/>
+      <div class="alert-danger" *ngIf="loginForm.submitted && lastName.invalid">
         <div *ngIf="lastName.errors.required">Username is required</div>
         <div *ngIf="lastName.errors.minLength">Username must be at least 3 characters</div>
         <div *ngIf="lastName.errors.maxLength">Username must be at most 20 characters</div>
       </div>
     </div>
-    <div class="form-group">
-      <label for="phoneNumber">Phone number</label>
-      <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="registerForm.phoneNumber" required pattern="[0-9]{9}" #phoneNumber="ngModel"/>
-      <div class="alert-danger" *ngIf="registerFormElement.submitted && phoneNumber.invalid">
-        <div *ngIf="email.errors.required">Phone number is required</div>
-        <div *ngIf="phoneNumber.errors.pattern">Wrong number!</div>
-      </div>
-    </div>
+
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="registerForm.username" required minlength="6" #email="ngModel"/>
-      <div class="alert-danger" *ngIf="registerFormElement.submitted && email.invalid">
+      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="form.username" required minlength="6" #email="ngModel"/>
+      <div class="alert-danger" *ngIf="loginForm.submitted && email.invalid">
         <div *ngIf="email.errors.required">Email is required</div>
         <div *ngIf="email.errors.email">Email must be a valid email address</div>
       </div>
     </div>
+
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="registerForm.password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" #password="ngModel">
-      <div class="alert-danger" *ngIf="registerFormElement.submitted && password.invalid">
+      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="form.password" required minlength="6" #password="ngModel">
+      <div class="alert-danger" *ngIf="loginForm.submitted && password.invalid">
         <div *ngIf="password.errors.required">Password is required</div>
-        <div *ngIf="password.errors.pattern"> Must contain at least one number, <br> one uppercase and lowercase letter, <br> and at least 8 or more character.</div>
+        <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
       </div>
     </div>
+
     <div class="form-group">
       <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
     </div>
-    <div class="alert alert-warning" *ngIf="registerFormElement.submitted && isRegistrationFailed">
-      Signup failed! <br/>{{ message }}
+
+    <div class="alert alert-warning" *ngIf="loginForm.submitted && isRegistrationFailed">
+      Signup failed!<br />{{ errorMessage }}
     </div>
   </form>
 </div>
+
+<div class="alert alert-success" *ngIf="isRegistrationSuccessful">Your registration is successful!</div>
