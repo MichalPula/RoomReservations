@@ -1,0 +1,26 @@
+<div class="container-fluid p-0" id="studentsContainer">
+  <div class="col-md-7">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Phone number</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of allStudents | paginate : config">
+        <td>{{student.firstName + ' ' + student.lastName}}</td>
+        <td>{{student.username}}</td>
+        <td>{{student.phoneNumber}}</td>
+        <td><button class="btn btn-dark" (click)="getStudentsHistory(student.id)">History</button></td>
+        <td><button class="btn btn-info" (click)="getStudentsActiveReservations(student.id)">Active</button></td>
+        <td><button class="btn btn-info" (click)="getStudentsStatistics(student.id)">Statistics</button></td>
+      </tr>
+      <pagination-controls (pageChange)="changePage($event)" class="my-pagination"></pagination-controls>
+      </tbody>
+    </table>
+  </div>
+</div>
