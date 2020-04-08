@@ -1,9 +1,12 @@
 package com.Pulson.RoomReservations.services;
 
+import com.Pulson.RoomReservations.entities.Role;
+import com.Pulson.RoomReservations.entities.RoleType;
 import com.Pulson.RoomReservations.entities.User;
 import com.Pulson.RoomReservations.models.BasicAccountDataChangeRequest;
 import com.Pulson.RoomReservations.models.EmailChangeRequest;
 import com.Pulson.RoomReservations.models.PasswordChangeRequest;
+import com.Pulson.RoomReservations.repositories.RoleRepository;
 import com.Pulson.RoomReservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,16 +26,24 @@ public class UserServiceImpl implements UserService {
 
     private EntityManager entityManager;
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(EntityManager entityManager, UserRepository userRepository) {
+    public UserServiceImpl(EntityManager entityManager, UserRepository userRepository, RoleRepository roleRepository) {
         this.entityManager = entityManager;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getAllStudents() {
+        Role role = roleRepository.findByRoleType(RoleType.ROLE_ADMIN);
+        return userRepository.findAllByRolesNotContaining(role);
     }
 
     @Override

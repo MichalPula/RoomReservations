@@ -76,11 +76,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         } else {
             stringRoles.forEach(role ->{
                 if ("admin".equals(role)) {
-                    Role adminRole = roleService.findByRoleType(RoleType.ROLE_ADMIN);
-                    roles.add(adminRole);
-                } else {
-                    Role userRole = roleService.findByRoleType(RoleType.ROLE_USER);
-                    roles.add(userRole);
+                    roles.add(roleService.findByRoleType(RoleType.ROLE_ADMIN));
+                    roles.add(roleService.findByRoleType(RoleType.ROLE_USER));
                 }
             });
         }

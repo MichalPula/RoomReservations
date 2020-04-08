@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public interface UserService extends UserDetailsService {
     List<User> getAll();
+    List<User> getAllStudents();
     User getById(long id) throws Exception;
     Boolean create(User user);
     Boolean deactivate(long id) throws Exception;
