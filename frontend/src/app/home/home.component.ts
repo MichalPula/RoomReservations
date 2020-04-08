@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   changePage(newPage: number) {
     this.router.navigate(['/reservations/active/'], {queryParams: {page: newPage}});
   }
