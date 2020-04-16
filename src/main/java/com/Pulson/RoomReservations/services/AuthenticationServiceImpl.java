@@ -23,22 +23,23 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class AuthenticationServiceImpl implements AuthenticationService{
+public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private JwtTokenService jwtTokenService;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private RoleService roleService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    public AuthenticationServiceImpl(AuthenticationManager authenticationManager, JwtTokenService jwtTokenService,
+                                     UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenService = jwtTokenService;
+        this.userService = userService;
+        this.roleService = roleService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest) throws Exception {
@@ -63,18 +64,18 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Override
     public ResponseEntity<?> handleRegistration(JwtRegisterRequest jwtRegisterRequest) {
-        if(userService.existsByUsername(jwtRegisterRequest.getUsername())) {
+        if (userService.existsByUsername(jwtRegisterRequest.getUsername())) {
             return ResponseEntity.badRequest().body("Username is already taken!");
         }
 
-        Set<String> stringRoles  = jwtRegisterRequest.getRoles();
+        Set<String> stringRoles = jwtRegisterRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
         if (stringRoles == null) {
             Role userRole = roleService.findByRoleType(RoleType.ROLE_USER);
             roles.add(userRole);
         } else {
-            stringRoles.forEach(role ->{
+            stringRoles.forEach(role -> {
                 if ("admin".equals(role)) {
                     roles.add(roleService.findByRoleType(RoleType.ROLE_ADMIN));
                     roles.add(roleService.findByRoleType(RoleType.ROLE_USER));

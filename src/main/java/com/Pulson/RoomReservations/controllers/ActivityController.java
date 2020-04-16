@@ -1,6 +1,5 @@
 package com.Pulson.RoomReservations.controllers;
 
-import com.Pulson.RoomReservations.entities.Activity;
 import com.Pulson.RoomReservations.entities.dtos.activity.ActivityCreateReadUpdateDTO;
 import com.Pulson.RoomReservations.services.ActivityService;
 import com.Pulson.RoomReservations.services.mappers.activity.CreateUpdateActivityMapper;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -17,23 +15,22 @@ import java.util.List;
 @RequestMapping("activities")
 public class ActivityController {
 
-    @Autowired
+
     private ActivityService activityService;
-
-    @Autowired
     private CreateUpdateActivityMapper createUpdateActivityMapper;
+    private ReadActivityMapper readActivityMapper;
 
     @Autowired
-    private ReadActivityMapper readActivityMapper;
+    public ActivityController(ActivityService activityService, CreateUpdateActivityMapper createUpdateActivityMapper,
+                              ReadActivityMapper readActivityMapper) {
+        this.activityService = activityService;
+        this.createUpdateActivityMapper = createUpdateActivityMapper;
+        this.readActivityMapper = readActivityMapper;
+    }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ActivityCreateReadUpdateDTO> getAll(){
-        return readActivityMapper.mapToActivityCreateUpdateDTOsList(activityService.getAll());
-    }
-
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ActivityCreateReadUpdateDTO getById(@PathVariable("id") long id) throws Exception {
-        return readActivityMapper.mapToActivityCreateUpdateDTOsList(Arrays.asList(activityService.getById(id))).get(0);
+        return readActivityMapper.mapToActivityCreateReadUpdateDTOsList(activityService.getAll());
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -47,7 +44,7 @@ public class ActivityController {
     }
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean update(@PathVariable("id") long id, @RequestBody Activity activityDetails) throws Exception {
-        return activityService.update(id, activityDetails);
+    public boolean update(@PathVariable("id") long id, @RequestBody ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) throws Exception {
+       return activityService.update(id, createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO));
     }
 }

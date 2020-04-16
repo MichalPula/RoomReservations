@@ -13,13 +13,17 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Service
-public class RoomServiceImpl implements RoomService{
+public class RoomServiceImpl implements RoomService {
 
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
     private RoomRepository repository;
+
+    @Autowired
+    public RoomServiceImpl(RoomRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<Room> getAll() {

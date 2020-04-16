@@ -18,19 +18,18 @@ import java.util.List;
 @RequestMapping("reservations")
 public class ReservationController {
 
-    @Autowired
     private ReservationService reservationService;
-
-    @Autowired
     private CreateUpdateReservationMapper createUpdateReservationMapper;
-
-    @Autowired
     private ReadReservationMapper readReservationMapper;
 
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ReservationReadDTO> getAll(){
-        return readReservationMapper.mapToReservationReadDTOsList(reservationService.getAll());
+    @Autowired
+    public ReservationController(ReservationService reservationService, CreateUpdateReservationMapper createUpdateReservationMapper,
+                                 ReadReservationMapper readReservationMapper) {
+        this.reservationService = reservationService;
+        this.createUpdateReservationMapper = createUpdateReservationMapper;
+        this.readReservationMapper = readReservationMapper;
     }
+
 
     @GetMapping(value = "/active", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MarkedReservation> getAllActive(){
@@ -61,15 +60,10 @@ public class ReservationController {
                 reservationService.getByDate(year, month, day)));
     }
 
-    @GetMapping(value = "/date/{year}/{month}/{day}/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/date/{year}/{month}/{day}/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Integer getNumberOfReservationsPerDayPerUser(@PathVariable("year") int year, @PathVariable("month") int month,
                                                         @PathVariable("day") int day, @PathVariable("userId") long userId) throws Exception {
         return reservationService.getAmountByDateByUser(year, month, day, userId);
-    }
-
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ReservationReadDTO getById(@PathVariable("id") long id) throws Exception {
-        return readReservationMapper.mapToReservationReadDTOsList(Arrays.asList(reservationService.getById(id))).get(0);
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -81,10 +75,4 @@ public class ReservationController {
     public boolean delete(@PathVariable("id") long id) throws Exception {
         return reservationService.delete(id);
     }
-
-    @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean update(@PathVariable("id") long id ,@RequestBody ReservationCreateUpdateDTO reservationDetails) throws Exception {
-        return reservationService.update(id, createUpdateReservationMapper.mapToReservation(reservationDetails));
-    }
-
 }

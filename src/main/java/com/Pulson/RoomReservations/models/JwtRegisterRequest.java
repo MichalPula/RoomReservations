@@ -11,7 +11,8 @@ public class JwtRegisterRequest {
     private String password;
     private Set<String> roles;
 
-    public JwtRegisterRequest() {}
+    public JwtRegisterRequest() {
+    }
 
     public JwtRegisterRequest(String firstName, String lastName, long phoneNumber, String username, String password, Set<String> roles) {
         this.firstName = firstName;

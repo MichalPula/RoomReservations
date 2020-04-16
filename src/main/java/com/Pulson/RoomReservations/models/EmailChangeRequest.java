@@ -12,7 +12,8 @@ public class EmailChangeRequest implements Serializable {
         this.email = email;
     }
 
-    public EmailChangeRequest() {}
+    public EmailChangeRequest() {
+    }
 
     public String getEmail() {
         return email;

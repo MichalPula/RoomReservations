@@ -22,7 +22,8 @@ public class BasicAccountDataChangeRequest implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public BasicAccountDataChangeRequest() {}
+    public BasicAccountDataChangeRequest() {
+    }
 
     public String getFirstName() {
         return firstName;

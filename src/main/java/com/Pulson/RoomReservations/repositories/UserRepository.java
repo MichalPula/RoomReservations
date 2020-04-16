@@ -10,6 +10,10 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User getUserByUsername(String username);
+
     Boolean existsByUsername(String username);
+
     List<User> findAllByRolesNotContaining(Role notContaining);
+
+    List<User> findAllByRolesNotContainingAndFirstNameIgnoreCaseAndLastNameIgnoreCase(Role notContaining, String firstName, String lastName);
 }

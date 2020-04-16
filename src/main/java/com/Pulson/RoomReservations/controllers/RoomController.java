@@ -13,17 +13,16 @@ import java.util.List;
 @RequestMapping("rooms")
 public class RoomController {
 
-    @Autowired
     private RoomService roomService;
+
+    @Autowired
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @GetMapping("/all")
     public List<Room> getAll(){
         return roomService.getAll();
-    }
-
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Room getById(@PathVariable("id") long id) throws Exception {
-        return roomService.getById(id);
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
