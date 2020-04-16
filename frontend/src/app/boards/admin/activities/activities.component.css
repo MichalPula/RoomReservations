@@ -1,0 +1,19 @@
+#activitiesContainer {
+  width: 100%;
+  height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.margin {
+  margin-right: 10px;
+}
+
+.authoritySelect {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-direction: row;
+}

@@ -1,0 +1,102 @@
+<ng-template #addActivityModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add activity</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form id="addRoom" (ngSubmit)="addActivityForm.form.valid && addActivity()" #addActivityForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="add/activityName">Activity name</label>
+        <input type="text" autocomplete="off" class="form-control" id="add/activityName" name="add/activityName" [(ngModel)]="activityAddForm.name" required #activityName="ngModel"/>
+        <div  class="alert alert-danger" *ngIf="activityName.invalid && (activityName.dirty || activityName.touched) || addActivityForm.submitted && activityName.invalid">
+          <div *ngIf="activityName.errors.required">Activity name is required</div>
+        </div>
+      </div>
+      <div class="form-group authoritySelect">
+        <label class="margin" for="add/authority">Authority:</label>
+        <mat-radio-group id="add/authority" name="add/authority" [(ngModel)]="activityAddForm.authorities[0]" required #authoritySelect="ngModel">
+          <mat-radio-button *ngFor="let role of roles" class="margin" value="{{role.formattedRoleType}}">{{role.formattedRoleType}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="addActivityForm.submitted && authoritySelect.invalid">Choose authority</div>
+      <div class="form-group">
+        <label for="add/isAvailable">Is available from beginning?</label>
+        <select class="custom-select" id="add/isAvailable" name="add/isAvailable"  [(ngModel)]="activityAddForm.available" required #isAvailableSelect="ngModel">
+          <option ngValue="true">true</option>
+          <option ngValue="false">false</option>
+        </select>
+        <div class="alert alert-danger" role="alert" *ngIf="addActivityForm.submitted && isAvailableSelect.invalid">Choose availability</div>
+      </div>
+      <div class="form-group">
+        <button type="submit"  class="btn btn-primary btn-block">Confirm</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #updateActivityModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Update activity</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form id="updateRoom" (ngSubmit)="updateRoomForm.form.valid && updateActvitity()" #updateRoomForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="update/activityName">Activity name</label>
+        <input type="text" autocomplete="off" class="form-control" id="update/activityName" name="update/activityName" [(ngModel)]="activityUpdateForm.name" required #activityName="ngModel"/>
+        <div  class="alert alert-danger" *ngIf="activityName.invalid && (activityName.dirty || activityName.touched) || updateRoomForm.submitted && activityName.invalid">
+          <div *ngIf="activityName.errors.required">Activity name is required</div>
+        </div>
+      </div>
+      <div class="form-group authoritySelect">
+        <label class="margin" for="update/authority">Authority:</label>
+        <mat-radio-group id="update/authority" name="update/authority" [(ngModel)]="activityUpdateForm.authorities[0]" required #authoritySelect="ngModel">
+          <mat-radio-button *ngFor="let role of roles" class="margin" value="{{role.formattedRoleType}}">{{role.formattedRoleType}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="updateRoomForm.submitted && authoritySelect.invalid">Choose authority</div>
+      <div class="form-group">
+        <label for="update/isAvailable">Is available</label>
+        <select class="custom-select" id="update/isAvailable" name="update/isAvailable" [(ngModel)]="activityUpdateForm.available" required #isAvailableSelect="ngModel">
+          <option ngValue="true">true</option>
+          <option ngValue="false">false</option>
+        </select>
+        <div class="alert alert-danger" role="alert" *ngIf="updateRoomForm.submitted && isAvailableSelect.invalid">Choose availability</div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Confirm</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<div class="container-fluid p-0" id="activitiesContainer">
+  <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Availability</th>
+        <th>Authorities</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let activity of activities | paginate : config">
+        <td>{{activity.name}}</td>
+        <td>{{activity.available}}</td>
+        <td>{{activity.authorities}}</td>
+        <td><button *ngIf="activity.available == true" class="btn btn-danger" (click)="deactivateAcivity(activity.id)">Deactivate</button></td>
+        <td><button class="btn btn-info" (click)="openUpdateActivityModal(updateActivityModal, activity.id, activity.name, activity.authorities)">Update</button></td>
+      </tr>
+      <pagination-controls (pageChange)="changePage($event)" class="my-pagination"></pagination-controls>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-success" (click)="openAddActivityModal(addActivityModal)">Add activity</button>
+</div>
