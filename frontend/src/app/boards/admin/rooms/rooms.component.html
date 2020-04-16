@@ -9,7 +9,7 @@
     <form id="addRoom" (ngSubmit)="addRoomForm.form.valid && addRoom()" #addRoomForm="ngForm" novalidate>
       <div class="form-group">
         <label for="add/roomName">Room name</label>
-        <input type="text" class="form-control" id="add/roomName" name="add/roomName" [(ngModel)]="roomAddForm.name" required #roomName="ngModel" appRoomNameValidateDirective/>
+        <input type="text" autocomplete="off" class="form-control" id="add/roomName" name="add/roomName" [(ngModel)]="roomAddForm.name" required #roomName="ngModel" appRoomNameValidateDirective/>
         <div  class="alert alert-danger" *ngIf=" roomName.invalid && (roomName.dirty || roomName.touched)">
           <div *ngIf="roomName.errors.required">Room name is required!</div>
           <div *ngIf="roomName.errors?.roomNameInvalid && (roomName.touched || roomName.dirty)">Room name has to be unique!</div>
@@ -41,7 +41,7 @@
     <form id="updateRoom" (ngSubmit)="updateRoomForm.form.valid && updateRoom()" #updateRoomForm="ngForm" novalidate>
       <div class="form-group">
         <label for="update/roomName">Room name</label>
-        <input type="text" class="form-control" id="update/roomName" name="update/roomName" [(ngModel)]="roomUpdateForm.name" required #roomName="ngModel" appRoomNameValidateDirective/>
+        <input autocomplete="off" type="text" class="form-control" id="update/roomName" name="update/roomName" [(ngModel)]="roomUpdateForm.name" required #roomName="ngModel" appRoomNameValidateDirective/>
         <div  class="alert alert-danger" *ngIf=" roomName.invalid && (roomName.dirty || roomName.touched)">
           <div *ngIf="roomName.errors.required">Room name is required!</div>
           <div *ngIf="roomName.errors?.roomNameInvalid && (roomName.touched || roomName.dirty)">Room name has to be unique!</div>

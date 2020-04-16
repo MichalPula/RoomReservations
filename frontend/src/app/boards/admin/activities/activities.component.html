@@ -44,11 +44,11 @@
     </button>
   </div>
   <div class="modal-body">
-    <form id="updateRoom" (ngSubmit)="updateRoomForm.form.valid && updateActvitity()" #updateRoomForm="ngForm" novalidate>
+    <form id="updateRoom" (ngSubmit)="updateActivityForm.form.valid && updateActvitity()" #updateActivityForm="ngForm" novalidate>
       <div class="form-group">
         <label for="update/activityName">Activity name</label>
         <input type="text" autocomplete="off" class="form-control" id="update/activityName" name="update/activityName" [(ngModel)]="activityUpdateForm.name" required #activityName="ngModel"/>
-        <div  class="alert alert-danger" *ngIf="activityName.invalid && (activityName.dirty || activityName.touched) || updateRoomForm.submitted && activityName.invalid">
+        <div  class="alert alert-danger" *ngIf="activityName.invalid && (activityName.dirty || activityName.touched) || updateActivityForm.submitted && activityName.invalid">
           <div *ngIf="activityName.errors.required">Activity name is required</div>
         </div>
       </div>
@@ -58,14 +58,14 @@
           <mat-radio-button *ngFor="let role of roles" class="margin" value="{{role.formattedRoleType}}">{{role.formattedRoleType}}</mat-radio-button>
         </mat-radio-group>
       </div>
-      <div class="alert alert-danger" role="alert" *ngIf="updateRoomForm.submitted && authoritySelect.invalid">Choose authority</div>
+      <div class="alert alert-danger" role="alert" *ngIf="updateActivityForm.submitted && authoritySelect.invalid">Choose authority</div>
       <div class="form-group">
         <label for="update/isAvailable">Is available</label>
         <select class="custom-select" id="update/isAvailable" name="update/isAvailable" [(ngModel)]="activityUpdateForm.available" required #isAvailableSelect="ngModel">
           <option ngValue="true">true</option>
           <option ngValue="false">false</option>
         </select>
-        <div class="alert alert-danger" role="alert" *ngIf="updateRoomForm.submitted && isAvailableSelect.invalid">Choose availability</div>
+        <div class="alert alert-danger" role="alert" *ngIf="updateActivityForm.submitted && isAvailableSelect.invalid">Choose availability</div>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Confirm</button>

@@ -4,7 +4,7 @@
       <label for="name">Name:</label>
       <div id="inputAndSubmit">
         <div class="input-group">
-            <input class="form-control" type="text" style="display: inline;" id="name" name="name" [(ngModel)]="searchedName" required #name="ngModel">
+            <input class="form-control" autocomplete="off" type="text" style="display: inline;" id="name" name="name" [(ngModel)]="searchedName" required #name="ngModel">
         </div>
         <div class="input-group-append">
           <button type="submit" class="btn btn-primary btn-block">Search</button>

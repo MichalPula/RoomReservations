@@ -3,7 +3,7 @@
     <form id="loginForm" *ngIf="!isLoggedIn" (ngSubmit)="loginForm.form.valid && onSubmit()" #loginForm="ngForm" novalidate>
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" [(ngModel)]="form.username" required #username="ngModel"/>
+        <input autocomplete="off" type="text" class="form-control" id="username" name="username" [(ngModel)]="form.username" required #username="ngModel"/>
         <div class="alert alert-danger" role="alert" *ngIf="loginForm.submitted && username.invalid">Username is required!</div>
       </div>
 
