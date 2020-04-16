@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbCalendar, NgbDate, NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AdminService} from '../../../services/admin.service';
-import {MarkedReservation} from '../../../home/home.component';
+import {MarkedReservation} from '../../common/home/home.component';
 import {CommonService} from '../../../services/common.service';
 
 @Component({
@@ -25,6 +25,8 @@ export class UsersReservationsByDateComponent implements OnInit {
 
   public markedReservationsList: MarkedReservation[] = [];
 
+  beforeFirstSearch = true;
+
   constructor(private adminService: AdminService, private calendar: NgbCalendar, private commonService: CommonService,
               private modalService: NgbModal) {}
 
@@ -34,6 +36,7 @@ export class UsersReservationsByDateComponent implements OnInit {
   }
 
   getReservationsByPickedDate() {
+    this.beforeFirstSearch = false;
     this.adminService.getReservationsByPickedDate(this.reservationDate.year, this.reservationDate.month, this.reservationDate.day)
       .subscribe(data => {
         this.markedReservationsList = data as MarkedReservation[];

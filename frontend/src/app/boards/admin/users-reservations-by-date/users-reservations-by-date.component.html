@@ -64,7 +64,11 @@
     </ng-template>
     <ng-template #noReservationsOnPickedDay>
       <div id="message">
-        <h1>No reservations for this day.</h1>
+        <ng-template [ngIf]="beforeFirstSearch" [ngIfElse]="afterFirstSearch">
+        </ng-template>
+        <ng-template #afterFirstSearch>
+          <h1>No reservations for this day.</h1>
+        </ng-template>
       </div>
     </ng-template>
   </div>

@@ -8,6 +8,7 @@
         <th>Phone number</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -17,7 +18,7 @@
         <td>{{student.phoneNumber}}</td>
         <td><button class="btn btn-dark" (click)="getStudentsHistory(student.id)">History</button></td>
         <td><button class="btn btn-info" (click)="getStudentsActiveReservations(student.id)">Active</button></td>
-        <td><button class="btn btn-info" (click)="getStudentsStatistics(student.id)">Statistics</button></td>
+        <td><button class="btn btn-link" (click)="getStudentsStatistics(student.id)">Statistics</button></td>
       </tr>
       <pagination-controls (pageChange)="changePage($event)" class="my-pagination"></pagination-controls>
       </tbody>

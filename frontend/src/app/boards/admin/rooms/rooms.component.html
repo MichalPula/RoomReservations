@@ -9,11 +9,11 @@
     <form id="addRoom" (ngSubmit)="addRoomForm.form.valid && addRoom()" #addRoomForm="ngForm" novalidate>
       <div class="form-group">
         <label for="add/roomName">Room name</label>
-          <input type="text" class="form-control" id="add/roomName" name="add/roomName" [(ngModel)]="roomAddForm.name" required #roomName="ngModel" appRoomNameValidateDirective/>
-          <div  class="alert alert-danger" *ngIf=" roomName.invalid && (roomName.dirty || roomName.touched)">
-            <div *ngIf="roomName.errors.required">Room name is required!</div>
-            <div *ngIf="roomName.errors?.roomNameInvalid && (roomName.touched || roomName.dirty)">Room name has to be unique!</div>
-          </div>
+        <input type="text" class="form-control" id="add/roomName" name="add/roomName" [(ngModel)]="roomAddForm.name" required #roomName="ngModel" appRoomNameValidateDirective/>
+        <div  class="alert alert-danger" *ngIf=" roomName.invalid && (roomName.dirty || roomName.touched)">
+          <div *ngIf="roomName.errors.required">Room name is required!</div>
+          <div *ngIf="roomName.errors?.roomNameInvalid && (roomName.touched || roomName.dirty)">Room name has to be unique!</div>
+        </div>
       </div>
       <div class="form-group">
         <label for="add/isAvailable">Is available from beginning?</label>
@@ -70,6 +70,7 @@
         <th>Name</th>
         <th>Availability</th>
         <th></th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -77,7 +78,7 @@
         <td>{{room.name}}</td>
         <td>{{room.available}}</td>
         <td><button *ngIf="room.available == true" class="btn btn-danger" (click)="deactivateRoom(room.id)">Deactivate</button></td>
-        <td><button class="btn btn-info" (click)="openUpdateRoomModal(updateRoomModal,room.id, room.name, room.available)">Update</button></td>
+        <td><button class="btn btn-info" (click)="openUpdateRoomModal(updateRoomModal,room.id, room.name)">Update</button></td>
       </tr>
       </tbody>
     </table>

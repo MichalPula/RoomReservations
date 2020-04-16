@@ -37,14 +37,14 @@ export class RoomsComponent implements OnInit {
 
   idOfRoomToUpdate: number;
 
-  constructor(private adminService: AdminService, private userService: CommonService, private modalService: NgbModal) { }
+  constructor(private adminService: AdminService, private commonService: CommonService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.fetchData();
   }
 
   fetchData() {
-    this.adminService.getAllRooms().subscribe(data => {
+    this.commonService.getAllRooms().subscribe(data => {
       this.rooms = data as Room[];
     });
   }
@@ -56,6 +56,8 @@ export class RoomsComponent implements OnInit {
   }
 
   openAddRoomModal(content) {
+    this.roomAddForm.name = '';
+    this.roomAddForm.available = null;
     this.modalService.open(content, { centered: true });
   }
 
@@ -65,7 +67,7 @@ export class RoomsComponent implements OnInit {
     });
   }
 
-  openUpdateRoomModal(content, roomId, roomName, isAvailable) {
+  openUpdateRoomModal(content, roomId, roomName) {
     this.idOfRoomToUpdate = roomId;
     this.roomUpdateForm.name = roomName;
     this.modalService.open(content, { centered: true });
