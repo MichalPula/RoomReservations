@@ -1,0 +1,56 @@
+<div class="container p-0" id="container">
+  <div id="studentSearch">
+    <form id="searchStudentForm" (ngSubmit)="searchStudentForm.valid && submitName()" #searchStudentForm="ngForm">
+      <label for="name">Name:</label>
+      <div id="inputAndSubmit">
+        <div class="input-group">
+            <input class="form-control" type="text" style="display: inline;" id="name" name="name" [(ngModel)]="searchedName" required #name="ngModel">
+        </div>
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary btn-block">Search</button>
+        </div>
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="searchStudentForm.submitted && name.invalid">
+        <div *ngIf="name.errors.required">Name is required</div>
+      </div>
+    </form>
+  </div>
+
+  <div class="container" id="resultContainer">
+    <ng-template [ngIf]="foundStudents.length > 0" [ngIfElse]="noStudentFound">
+      <div id="reservationsByDateContainer">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Phone number</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let foundStudent of foundStudents">
+            <td>{{foundStudent.firstName + ' ' + foundStudent.lastName}}</td>
+            <td>{{foundStudent.username}}</td>
+            <td>{{foundStudent.phoneNumber}}</td>
+            <td><button class="btn btn-dark" (click)="getStudentsHistory(foundStudent.id)">History</button></td>
+            <td><button class="btn btn-info" (click)="getStudentsActiveReservations(foundStudent.id)">Active</button></td>
+            <td><button class="btn btn-link" (click)="getStudentsStatistics(foundStudent.id)">Statistics</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+    <ng-template #noStudentFound>
+      <div id="message">
+      <ng-template [ngIf]="beforeFirstSearch" [ngIfElse]="afterFirstSearch">
+      </ng-template>
+      <ng-template #afterFirstSearch>
+          <h1>Student not found.</h1>
+      </ng-template>
+      </div>
+    </ng-template>
+  </div>
+</div>
