@@ -13,7 +13,7 @@ import { RoomsComponent } from './boards/admin/rooms/rooms.component';
 import { ReservationAddComponent } from './boards/common/reservation-add/reservation-add.component';
 import { MyReservationsComponent } from './boards/common/my-reservations/my-reservations.component';
 import { UsersReservationsByDateComponent } from './boards/admin/users-reservations-by-date/users-reservations-by-date.component';
-import { AllStudentsComponent } from './boards/admin/all-students/all-students.component';
+import { AllStudentsComponent } from "./boards/admin/all-students/all-students.component";
 import { StudentByNameComponent } from './boards/admin/student-by-name/student-by-name.component';
 import { RoomsAndStudentsStatisticsComponent } from './boards/admin/rooms-and-students-statistics/rooms-and-students-statistics.component';
 

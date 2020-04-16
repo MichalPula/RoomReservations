@@ -31,7 +31,7 @@ import {LoginRouteGuardService} from './services/login-route-guard.service';
 import {RoomNameValidateDirective} from './boards/admin/rooms/room-name-validator';
 import { UsersReservationsByDateComponent } from './boards/admin/users-reservations-by-date/users-reservations-by-date.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { AllStudentsComponent } from './boards/admin/all-students/all-students.component';
+import { AllStudentsComponent } from "./boards/admin/all-students/all-students.component";
 import { RoomsAndStudentsStatisticsComponent } from './boards/admin/rooms-and-students-statistics/rooms-and-students-statistics.component';
 import { StudentByNameComponent } from './boards/admin/student-by-name/student-by-name.component';
 import { ActivitiesComponent } from './boards/admin/activities/activities.component';
