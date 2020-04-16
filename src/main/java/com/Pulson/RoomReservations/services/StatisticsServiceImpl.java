@@ -2,6 +2,8 @@ package com.Pulson.RoomReservations.services;
 
 import com.Pulson.RoomReservations.entities.Reservation;
 import com.Pulson.RoomReservations.entities.User;
+import com.Pulson.RoomReservations.models.statistics.HoursPerActivityStatistics;
+import com.Pulson.RoomReservations.models.statistics.HoursPerRoomStatistics;
 import com.Pulson.RoomReservations.repositories.ReservationRepository;
 import com.Pulson.RoomReservations.repositories.UserRepository;
 import org.json.JSONArray;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -28,7 +31,6 @@ public class StatisticsServiceImpl implements StatisticsService {
         this.userRepository = userRepository;
         this.entityManager = entityManager;
     }
-
 
     @Override
     public String getAmountOfHoursSpentOnParticularActivitiesByUser(long userId) throws Exception {
@@ -68,25 +70,21 @@ public class StatisticsServiceImpl implements StatisticsService {
                 " AND start_time >= ?" +
                 " AND start_time < ?" +
                 " group by 1");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date parsedStartDate = dateFormat.parse(LocalDateTime.now().getYear() + "-01-01");
-        Date parsedEndDate = dateFormat.parse(LocalDateTime.now().getYear() + "-12-31");
-        Timestamp startTimestamp = new Timestamp(parsedStartDate.getTime());
-        Timestamp endTimestamp = new Timestamp(parsedEndDate.getTime());
 
+        List<Timestamp> startAndEndTimestamp = getStartAndEndYearDate();
         query.setParameter(1, userId);
-        query.setParameter(2, startTimestamp);
-        query.setParameter(3, endTimestamp);
+        query.setParameter(2, startAndEndTimestamp.get(0));
+        query.setParameter(3, startAndEndTimestamp.get(1));
 
         JSONArray objectsArray = new JSONArray();
         List<Object[]> resultList = query.getResultList();
 
-        for (int i = 0; i <= 11; i++){
+        for (int i = 0; i <= 11; i++) {
             JSONObject json = new JSONObject();
-            if(i < resultList.size()){
+            if (i < resultList.size()) {
                 Object[] record = resultList.get(i);
                 json.put("hours", record[1]);
-            }else{
+            } else {
                 json.put("hours", 0);
             }
             objectsArray.put(json);
@@ -105,5 +103,37 @@ public class StatisticsServiceImpl implements StatisticsService {
                 " group by user_id) OK");
         Object result = query.getSingleResult();
         return String.valueOf(result);
+    }
+
+    @Override
+    public List<HoursPerRoomStatistics> getHoursSpentInRooms() throws Exception {
+        List<Timestamp> startAndEndTimestamp = getStartAndEndYearDate();
+
+        return Collections.checkedList(
+                entityManager.createNamedQuery(HoursPerRoomStatistics.HOURS_PER_ROOM, HoursPerRoomStatistics.class)
+                        .setParameter(1, startAndEndTimestamp.get(0))
+                        .setParameter(2, startAndEndTimestamp.get(1))
+                        .getResultList(), HoursPerRoomStatistics.class);
+    }
+
+    @Override
+    public List<HoursPerActivityStatistics> getHoursSpentOnActivities() throws Exception {
+        List<Timestamp> startAndEndTimestamp = getStartAndEndYearDate();
+
+        return Collections.checkedList(
+                entityManager.createNamedQuery(HoursPerActivityStatistics.HOURS_PER_ACTIVITY, HoursPerActivityStatistics.class)
+                        .setParameter(1, startAndEndTimestamp.get(0))
+                        .setParameter(2, startAndEndTimestamp.get(1))
+                        .getResultList(), HoursPerActivityStatistics.class);
+    }
+
+    private List<Timestamp> getStartAndEndYearDate() throws ParseException {
+        List<Timestamp> startAndEndYearDate = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedStartDate = dateFormat.parse(LocalDateTime.now().getYear() + "-01-01");
+        Date parsedEndDate = dateFormat.parse(LocalDateTime.now().getYear() + "-12-31");
+        startAndEndYearDate.add(new Timestamp(parsedStartDate.getTime()));
+        startAndEndYearDate.add(new Timestamp(parsedEndDate.getTime()));
+        return startAndEndYearDate;
     }
 }
