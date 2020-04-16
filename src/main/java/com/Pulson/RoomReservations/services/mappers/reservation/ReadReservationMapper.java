@@ -49,6 +49,6 @@ public class ReadReservationMapper {
             markedReservation.setReservation(reservationReadDTO);
             markedReservations.add(markedReservation);
         });
-        return  markedReservations;
+        return markedReservations;
     }
 }

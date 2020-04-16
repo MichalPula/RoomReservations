@@ -21,12 +21,12 @@ public class Room {
     public Room() {
     }
 
-    public Room(String name, Boolean isAvailable){
+    public Room(String name, Boolean isAvailable) {
         this.name = name;
         this.isAvailable = isAvailable;
     }
 
-    public Room(String name){
+    public Room(String name) {
         this.name = name;
     }
 

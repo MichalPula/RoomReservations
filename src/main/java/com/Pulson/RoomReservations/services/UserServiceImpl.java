@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,13 +43,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllStudents() {
-        Role role = roleRepository.findByRoleType(RoleType.ROLE_ADMIN);
-        return userRepository.findAllByRolesNotContaining(role);
+        Role admin = roleRepository.findByRoleType(RoleType.ROLE_ADMIN);
+        return userRepository.findAllByRolesNotContaining(admin);
     }
 
     @Override
     public User getById(long id) throws Exception {
         return userRepository.findById(id).orElseThrow(() -> new Exception("User " + id + " NOT found"));
+    }
+
+    @Override
+    public List<User> getStudentByName(String firstName, String lastName) throws Exception {
+        List<User> studentsMatchingConstraint = new ArrayList<>();
+        Role admin = roleRepository.findByRoleType(RoleType.ROLE_ADMIN);
+        if (!firstName.equals("null") && !lastName.equals("null")) {
+            return userRepository.findAllByRolesNotContainingAndFirstNameIgnoreCaseAndLastNameIgnoreCase
+                    (admin, firstName, lastName);
+        } else {
+            List<User> students = userRepository.findAllByRolesNotContaining(admin);
+            students.forEach(student -> {
+                if (student.getFirstName().toLowerCase().equals(firstName.toLowerCase()) ||
+                        student.getLastName().toLowerCase().equals(firstName.toLowerCase())) {
+                    studentsMatchingConstraint.add(student);
+                }
+            });
+        }
+        return studentsMatchingConstraint;
     }
 
     @Transactional
@@ -94,7 +114,7 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<?> updatePassword(PasswordChangeRequest passwordChangeRequest) throws Exception {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         User user = userRepository.findById(passwordChangeRequest.getUserId()).orElseThrow(() -> new Exception("User NOT found"));
-        if(!bCryptPasswordEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())){
+        if (!bCryptPasswordEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())) {
             return new ResponseEntity<>("Wrong password", HttpStatus.CONFLICT);
         } else {
             user.setPassword(bCryptPasswordEncoder.encode(passwordChangeRequest.getNewPassword()));
@@ -122,13 +142,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try{
+        try {
             User user = userRepository.getUserByUsername(username);
             return UserDetailsImpl.build(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new UsernameNotFoundException("User Not Found with username: " + username);
         }
     }
-
-
 }

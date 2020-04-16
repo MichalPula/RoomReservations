@@ -17,18 +17,20 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class CreateUpdateReservationMapper {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private RoomRepository roomRepository;
+    private ActivityRepository activityRepository;
 
     @Autowired
-    private ActivityRepository activityRepository;
+    public CreateUpdateReservationMapper(UserRepository userRepository, RoomRepository roomRepository, ActivityRepository activityRepository) {
+        this.userRepository = userRepository;
+        this.roomRepository = roomRepository;
+        this.activityRepository = activityRepository;
+    }
 
     public Reservation mapToReservation(ReservationCreateUpdateDTO reservationCreateUpdateDTO) throws Exception {
         Reservation reservation = new Reservation();
-        User user = userRepository.findById(reservationCreateUpdateDTO.getUserId()).orElseThrow(()-> new Exception("User NOT found"));
+        User user = userRepository.findById(reservationCreateUpdateDTO.getUserId()).orElseThrow(() -> new Exception("User NOT found"));
         reservation.setUser(user);
         Room room = roomRepository.findByName(reservationCreateUpdateDTO.getRoomName());
         reservation.setRoom(room);

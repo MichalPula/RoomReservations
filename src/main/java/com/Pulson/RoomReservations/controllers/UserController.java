@@ -1,6 +1,5 @@
 package com.Pulson.RoomReservations.controllers;
 
-import com.Pulson.RoomReservations.entities.RoleType;
 import com.Pulson.RoomReservations.entities.User;
 import com.Pulson.RoomReservations.entities.dtos.user.UserReadDTO;
 import com.Pulson.RoomReservations.models.BasicAccountDataChangeRequest;
@@ -30,29 +29,14 @@ public class UserController {
         this.readUserMapper = readUserMapper;
     }
 
-    @GetMapping("/all")
-    public List<User> getAll() {
-        return userService.getAll();
-    }
-
     @GetMapping("/all/students")
     public List<UserReadDTO> getAllStudents() {
         return readUserMapper.mapToUserReadDTOsList(userService.getAllStudents());
     }
 
-    @GetMapping("/{id}")
-    public User getById(@PathVariable("id") long id) throws Exception {
-        return userService.getById(id);
-    }
-
-    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean create(@RequestBody User user) {
-        return userService.create(user);
-    }
-
-    @DeleteMapping("/deactivate/{id}")
-    public boolean delete(@PathVariable("id") long id) throws Exception {
-        return userService.deactivate(id);
+    @GetMapping("/students/name/{firstName}/{lastName}")
+    public List<UserReadDTO> getStudentByName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) throws Exception {
+        return readUserMapper.mapToUserReadDTOsList(userService.getStudentByName(firstName, lastName));
     }
 
     @GetMapping(value = "/getBasicAccountData/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

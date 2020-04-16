@@ -6,7 +6,8 @@ public class JwtLoginRequest {
 
     private String password;
 
-    public JwtLoginRequest() {}
+    public JwtLoginRequest() {
+    }
 
     public JwtLoginRequest(String username, String password) {
         this.username = username;

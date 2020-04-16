@@ -15,19 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ReservationServiceImpl implements ReservationService{
+public class ReservationServiceImpl implements ReservationService {
 
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
     private ReservationRepository reservationRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private ActivityRepository activityRepository;
+    public ReservationServiceImpl(ReservationRepository reservationRepository, UserRepository userRepository) {
+        this.reservationRepository = reservationRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<Reservation> getAll() {
@@ -37,8 +37,8 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public List<Reservation> getActive() {
         LocalDateTime todayDate = LocalDateTime.now();
-        return reservationRepository.findAllByStartTimeBetween(LocalDateTime.of(todayDate.getYear(),todayDate.getMonth(), todayDate.getDayOfMonth(),0,0),
-                LocalDateTime.of(todayDate.getYear(),todayDate.getMonth(), todayDate.getDayOfMonth(),23,59));
+        return reservationRepository.findAllByStartTimeBetween(LocalDateTime.of(todayDate.getYear(), todayDate.getMonth(), todayDate.getDayOfMonth(), 0, 0),
+                LocalDateTime.of(todayDate.getYear(), todayDate.getMonth(), todayDate.getDayOfMonth(), 23, 59));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ReservationServiceImpl implements ReservationService{
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
         List<Reservation> activeReservations = new ArrayList<>();
         reservationRepository.findAllByUser(user).forEach(reservation -> {
-            if(reservation.getStartTime().isAfter(LocalDateTime.now())){
+            if (reservation.getStartTime().isAfter(LocalDateTime.now())) {
                 activeReservations.add(reservation);
             }
         });
@@ -58,7 +58,7 @@ public class ReservationServiceImpl implements ReservationService{
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
         List<Reservation> reservationsHistory = new ArrayList<>();
         reservationRepository.findAllByUser(user).forEach(reservation -> {
-            if(reservation.getEndTime().isBefore(LocalDateTime.now())){
+            if (reservation.getEndTime().isBefore(LocalDateTime.now())) {
                 reservationsHistory.add(reservation);
             }
         });
@@ -67,12 +67,12 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public List<Reservation> getByDate(int year, int month, int day) throws Exception {
-        return reservationRepository.findAllByStartTimeBetween(LocalDateTime.of(year,month,day,0,0), LocalDateTime.of(year,month,day,23,59));
+        return reservationRepository.findAllByStartTimeBetween(LocalDateTime.of(year, month, day, 0, 0), LocalDateTime.of(year, month, day, 23, 59));
     }
 
     @Override
     public List<Integer> getStartingHoursListByDateByRoom(int year, int month, int day, long roomId) throws Exception {
-        List<Reservation> todayReservations = reservationRepository.findAllByStartTimeBetweenAndRoom_Id(LocalDateTime.of(year,month,day,0,0), LocalDateTime.of(year,month,day,23,59), roomId);
+        List<Reservation> todayReservations = reservationRepository.findAllByStartTimeBetweenAndRoom_Id(LocalDateTime.of(year, month, day, 0, 0), LocalDateTime.of(year, month, day, 23, 59), roomId);
         List<Integer> todayReservationsStartingHours = new ArrayList<>();
         todayReservations.forEach(reservation -> {
             todayReservationsStartingHours.add(reservation.getStartTime().getHour());
@@ -83,7 +83,7 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public Integer getAmountByDateByUser(int year, int month, int day, long userId) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
-        return reservationRepository.countAllByStartTimeBetweenAndUser(LocalDateTime.of(year,month,day,0,0), LocalDateTime.of(year,month,day,23,59), user);
+        return reservationRepository.countAllByStartTimeBetweenAndUser(LocalDateTime.of(year, month, day, 0, 0), LocalDateTime.of(year, month, day, 23, 59), user);
     }
 
     @Override

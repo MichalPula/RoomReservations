@@ -30,15 +30,16 @@ public class Activity {
     @Column(columnDefinition = "boolean", name = "is_available")
     private Boolean isAvailable = true;
 
-    public Activity() { }
+    public Activity() {
+    }
 
-    public Activity(String name, List<Role> authorities, Boolean isAvailable){
+    public Activity(String name, List<Role> authorities, Boolean isAvailable) {
         this.name = name;
         this.authorities = authorities;
         this.isAvailable = isAvailable;
     }
 
-    public Activity(String name, List<Role> authorities){
+    public Activity(String name, List<Role> authorities) {
         this.name = name;
         this.authorities = authorities;
     }

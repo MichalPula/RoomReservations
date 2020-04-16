@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class JwtAuthenticationController {
 
-    @Autowired
+
     private AuthenticationService authenticationService;
+
+    @Autowired
+    public JwtAuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody JwtLoginRequest loginRequest) throws Exception {

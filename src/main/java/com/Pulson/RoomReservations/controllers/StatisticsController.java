@@ -1,9 +1,13 @@
 package com.Pulson.RoomReservations.controllers;
 
+import com.Pulson.RoomReservations.models.statistics.HoursPerActivityStatistics;
+import com.Pulson.RoomReservations.models.statistics.HoursPerRoomStatistics;
 import com.Pulson.RoomReservations.services.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -31,6 +35,14 @@ public class StatisticsController {
     public String getAverageHoursSpentInRoomsPerUser() throws Exception { ;
         return statisticsService.getAverageHoursSpentInRoomsPerUser();
     }
+
+    @GetMapping(value = "/all/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<HoursPerRoomStatistics> getHoursSpentInRooms() throws Exception {
+        return statisticsService.getHoursSpentInRooms();
+    }
+
+    @GetMapping(value = "/all/activities", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<HoursPerActivityStatistics> getHoursSpentOnActivities() throws Exception {
+        return statisticsService.getHoursSpentOnActivities();
+    }
 }
-
-

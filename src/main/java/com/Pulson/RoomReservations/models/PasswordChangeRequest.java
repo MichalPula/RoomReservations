@@ -14,7 +14,8 @@ public class PasswordChangeRequest implements Serializable {
         this.newPassword = newPassword;
     }
 
-    public PasswordChangeRequest() {}
+    public PasswordChangeRequest() {
+    }
 
     public String getOldPassword() {
         return oldPassword;
