@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {BasicDataChangeForm, EmailChangeForm, PasswordChangeForm} from '../profile/profile.component';
-import {MarkedReservation} from '../home/home.component';
+import {BasicDataChangeForm, EmailChangeForm, PasswordChangeForm} from '../boards/common/profile/profile.component';
 
 const API_URL = 'http://localhost:8080/';
 
@@ -56,12 +55,17 @@ export class ReservationRead {
 }
 
 export class Activity {
-   name: string;
-   authorities: string[];
-   available: boolean;
+  id: number;
+  name: string;
+  authorities: string[];
+  available: boolean;
 
-   constructor(name?: string, authorities?: string[], available?: boolean) {
-   }
+  constructor(id?: number, name?: string, authorities?: string[], available?: boolean) {
+    this.id = id;
+    this.name = name;
+    this.authorities = authorities;
+    this.available = available;
+  }
 }
 
 
@@ -83,11 +87,11 @@ export class CommonService {
   addReservation(reservation: ReservationAddUpdate) {
     return this.http.post(API_URL + 'reservations/add', reservation);
   }
-  getUsersActiveReservations(userId: number): Observable<any> {
-    return this.http.get(API_URL + 'reservations/active/' + userId);
-  }
   getActiveReservations(): Observable<any> {
     return this.http.get(API_URL + 'reservations/active');
+  }
+  getUsersActiveReservations(userId: number): Observable<any> {
+    return this.http.get(API_URL + 'reservations/active/' + userId);
   }
   getUsersReservationsHistory(userId: number): Observable<any> {
     return this.http.get(API_URL + 'reservations/history/' + userId);
@@ -96,7 +100,7 @@ export class CommonService {
     return this.http.get(API_URL + 'reservations/date/' + year + '/' + month + '/' + day + '/room/' + roomId);
   }
   getAmountOfReservationsByPickedDateByUser(year: number, month: number, day: number, userId: number): Observable<any> {
-    return this.http.get(API_URL + 'reservations/date/' + year + '/' + month + '/' + day + '/' + userId);
+    return this.http.get(API_URL + 'reservations/date/' + year + '/' + month + '/' + day + '/user/' + userId);
   }
   cancelReservation(reservationId: number) {
     return this.http.delete(API_URL + 'reservations/delete/' + reservationId);
