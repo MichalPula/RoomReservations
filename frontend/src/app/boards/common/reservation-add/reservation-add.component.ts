@@ -83,16 +83,16 @@ export class ReservationAddComponent implements OnInit {
   fetchData() {
     this.commonService.getAllActivities().subscribe(data => {
       this.activities = data as Activity[];
-      if (this.isAdmin() === false) {
-         for (const activity of this.activities) {
-            if (activity.authorities.includes('ROLE_USER') &&
-             activity.available) {
-              continue;
-            }
-            if (activity.authorities.includes('ROLE_ADMIN') || activity.available === false) {
-              this.activities = this.activities.filter(obj => obj !== activity);
-            }
-         }
+      for (const activity of this.activities) {
+        if (this.isAdmin() === false) {
+          if (activity.authorities.includes('ROLE_ADMIN') || !activity.available) {
+            this.activities = this.activities.filter(obj => obj !== activity);
+          }
+        } else {
+          if (!activity.available) {
+            this.activities = this.activities.filter(obj => obj !== activity);
+          }
+        }
       }
     });
 
