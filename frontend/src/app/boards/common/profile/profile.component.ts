@@ -1,7 +1,7 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {TokenStorageService} from '../services/token-storage.service';
-import {CommonService} from '../services/common.service';
+import {TokenStorageService} from '../../../services/token-storage.service';
+import {CommonService} from '../../../services/common.service';
 
 export interface BasicDataChangeForm {
   userId: null;

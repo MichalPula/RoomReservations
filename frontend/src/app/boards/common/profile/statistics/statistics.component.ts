@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import * as CanvasJS from 'src/app/lib/canvasjs.min.js';
-import {TokenStorageService} from '../../services/token-storage.service';
-import {CommonService} from '../../services/common.service';
+import {TokenStorageService} from '../../../../services/token-storage.service';
+import {CommonService} from '../../../../services/common.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 export interface ActivityAndHour {
   y: number;
@@ -19,29 +20,46 @@ export interface Hour {
 })
 export class StatisticsComponent implements OnInit {
 
-  constructor(private tokenStorageService: TokenStorageService, private userService: CommonService) { }
+  adminIsSearchingStudentsStatistics: boolean;
+  searchedStudentId: number;
+
+  constructor(private tokenStorageService: TokenStorageService, private commonService: CommonService,
+              private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getCurrentURL();
     this.fetchDataAndCreateCharts();
   }
 
+  private getCurrentURL() {
+    const urlWithoutParams = this.router.url.split('?')[0];
+    if (urlWithoutParams === '/statistics/student') {
+      this.adminIsSearchingStudentsStatistics = true;
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.searchedStudentId = params.student;
+      });
+    }
+  }
+
   private fetchDataAndCreateCharts() {
-    this.userService.getAverageHoursSpentInRoomsPerUser().subscribe(average => {
-      this.userService.getAmountOfHoursSpentByMonthByUser(this.tokenStorageService.getUser().id).subscribe(hours => {
-        this.createTimePerMonthChart(hours as Hour[], average as number);
+    this.commonService.getAverageHoursSpentInRoomsPerUser().subscribe(average => {
+      this.commonService.getAmountOfHoursSpentByMonthByUser(
+        this.adminIsSearchingStudentsStatistics ? this.searchedStudentId : this.tokenStorageService.getUser().id)
+        .subscribe(hours => {this.createTimePerMonthChart(hours as Hour[], average as number);
       });
     });
-    this.userService.getAmountOfHoursSpentOnParticularActivitiesByUser(this.tokenStorageService.getUser().id)
+    this.commonService.getAmountOfHoursSpentOnParticularActivitiesByUser(
+      this.adminIsSearchingStudentsStatistics ? this.searchedStudentId : this.tokenStorageService.getUser().id)
       .subscribe(activitiesAndHours => {
       this.createTimePerActivityChart(activitiesAndHours as ActivityAndHour[]);
     });
   }
 
-  private createTimePerActivityChart(activitiesAndHours: ActivityAndHour[]) {
+  createTimePerActivityChart(activitiesAndHours: ActivityAndHour[]) {
     const averageTimePerActivityChart = new CanvasJS.Chart('averageTimePerActivityChart', {
       theme: 'light3',
       animationEnabled: true,
-      exportEnabled: true,
+      exportEnabled: false,
       title: {
         text: 'Time spent on particular activities'
       },
@@ -56,7 +74,7 @@ export class StatisticsComponent implements OnInit {
     averageTimePerActivityChart.render();
   }
 
-  private createTimePerMonthChart(hours: Hour[], average: number) {
+  createTimePerMonthChart(hours: Hour[], average: number) {
     const todayDate = new Date();
     const thisYear = todayDate.getFullYear();
 
@@ -91,7 +109,6 @@ export class StatisticsComponent implements OnInit {
         ]
       }]
     });
-
     monthlyHoursChart.render();
   }
 }

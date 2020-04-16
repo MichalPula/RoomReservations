@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ReservationRead, ReservationAddUpdate, CommonService} from '../../../services/common.service';
+import {ReservationRead, CommonService} from '../../../services/common.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from '../../../services/token-storage.service';
 
@@ -47,36 +47,33 @@ export class MyReservationsComponent implements OnInit {
         break;
       case '/reservations/active/student':
         this.adminIsSearchingStudentsActiveReservations = true;
+        this.activatedRoute.queryParams.subscribe(params => {
+          this.searchedStudentId = params.student;
+        });
         break;
       case '/reservations/history/student':
         this.adminIsSearchingStudentsHistory = true;
+        this.activatedRoute.queryParams.subscribe(params => {
+          this.searchedStudentId = params.student;
+        });
         break;
     }
   }
 
   private fetchData() {
-    if (this.activeReservations) {
-      this.commonService.getUsersActiveReservations(this.tokenStorageService.getUser().id).subscribe(data => {
-        this.reservationsList = data as ReservationRead[];
-      });
-    } else if (this.reservationsHistory) {
-      this.commonService.getUsersActiveReservations(this.tokenStorageService.getUser().id).subscribe(data => {
-        this.reservationsList = data as ReservationRead[];
-      });
-    } else if (this.adminIsSearchingStudentsActiveReservations) {
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.searchedStudentId = params.student;
-        this.commonService.getUsersActiveReservations(this.searchedStudentId).subscribe(data => {
+    if (this.activeReservations || this.adminIsSearchingStudentsActiveReservations) {
+      this.commonService.getUsersActiveReservations(
+        this.adminIsSearchingStudentsActiveReservations ? this.searchedStudentId : this.tokenStorageService.getUser().id)
+        .subscribe(data => {
           this.reservationsList = data as ReservationRead[];
         });
-      });
-    } else if (this.adminIsSearchingStudentsHistory) {
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.searchedStudentId = params.student;
-        this.commonService.getUsersReservationsHistory(this.searchedStudentId).subscribe(data => {
+    }
+    if (this.reservationsHistory || this.adminIsSearchingStudentsHistory) {
+      this.commonService.getUsersReservationsHistory(
+        this.adminIsSearchingStudentsHistory ? this.searchedStudentId : this.tokenStorageService.getUser().id)
+        .subscribe(data => {
           this.reservationsList = data as ReservationRead[];
         });
-      });
     }
   }
 

@@ -30,7 +30,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let markedReservation of markedActiveReservations | paginate : config"
-      [ngStyle]="{'color': markedReservation.color}">
+          [ngStyle]="{'color': markedReservation.color}">
         <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.firstName + ' ' + markedReservation.reservation.lastName}}</td>
         <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.roomName}}</td>
         <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.activityName}}</td>

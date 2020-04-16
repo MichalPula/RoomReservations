@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ReservationRead, CommonService} from '../services/common.service';
+import {ReservationRead, CommonService} from '../../../services/common.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TokenStorageService} from '../services/token-storage.service';
+import {TokenStorageService} from '../../../services/token-storage.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 export interface MarkedReservation {
@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
       this.fetchData();
     });
   }
+
 
   changePage(newPage: number) {
     this.router.navigate(['/reservations/active/'], {queryParams: {page: newPage}});
