@@ -10,15 +10,25 @@ import java.util.List;
 @Component
 public class ReadActivityMapper {
 
-    public List<ActivityCreateReadUpdateDTO> mapToActivityCreateUpdateDTOsList(List<Activity> activities){
+    public List<ActivityCreateReadUpdateDTO> mapToActivityCreateReadUpdateDTOsList(List<Activity> activities) {
         List<ActivityCreateReadUpdateDTO> activityCreateUpdateDTOList = new ArrayList<>();
 
         activities.forEach(activity -> {
             ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO = new ActivityCreateReadUpdateDTO();
+            activityCreateReadUpdateDTO.setId(activity.getId());
             activityCreateReadUpdateDTO.setName(activity.getName());
 
             List<String> authorities = new ArrayList<>();
-            activity.getAuthorities().forEach(role -> authorities.add(role.getAuthority()));
+            activity.getAuthorities().forEach(role -> {
+                switch (role.getAuthority()) {
+                    case "ROLE_USER":
+                        authorities.add("User");
+                        break;
+                    case "ROLE_ADMIN":
+                        authorities.add("Admin");
+                        break;
+                }
+            });
             activityCreateReadUpdateDTO.setAuthorities(authorities);
 
             activityCreateReadUpdateDTO.setAvailable(activity.getAvailable());
