@@ -4,9 +4,17 @@ import java.util.List;
 
 public class ActivityCreateReadUpdateDTO {
 
+    private long id;
     private String name;
     private List<String> authorities;
     private Boolean available;
+
+    public ActivityCreateReadUpdateDTO(long id, String name, List<String> authorities, Boolean available) {
+        this.id = id;
+        this.name = name;
+        this.authorities = authorities;
+        this.available = available;
+    }
 
     public ActivityCreateReadUpdateDTO(String name, List<String> authorities, Boolean available) {
         this.name = name;
@@ -14,8 +22,14 @@ public class ActivityCreateReadUpdateDTO {
         this.available = available;
     }
 
-    public ActivityCreateReadUpdateDTO() {
+    public ActivityCreateReadUpdateDTO() { }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -9,8 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
-import { ProfileComponent } from './profile/profile.component';
+import { HomeComponent } from './boards/common/home/home.component';
+import { ProfileComponent } from './boards/common/profile/profile.component';
 
 import { AuthenticationInterceptorService } from './services/authentication-interceptor.service';
 import { RoomsComponent } from './boards/admin/rooms/rooms.component';
@@ -26,12 +26,16 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { StatisticsComponent } from './profile/statistics/statistics.component';
+import { StatisticsComponent } from './boards/common/profile/statistics/statistics.component';
 import {LoginRouteGuardService} from './services/login-route-guard.service';
 import {RoomNameValidateDirective} from './boards/admin/rooms/room-name-validator';
 import { UsersReservationsByDateComponent } from './boards/admin/users-reservations-by-date/users-reservations-by-date.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { AllStudentsComponent } from './boards/admin/all-students/all-students.component';
+import { RoomsAndStudentsStatisticsComponent } from './boards/admin/rooms-and-students-statistics/rooms-and-students-statistics.component';
+import { StudentByNameComponent } from './boards/admin/student-by-name/student-by-name.component';
+import { ActivitiesComponent } from './boards/admin/activities/activities.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -47,6 +51,9 @@ import { AllStudentsComponent } from './boards/admin/all-students/all-students.c
     RoomNameValidateDirective,
     UsersReservationsByDateComponent,
     AllStudentsComponent,
+    RoomsAndStudentsStatisticsComponent,
+    StudentByNameComponent,
+    ActivitiesComponent,
   ],
   exports: [ReservationAddComponent],
     imports: [
@@ -63,7 +70,8 @@ import { AllStudentsComponent } from './boards/admin/all-students/all-students.c
         MatInputModule,
         MatSelectModule,
         BrowserAnimationsModule,
-        DragDropModule
+        DragDropModule,
+        MatRadioModule
     ],
   providers: [AuthenticationInterceptorService, LoginComponent, LoginRouteGuardService, RoomsComponent],
   bootstrap: [AppComponent]
