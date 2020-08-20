@@ -16,27 +16,27 @@ public class RoomServiceImpl implements RoomService {
     @PersistenceContext
     private EntityManager em;
 
-    private RoomRepository repository;
+    private RoomRepository roomRepository;
 
     @Autowired
-    public RoomServiceImpl(RoomRepository repository) {
-        this.repository = repository;
+    public RoomServiceImpl(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
     }
 
     @Override
     public List<Room> getAll() {
-        return repository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return roomRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     @Override
     public Room getById(long id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("Room " + id + " NOT found"));
+        return roomRepository.findById(id).orElseThrow(() -> new Exception("Room " + id + " NOT found"));
     }
 
     @Transactional
     @Override
     public Boolean create(Room room) {
-        repository.save(room);
+        roomRepository.save(room);
         return true;
     }
 
@@ -52,10 +52,10 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     @Override
     public Boolean update(long id, Room roomDetails) throws Exception {
-        Room room = repository.findById(id).orElseThrow(() -> new Exception("Room NOT found"));
+        Room room = roomRepository.findById(id).orElseThrow(() -> new Exception("Room NOT found"));
         room.setName(roomDetails.getName());
         room.setAvailable(roomDetails.getAvailable());
-        repository.save(room);
+        roomRepository.save(room);
         return true;
     }
 }
