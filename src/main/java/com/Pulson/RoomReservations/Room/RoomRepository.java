@@ -1,6 +1,5 @@
-package com.Pulson.RoomReservations.repositories;
+package com.Pulson.RoomReservations.Room;
 
-import com.Pulson.RoomReservations.entities.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

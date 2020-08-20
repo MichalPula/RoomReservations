@@ -1,6 +1,5 @@
-package com.Pulson.RoomReservations.services;
+package com.Pulson.RoomReservations.User;
 
-import com.Pulson.RoomReservations.entities.User;
 import com.Pulson.RoomReservations.models.BasicAccountDataChangeRequest;
 import com.Pulson.RoomReservations.models.EmailChangeRequest;
 import com.Pulson.RoomReservations.models.PasswordChangeRequest;

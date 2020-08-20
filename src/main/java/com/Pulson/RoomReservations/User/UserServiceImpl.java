@@ -1,13 +1,11 @@
-package com.Pulson.RoomReservations.services;
+package com.Pulson.RoomReservations.User;
 
 import com.Pulson.RoomReservations.entities.Role;
 import com.Pulson.RoomReservations.entities.RoleType;
-import com.Pulson.RoomReservations.entities.User;
 import com.Pulson.RoomReservations.models.BasicAccountDataChangeRequest;
 import com.Pulson.RoomReservations.models.EmailChangeRequest;
 import com.Pulson.RoomReservations.models.PasswordChangeRequest;
 import com.Pulson.RoomReservations.repositories.RoleRepository;
-import com.Pulson.RoomReservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getStudentByName(String firstName, String lastName) throws Exception {
+    public List<User> getStudentByName(String firstName, String lastName) {
         List<User> studentsMatchingConstraint = new ArrayList<>();
         Role admin = roleRepository.findByRoleType(RoleType.ROLE_ADMIN);
         if (!firstName.equals("null") && !lastName.equals("null")) {

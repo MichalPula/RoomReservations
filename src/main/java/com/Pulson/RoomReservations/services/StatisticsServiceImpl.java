@@ -1,11 +1,11 @@
 package com.Pulson.RoomReservations.services;
 
 import com.Pulson.RoomReservations.entities.Reservation;
-import com.Pulson.RoomReservations.entities.User;
+import com.Pulson.RoomReservations.User.User;
 import com.Pulson.RoomReservations.models.statistics.HoursPerActivityStatistics;
 import com.Pulson.RoomReservations.models.statistics.HoursPerRoomStatistics;
 import com.Pulson.RoomReservations.repositories.ReservationRepository;
-import com.Pulson.RoomReservations.repositories.UserRepository;
+import com.Pulson.RoomReservations.User.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

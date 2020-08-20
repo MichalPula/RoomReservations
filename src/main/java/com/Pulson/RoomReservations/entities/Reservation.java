@@ -1,5 +1,8 @@
 package com.Pulson.RoomReservations.entities;
 
+import com.Pulson.RoomReservations.Room.Room;
+import com.Pulson.RoomReservations.User.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;

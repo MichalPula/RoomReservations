@@ -1,6 +1,5 @@
-package com.Pulson.RoomReservations.services;
+package com.Pulson.RoomReservations.User;
 
-import com.Pulson.RoomReservations.entities.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,8 +1,10 @@
 package com.Pulson.RoomReservations.services;
 
+import com.Pulson.RoomReservations.User.UserDetailsImpl;
+import com.Pulson.RoomReservations.User.UserService;
 import com.Pulson.RoomReservations.entities.Role;
 import com.Pulson.RoomReservations.entities.RoleType;
-import com.Pulson.RoomReservations.entities.User;
+import com.Pulson.RoomReservations.User.User;
 import com.Pulson.RoomReservations.models.JwtLoginRequest;
 import com.Pulson.RoomReservations.models.JwtRegisterRequest;
 import com.Pulson.RoomReservations.models.JwtResponse;

@@ -1,7 +1,5 @@
-package com.Pulson.RoomReservations.services.mappers.user;
+package com.Pulson.RoomReservations.User;
 
-import com.Pulson.RoomReservations.entities.User;
-import com.Pulson.RoomReservations.entities.dtos.user.UserReadDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

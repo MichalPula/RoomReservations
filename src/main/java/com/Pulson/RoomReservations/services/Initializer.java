@@ -1,5 +1,10 @@
 package com.Pulson.RoomReservations.services;
 
+import com.Pulson.RoomReservations.Room.Room;
+import com.Pulson.RoomReservations.Room.RoomRepository;
+import com.Pulson.RoomReservations.User.User;
+import com.Pulson.RoomReservations.User.UserRepository;
+import com.Pulson.RoomReservations.User.UserService;
 import com.Pulson.RoomReservations.entities.*;
 import com.Pulson.RoomReservations.repositories.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

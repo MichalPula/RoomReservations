@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.entities.dtos.user;
+package com.Pulson.RoomReservations.User;
 
 public class UserReadDTO {
 

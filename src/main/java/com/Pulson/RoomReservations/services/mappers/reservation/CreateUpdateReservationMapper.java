@@ -2,12 +2,12 @@ package com.Pulson.RoomReservations.services.mappers.reservation;
 
 import com.Pulson.RoomReservations.entities.Activity;
 import com.Pulson.RoomReservations.entities.Reservation;
-import com.Pulson.RoomReservations.entities.Room;
-import com.Pulson.RoomReservations.entities.User;
+import com.Pulson.RoomReservations.Room.Room;
+import com.Pulson.RoomReservations.User.User;
 import com.Pulson.RoomReservations.entities.dtos.reservation.ReservationCreateUpdateDTO;
 import com.Pulson.RoomReservations.repositories.ActivityRepository;
-import com.Pulson.RoomReservations.repositories.RoomRepository;
-import com.Pulson.RoomReservations.repositories.UserRepository;
+import com.Pulson.RoomReservations.Room.RoomRepository;
+import com.Pulson.RoomReservations.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
