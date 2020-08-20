@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.entities;
+package com.Pulson.RoomReservations.Reservation;
 
 import com.Pulson.RoomReservations.Activity.Activity;
 import com.Pulson.RoomReservations.Room.Room;

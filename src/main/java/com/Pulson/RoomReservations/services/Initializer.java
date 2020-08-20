@@ -2,6 +2,9 @@ package com.Pulson.RoomReservations.services;
 
 import com.Pulson.RoomReservations.Activity.Activity;
 import com.Pulson.RoomReservations.Activity.ActivityRepository;
+import com.Pulson.RoomReservations.Reservation.Reservation;
+import com.Pulson.RoomReservations.Reservation.ReservationRepository;
+import com.Pulson.RoomReservations.Reservation.ReservationService;
 import com.Pulson.RoomReservations.Role.Role;
 import com.Pulson.RoomReservations.Role.RoleRepository;
 import com.Pulson.RoomReservations.Role.RoleType;
@@ -10,8 +13,6 @@ import com.Pulson.RoomReservations.Room.RoomRepository;
 import com.Pulson.RoomReservations.User.User;
 import com.Pulson.RoomReservations.User.UserRepository;
 import com.Pulson.RoomReservations.User.UserService;
-import com.Pulson.RoomReservations.entities.*;
-import com.Pulson.RoomReservations.repositories.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

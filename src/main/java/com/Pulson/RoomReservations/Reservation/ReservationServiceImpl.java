@@ -1,8 +1,6 @@
-package com.Pulson.RoomReservations.services;
+package com.Pulson.RoomReservations.Reservation;
 
 import com.Pulson.RoomReservations.User.User;
-import com.Pulson.RoomReservations.entities.*;
-import com.Pulson.RoomReservations.repositories.ReservationRepository;
 import com.Pulson.RoomReservations.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

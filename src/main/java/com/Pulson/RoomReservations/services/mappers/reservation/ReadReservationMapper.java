@@ -1,8 +1,8 @@
 package com.Pulson.RoomReservations.services.mappers.reservation;
 
-import com.Pulson.RoomReservations.entities.Reservation;
-import com.Pulson.RoomReservations.entities.dtos.reservation.MarkedReservation;
-import com.Pulson.RoomReservations.entities.dtos.reservation.ReservationReadDTO;
+import com.Pulson.RoomReservations.Reservation.Reservation;
+import com.Pulson.RoomReservations.Reservation.MarkedReservation;
+import com.Pulson.RoomReservations.Reservation.ReservationReadDTO;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

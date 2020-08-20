@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.entities.dtos.reservation;
+package com.Pulson.RoomReservations.Reservation;
 
 public class MarkedReservation {
 

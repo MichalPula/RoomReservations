@@ -1,10 +1,10 @@
 package com.Pulson.RoomReservations.services;
 
-import com.Pulson.RoomReservations.entities.Reservation;
+import com.Pulson.RoomReservations.Reservation.Reservation;
 import com.Pulson.RoomReservations.User.User;
 import com.Pulson.RoomReservations.models.statistics.HoursPerActivityStatistics;
 import com.Pulson.RoomReservations.models.statistics.HoursPerRoomStatistics;
-import com.Pulson.RoomReservations.repositories.ReservationRepository;
+import com.Pulson.RoomReservations.Reservation.ReservationRepository;
 import com.Pulson.RoomReservations.User.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;

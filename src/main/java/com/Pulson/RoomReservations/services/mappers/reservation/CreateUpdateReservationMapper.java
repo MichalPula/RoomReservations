@@ -1,10 +1,10 @@
 package com.Pulson.RoomReservations.services.mappers.reservation;
 
 import com.Pulson.RoomReservations.Activity.Activity;
-import com.Pulson.RoomReservations.entities.Reservation;
+import com.Pulson.RoomReservations.Reservation.Reservation;
 import com.Pulson.RoomReservations.Room.Room;
 import com.Pulson.RoomReservations.User.User;
-import com.Pulson.RoomReservations.entities.dtos.reservation.ReservationCreateUpdateDTO;
+import com.Pulson.RoomReservations.Reservation.ReservationCreateUpdateDTO;
 import com.Pulson.RoomReservations.Activity.ActivityRepository;
 import com.Pulson.RoomReservations.Room.RoomRepository;
 import com.Pulson.RoomReservations.User.UserRepository;

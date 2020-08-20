@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.services;
+package com.Pulson.RoomReservations.Activity;
 
 import com.Pulson.RoomReservations.Activity.Activity;
 import org.springframework.stereotype.Service;

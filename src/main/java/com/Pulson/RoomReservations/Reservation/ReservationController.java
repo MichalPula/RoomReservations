@@ -1,16 +1,15 @@
-package com.Pulson.RoomReservations.controllers;
+package com.Pulson.RoomReservations.Reservation;
 
-import com.Pulson.RoomReservations.entities.dtos.reservation.MarkedReservation;
-import com.Pulson.RoomReservations.entities.dtos.reservation.ReservationCreateUpdateDTO;
-import com.Pulson.RoomReservations.entities.dtos.reservation.ReservationReadDTO;
-import com.Pulson.RoomReservations.services.ReservationService;
+import com.Pulson.RoomReservations.Reservation.MarkedReservation;
+import com.Pulson.RoomReservations.Reservation.ReservationCreateUpdateDTO;
+import com.Pulson.RoomReservations.Reservation.ReservationReadDTO;
+import com.Pulson.RoomReservations.Reservation.ReservationService;
 import com.Pulson.RoomReservations.services.mappers.reservation.CreateUpdateReservationMapper;
 import com.Pulson.RoomReservations.services.mappers.reservation.ReadReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
