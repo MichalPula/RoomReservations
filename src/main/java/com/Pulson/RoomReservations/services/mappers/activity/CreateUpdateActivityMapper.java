@@ -1,10 +1,10 @@
 package com.Pulson.RoomReservations.services.mappers.activity;
 
 import com.Pulson.RoomReservations.entities.Activity;
-import com.Pulson.RoomReservations.entities.Role;
-import com.Pulson.RoomReservations.entities.RoleType;
+import com.Pulson.RoomReservations.Role.Role;
+import com.Pulson.RoomReservations.Role.RoleType;
 import com.Pulson.RoomReservations.entities.dtos.activity.ActivityCreateReadUpdateDTO;
-import com.Pulson.RoomReservations.services.RoleService;
+import com.Pulson.RoomReservations.Role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

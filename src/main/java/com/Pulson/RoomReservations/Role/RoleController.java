@@ -1,7 +1,5 @@
-package com.Pulson.RoomReservations.controllers;
+package com.Pulson.RoomReservations.Role;
 
-import com.Pulson.RoomReservations.entities.dtos.role.RoleReadDTO;
-import com.Pulson.RoomReservations.services.RoleService;
 import com.Pulson.RoomReservations.services.mappers.role.ReadRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

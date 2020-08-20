@@ -1,5 +1,6 @@
 package com.Pulson.RoomReservations.entities;
 
+import com.Pulson.RoomReservations.Role.Role;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 

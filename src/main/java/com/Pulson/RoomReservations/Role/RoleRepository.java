@@ -1,7 +1,5 @@
-package com.Pulson.RoomReservations.repositories;
+package com.Pulson.RoomReservations.Role;
 
-import com.Pulson.RoomReservations.entities.Role;
-import com.Pulson.RoomReservations.entities.RoleType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.Pulson.RoomReservations.services.mappers.role;
 
-import com.Pulson.RoomReservations.entities.Role;
-import com.Pulson.RoomReservations.entities.dtos.role.RoleReadDTO;
+import com.Pulson.RoomReservations.Role.Role;
+import com.Pulson.RoomReservations.Role.RoleReadDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

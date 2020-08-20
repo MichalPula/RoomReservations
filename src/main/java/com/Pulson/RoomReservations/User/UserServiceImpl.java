@@ -1,11 +1,11 @@
 package com.Pulson.RoomReservations.User;
 
-import com.Pulson.RoomReservations.entities.Role;
-import com.Pulson.RoomReservations.entities.RoleType;
+import com.Pulson.RoomReservations.Role.Role;
+import com.Pulson.RoomReservations.Role.RoleType;
 import com.Pulson.RoomReservations.models.BasicAccountDataChangeRequest;
 import com.Pulson.RoomReservations.models.EmailChangeRequest;
 import com.Pulson.RoomReservations.models.PasswordChangeRequest;
-import com.Pulson.RoomReservations.repositories.RoleRepository;
+import com.Pulson.RoomReservations.Role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

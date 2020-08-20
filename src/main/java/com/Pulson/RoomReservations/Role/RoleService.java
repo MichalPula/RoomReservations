@@ -1,7 +1,5 @@
-package com.Pulson.RoomReservations.services;
+package com.Pulson.RoomReservations.Role;
 
-import com.Pulson.RoomReservations.entities.Role;
-import com.Pulson.RoomReservations.entities.RoleType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

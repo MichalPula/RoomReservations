@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.entities.dtos.role;
+package com.Pulson.RoomReservations.Role;
 
 public class RoleReadDTO {
 
