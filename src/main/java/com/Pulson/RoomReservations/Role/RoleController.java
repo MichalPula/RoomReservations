@@ -1,6 +1,5 @@
 package com.Pulson.RoomReservations.Role;
 
-import com.Pulson.RoomReservations.services.mappers.role.ReadRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

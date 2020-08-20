@@ -1,7 +1,7 @@
 package com.Pulson.RoomReservations.services;
 
-import com.Pulson.RoomReservations.entities.Activity;
-import com.Pulson.RoomReservations.repositories.ActivityRepository;
+import com.Pulson.RoomReservations.Activity.Activity;
+import com.Pulson.RoomReservations.Activity.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

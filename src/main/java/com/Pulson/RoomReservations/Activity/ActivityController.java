@@ -1,9 +1,6 @@
-package com.Pulson.RoomReservations.controllers;
+package com.Pulson.RoomReservations.Activity;
 
-import com.Pulson.RoomReservations.entities.dtos.activity.ActivityCreateReadUpdateDTO;
 import com.Pulson.RoomReservations.services.ActivityService;
-import com.Pulson.RoomReservations.services.mappers.activity.CreateUpdateActivityMapper;
-import com.Pulson.RoomReservations.services.mappers.activity.ReadActivityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

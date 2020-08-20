@@ -1,5 +1,6 @@
 package com.Pulson.RoomReservations.entities;
 
+import com.Pulson.RoomReservations.Activity.Activity;
 import com.Pulson.RoomReservations.Room.Room;
 import com.Pulson.RoomReservations.User.User;
 

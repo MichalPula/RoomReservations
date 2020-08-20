@@ -1,7 +1,5 @@
-package com.Pulson.RoomReservations.services.mappers.activity;
+package com.Pulson.RoomReservations.Activity;
 
-import com.Pulson.RoomReservations.entities.Activity;
-import com.Pulson.RoomReservations.entities.dtos.activity.ActivityCreateReadUpdateDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

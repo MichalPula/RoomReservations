@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.entities.dtos.activity;
+package com.Pulson.RoomReservations.Activity;
 
 import java.util.List;
 

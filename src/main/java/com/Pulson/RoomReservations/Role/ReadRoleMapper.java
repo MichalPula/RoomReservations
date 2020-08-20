@@ -1,4 +1,4 @@
-package com.Pulson.RoomReservations.services.mappers.role;
+package com.Pulson.RoomReservations.Role;
 
 import com.Pulson.RoomReservations.Role.Role;
 import com.Pulson.RoomReservations.Role.RoleReadDTO;
