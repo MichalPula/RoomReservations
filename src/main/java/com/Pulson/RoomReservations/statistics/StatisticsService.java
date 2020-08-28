@@ -1,15 +1,16 @@
 package com.Pulson.RoomReservations.statistics;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface StatisticsService {
-    String getAmountOfHoursSpentOnParticularActivitiesByUser(long userId) throws Exception;
+    List<HoursPerActivityPerUser> getAmountOfHoursSpentOnParticularActivitiesByUser(long userId);
 
     String getAmountOfHoursSpentInRoomsByMonth(long userId) throws Exception;
 
-    String getAverageHoursSpentInRoomsPerUser();
+    BigDecimal getAverageHoursSpentInRoomsPerUser();
 
-    List<HoursPerRoomStatistics> getHoursSpentInRooms() throws Exception;
+    List<HoursPerRoomStatistics> getHoursSpentInRooms();
 
-    List<HoursPerActivityStatistics> getHoursSpentOnActivities() throws Exception;
+    List<HoursPerActivityStatistics> getHoursSpentOnActivities();
 }

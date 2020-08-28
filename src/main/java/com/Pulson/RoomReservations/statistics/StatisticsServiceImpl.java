@@ -3,14 +3,18 @@ package com.Pulson.RoomReservations.statistics;
 import com.Pulson.RoomReservations.reservation.Reservation;
 import com.Pulson.RoomReservations.reservation.ReservationRepository;
 import com.Pulson.RoomReservations.user.User;
+import com.Pulson.RoomReservations.user.UserNotFoundException;
 import com.Pulson.RoomReservations.user.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,11 +36,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public String getAmountOfHoursSpentOnParticularActivitiesByUser(long userId) throws Exception {
-        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User " + userId + " NOT found"));
+    public List<HoursPerActivityPerUser> getAmountOfHoursSpentOnParticularActivitiesByUser(long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         List<Reservation> reservations = reservationRepository.findAllByUser(user);
 
-        JSONArray objectsArray = new JSONArray();
+        List<HoursPerActivityPerUser> hoursPerActivityPerUsers = new ArrayList<>();
         Map<String, Integer> map = new HashMap<>();
 
         reservations.forEach(reservation -> {
@@ -51,12 +55,9 @@ public class StatisticsServiceImpl implements StatisticsService {
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             String activityName = entry.getKey();
             Integer amountOfHours = entry.getValue();
-            JSONObject json = new JSONObject();
-            json.put("y", amountOfHours);
-            json.put("activity", activityName);
-            objectsArray.put(json);
+            hoursPerActivityPerUsers.add(new HoursPerActivityPerUser(amountOfHours, activityName));
         }
-        return objectsArray.toString();
+        return hoursPerActivityPerUsers;
     }
 
     @Override
@@ -93,19 +94,18 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public String getAverageHoursSpentInRoomsPerUser() {
+    public BigDecimal getAverageHoursSpentInRoomsPerUser() {
         Query query = entityManager.createNativeQuery("select avg(total_hours) as total_hours_avg from" +
                 " (select count(*) as total_hours" +
                 " from reservations" +
                 " WHERE start_time >= '2020-01-01'" +
                 " AND start_time < '2020-12-31'" +
                 " group by user_id) OK");
-        Object result = query.getSingleResult();
-        return String.valueOf(result);
+        return (BigDecimal) query.getSingleResult();
     }
 
     @Override
-    public List<HoursPerRoomStatistics> getHoursSpentInRooms() throws Exception {
+    public List<HoursPerRoomStatistics> getHoursSpentInRooms() {
         List<Timestamp> startAndEndTimestamp = getStartAndEndYearDate();
 
         return Collections.checkedList(
@@ -116,7 +116,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<HoursPerActivityStatistics> getHoursSpentOnActivities() throws Exception {
+    public List<HoursPerActivityStatistics> getHoursSpentOnActivities() {
         List<Timestamp> startAndEndTimestamp = getStartAndEndYearDate();
 
         return Collections.checkedList(
@@ -126,13 +126,18 @@ public class StatisticsServiceImpl implements StatisticsService {
                         .getResultList(), HoursPerActivityStatistics.class);
     }
 
-    private List<Timestamp> getStartAndEndYearDate() throws ParseException {
+    private List<Timestamp> getStartAndEndYearDate() {
         List<Timestamp> startAndEndYearDate = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date parsedStartDate = dateFormat.parse(LocalDateTime.now().getYear() + "-01-01");
-        Date parsedEndDate = dateFormat.parse(LocalDateTime.now().getYear() + "-12-31");
-        startAndEndYearDate.add(new Timestamp(parsedStartDate.getTime()));
-        startAndEndYearDate.add(new Timestamp(parsedEndDate.getTime()));
+        Logger logger = LoggerFactory.getLogger(StatisticsServiceImpl.class);
+        try {
+            Date parsedStartDate = dateFormat.parse(LocalDateTime.now().getYear() + "-01-01");
+            Date parsedEndDate = dateFormat.parse(LocalDateTime.now().getYear() + "-12-31");
+            startAndEndYearDate.add(new Timestamp(parsedStartDate.getTime()));
+            startAndEndYearDate.add(new Timestamp(parsedEndDate.getTime()));
+        } catch (ParseException e) {
+            logger.error("Date parsing failure!");
+        }
         return startAndEndYearDate;
     }
 }
