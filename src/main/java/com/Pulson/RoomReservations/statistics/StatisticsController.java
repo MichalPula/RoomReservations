@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("statistics")
 public class StatisticsController {
 
-    private StatisticsService statisticsService;
+    private final StatisticsService statisticsService;
 
     @Autowired
     public StatisticsController(StatisticsService statisticsService) {

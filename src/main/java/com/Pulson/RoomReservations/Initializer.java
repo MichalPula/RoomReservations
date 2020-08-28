@@ -18,17 +18,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class Initializer {
     public Initializer(UserRepository userRepository, RoomRepository roomRepository,
                        ActivityRepository activityRepository, ReservationRepository reservationRepository,
                        RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ReservationService reservationService,
-                       StatisticsService statisticsService, UserService userService) throws Exception {
+                       StatisticsService statisticsService, UserService userService) {
 
         for (RoleType roleType : RoleType.values()) {
             Role role = new Role();
@@ -64,10 +61,10 @@ public class Initializer {
         roomRepository.saveAll(rooms);
 
 
-        List<Role> adminOnly = new ArrayList<>(Arrays.asList(roleRepository.findByRoleType(RoleType.ROLE_ADMIN)));
-        List<Role> userOnly = new ArrayList<>(Arrays.asList(roleRepository.findByRoleType(RoleType.ROLE_USER)));
-        List<Role> adminAndUser = new ArrayList<>(Arrays.asList(roleRepository.findByRoleType(RoleType.ROLE_ADMIN),
-                roleRepository.findByRoleType(RoleType.ROLE_USER)));
+        List<Role> adminOnly = new ArrayList<>(Collections.singletonList(roleRepository.findByRoleType(RoleType.ROLE_ADMIN)));
+        List<Role> userOnly = new ArrayList<>(Collections.singletonList(roleRepository.findByRoleType(RoleType.ROLE_USER)));
+//        List<Role> adminAndUser = new ArrayList<>(Arrays.asList(roleRepository.findByRoleType(RoleType.ROLE_ADMIN),
+//                roleRepository.findByRoleType(RoleType.ROLE_USER)));
         List<Activity> activities = new ArrayList<>(Arrays.asList(
                 new Activity("Learning", userOnly),
                 new Activity("Playing PS4", userOnly),

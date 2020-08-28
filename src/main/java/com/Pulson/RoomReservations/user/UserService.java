@@ -11,25 +11,20 @@ import java.util.List;
 
 @Service
 public interface UserService extends UserDetailsService {
-    List<User> getAll();
 
     List<User> getAllStudents();
 
-    User getById(long id) throws Exception;
-
-    List<User> getStudentByName(String firstName, String lastName) throws Exception;
+    List<User> getStudentByName(String firstName, String lastName);
 
     Boolean create(User user);
 
-    Boolean deactivate(long id) throws Exception;
+    Boolean updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo);
 
-    Boolean updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo) throws Exception;
+    ResponseEntity<?> updateEmail(EmailChangeRequest emailChangeRequest);
 
-    ResponseEntity<?> updateEmail(EmailChangeRequest emailChangeRequest) throws Exception;
-
-    ResponseEntity<?> updatePassword(PasswordChangeRequest passwordChangeRequest) throws Exception;
+    ResponseEntity<?> updatePassword(PasswordChangeRequest passwordChangeRequest);
 
     Boolean existsByUsername(String username);
 
-    BasicAccountDataChangeRequest getBasicAccountData(long id);
+    UserBasicAccountData getBasicAccountData(long id);
 }

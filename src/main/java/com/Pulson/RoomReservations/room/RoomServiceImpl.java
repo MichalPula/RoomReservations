@@ -16,7 +16,7 @@ public class RoomServiceImpl implements RoomService {
     @PersistenceContext
     private EntityManager em;
 
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
     @Autowired
     public RoomServiceImpl(RoomRepository roomRepository) {

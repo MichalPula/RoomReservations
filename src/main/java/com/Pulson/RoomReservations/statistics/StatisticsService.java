@@ -7,7 +7,7 @@ public interface StatisticsService {
 
     String getAmountOfHoursSpentInRoomsByMonth(long userId) throws Exception;
 
-    String getAverageHoursSpentInRoomsPerUser() throws Exception;
+    String getAverageHoursSpentInRoomsPerUser();
 
     List<HoursPerRoomStatistics> getHoursSpentInRooms() throws Exception;
 

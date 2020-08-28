@@ -12,7 +12,7 @@ public interface ActivityService {
 
     Boolean create(Activity activity);
 
-    Boolean deactivate(long id) throws Exception;
+    Boolean deactivate(long id);
 
     Boolean update(long id, Activity activityDetails) throws Exception;
 }

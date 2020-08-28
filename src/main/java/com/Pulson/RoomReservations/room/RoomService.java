@@ -12,7 +12,7 @@ public interface RoomService {
 
     Boolean create(Room room);
 
-    Boolean deactivate(long id) throws Exception;
+    Boolean deactivate(long id);
 
     Boolean update(long id, Room roomDetails) throws Exception;
 }

@@ -12,9 +12,9 @@ import java.util.List;
 public class ActivityController {
 
 
-    private ActivityService activityService;
-    private CreateUpdateActivityMapper createUpdateActivityMapper;
-    private ReadActivityMapper readActivityMapper;
+    private final ActivityService activityService;
+    private final CreateUpdateActivityMapper createUpdateActivityMapper;
+    private final ReadActivityMapper readActivityMapper;
 
     @Autowired
     public ActivityController(ActivityService activityService, CreateUpdateActivityMapper createUpdateActivityMapper,

@@ -16,8 +16,8 @@ import java.util.List;
 public class UserController {
 
 
-    private UserService userService;
-    private ReadUserMapper readUserMapper;
+    private final UserService userService;
+    private final ReadUserMapper readUserMapper;
 
     @Autowired
     public UserController(UserService userService, ReadUserMapper readUserMapper) {
@@ -36,22 +36,24 @@ public class UserController {
     }
 
     @GetMapping(value = "/getBasicAccountData/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BasicAccountDataChangeRequest getBasicAccountData(@PathVariable("id") long userId) throws Exception {
-        return userService.getBasicAccountData(userId);
+    public ResponseEntity<UserBasicAccountData> getBasicAccountData(@PathVariable("id") long userId) {
+        return ResponseEntity.ok().body(userService.getBasicAccountData(userId));
     }
 
     @PutMapping(value = "/update/basicInfo", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean updateBasicInfo(@RequestBody BasicAccountDataChangeRequest basicAccountDataChangeRequest) throws Exception {
+    public boolean updateBasicInfo(@RequestBody BasicAccountDataChangeRequest basicAccountDataChangeRequest) {
         return userService.updateBasicInfo(basicAccountDataChangeRequest);
     }
 
     @PutMapping(value = "/update/email", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateEmail(@RequestBody EmailChangeRequest emailChangeRequest) throws Exception {
+    public ResponseEntity<?> updateEmail(@RequestBody EmailChangeRequest emailChangeRequest) {
         return userService.updateEmail(emailChangeRequest);
     }
 
     @PutMapping(value = "/update/password", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updatePassword(@RequestBody PasswordChangeRequest passwordChangeRequest) throws Exception {
+    public ResponseEntity<?> updatePassword(@RequestBody PasswordChangeRequest passwordChangeRequest) {
         return userService.updatePassword(passwordChangeRequest);
+        //frontend opiera się na odbieraniu kodów, więc będę je wysyłał w response entity
     }
 }
+//pozmieniać żeby wszędzie było response entity zgodnie z pc shop projektem

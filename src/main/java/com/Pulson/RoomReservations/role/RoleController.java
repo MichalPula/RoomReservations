@@ -13,8 +13,8 @@ import java.util.List;
 @RequestMapping("roles")
 public class RoleController {
 
-    private RoleService roleService;
-    private ReadRoleMapper readRoleMapper;
+    private final RoleService roleService;
+    private final ReadRoleMapper readRoleMapper;
 
     @Autowired
     public RoleController(RoleService roleService, ReadRoleMapper readRoleMapper) {

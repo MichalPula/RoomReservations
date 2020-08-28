@@ -23,9 +23,9 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private EntityManager entityManager;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private final EntityManager entityManager;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
     public UserServiceImpl(EntityManager entityManager, UserRepository userRepository, RoleRepository roleRepository) {
@@ -35,19 +35,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
     public List<User> getAllStudents() {
         Role admin = roleRepository.findByRoleType(RoleType.ROLE_ADMIN);
         return userRepository.findAllByRolesNotContaining(admin);
-    }
-
-    @Override
-    public User getById(long id) throws Exception {
-        return userRepository.findById(id).orElseThrow(() -> new Exception("User " + id + " NOT found"));
     }
 
     @Override
@@ -78,17 +68,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Boolean deactivate(long id) {
-        Query query = entityManager.createNativeQuery("update users set is_active = false where id = ?");
-        query.setParameter(1, id);
-        query.executeUpdate();
-        return true;
-    }
-
-    @Transactional
-    @Override
-    public Boolean updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo) throws Exception {
-        User user = userRepository.findById(basicAccountInfo.getUserId()).orElseThrow(() -> new Exception("User NOT found"));
+    public Boolean updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo) {
+        User user = userRepository.getOne(basicAccountInfo.getUserId());
         user.setFirstName(basicAccountInfo.getFirstName());
         user.setLastName(basicAccountInfo.getLastName());
         user.setPhoneNumber(basicAccountInfo.getPhoneNumber());
@@ -97,28 +78,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<?> updateEmail(EmailChangeRequest emailChangeRequest) throws Exception {
+    public ResponseEntity<?> updateEmail(EmailChangeRequest emailChangeRequest) {
         if (userRepository.existsByUsername(emailChangeRequest.getEmail())) {
             return new ResponseEntity<>("Username is taken", HttpStatus.CONFLICT);
         } else {
-            User user = userRepository.findById(emailChangeRequest.getUserId()).orElseThrow(() -> new Exception("User NOT found"));
+            User user = userRepository.getOne(emailChangeRequest.getUserId());
             user.setUsername(emailChangeRequest.getEmail());
             userRepository.save(user);
         }
-        return new ResponseEntity<>("Username changed", HttpStatus.OK);
+        return ResponseEntity.ok().body("Username changed");
     }
 
     @Override
-    public ResponseEntity<?> updatePassword(PasswordChangeRequest passwordChangeRequest) throws Exception {
+    public ResponseEntity<?> updatePassword(PasswordChangeRequest passwordChangeRequest) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        User user = userRepository.findById(passwordChangeRequest.getUserId()).orElseThrow(() -> new Exception("User NOT found"));
+        User user = userRepository.getOne(passwordChangeRequest.getUserId());
         if (!bCryptPasswordEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())) {
             return new ResponseEntity<>("Wrong password", HttpStatus.CONFLICT);
         } else {
             user.setPassword(bCryptPasswordEncoder.encode(passwordChangeRequest.getNewPassword()));
             userRepository.save(user);
         }
-        return new ResponseEntity<>("Password changed", HttpStatus.OK);
+        return ResponseEntity.ok().body("Password changed");
     }
 
     @Override
@@ -127,15 +108,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BasicAccountDataChangeRequest getBasicAccountData(long userId) {
-        Query query = entityManager.createNativeQuery("select" +
-                " first_name, last_name, phone_number" +
-                " from users" +
-                " where id = ?");
-        query.setParameter(1, userId);
-        List<Object[]> resultList = query.getResultList();
-        return new BasicAccountDataChangeRequest(resultList.get(0)[0].toString(),
-                resultList.get(0)[1].toString(), Long.parseLong(resultList.get(0)[2].toString()));
+    public UserBasicAccountData getBasicAccountData(long userId) {
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
+        return new UserBasicAccountData(user.getFirstName(), user.getLastName(), user.getPhoneNumber());
     }
 
     @Override

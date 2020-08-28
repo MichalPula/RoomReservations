@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
 @Component
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private AuthenticationManager authenticationManager;
-    private JwtTokenService jwtTokenService;
-    private UserService userService;
-    private RoleService roleService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenService jwtTokenService;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public AuthenticationServiceImpl(AuthenticationManager authenticationManager, JwtTokenService jwtTokenService,
@@ -44,7 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest) throws Exception {
+    public ResponseEntity<?> handleLogin(JwtLoginRequest jwtLoginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(jwtLoginRequest.getUsername(), jwtLoginRequest.getPassword()));

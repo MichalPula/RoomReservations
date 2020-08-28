@@ -20,9 +20,9 @@ import java.util.*;
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
 
-    private ReservationRepository reservationRepository;
-    private UserRepository userRepository;
-    private EntityManager entityManager;
+    private final ReservationRepository reservationRepository;
+    private final UserRepository userRepository;
+    private final EntityManager entityManager;
 
     @Autowired
     public StatisticsServiceImpl(ReservationRepository reservationRepository, UserRepository userRepository, EntityManager entityManager) {
@@ -93,7 +93,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public String getAverageHoursSpentInRoomsPerUser() throws Exception {
+    public String getAverageHoursSpentInRoomsPerUser() {
         Query query = entityManager.createNativeQuery("select avg(total_hours) as total_hours_avg from" +
                 " (select count(*) as total_hours" +
                 " from reservations" +

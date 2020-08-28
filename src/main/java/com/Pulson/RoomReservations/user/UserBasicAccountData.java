@@ -1,14 +1,16 @@
-package com.Pulson.RoomReservations.authentication.account_data_change;
+package com.Pulson.RoomReservations.user;
 
-import java.io.Serializable;
+public class UserBasicAccountData {
 
-public class BasicAccountDataChangeRequest implements Serializable {
-
-    private long userId;
     private String firstName;
     private String lastName;
     private long phoneNumber;
 
+    public UserBasicAccountData(String firstName, String lastName, long phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -20,9 +22,5 @@ public class BasicAccountDataChangeRequest implements Serializable {
 
     public long getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public long getUserId() {
-        return userId;
     }
 }

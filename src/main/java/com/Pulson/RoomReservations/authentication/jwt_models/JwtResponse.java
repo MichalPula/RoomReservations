@@ -8,7 +8,7 @@ public class JwtResponse implements Serializable {
     private final String jwtToken;
     private Long id;
     private String username;
-    private List<String> roles;
+    private final List<String> roles;
 
     public JwtResponse(String jwtToken, Long id, String username, List<String> roles) {
         this.jwtToken = jwtToken;

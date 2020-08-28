@@ -18,8 +18,8 @@ public class ReservationServiceImpl implements ReservationService {
     @PersistenceContext
     private EntityManager em;
 
-    private ReservationRepository reservationRepository;
-    private UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository, UserRepository userRepository) {
@@ -64,17 +64,15 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> getByDate(int year, int month, int day) throws Exception {
+    public List<Reservation> getByDate(int year, int month, int day) {
         return reservationRepository.findAllByStartTimeBetween(LocalDateTime.of(year, month, day, 0, 0), LocalDateTime.of(year, month, day, 23, 59));
     }
 
     @Override
-    public List<Integer> getStartingHoursListByDateByRoom(int year, int month, int day, long roomId) throws Exception {
+    public List<Integer> getStartingHoursListByDateByRoom(int year, int month, int day, long roomId) {
         List<Reservation> todayReservations = reservationRepository.findAllByStartTimeBetweenAndRoom_Id(LocalDateTime.of(year, month, day, 0, 0), LocalDateTime.of(year, month, day, 23, 59), roomId);
         List<Integer> todayReservationsStartingHours = new ArrayList<>();
-        todayReservations.forEach(reservation -> {
-            todayReservationsStartingHours.add(reservation.getStartTime().getHour());
-        });
+        todayReservations.forEach(reservation -> todayReservationsStartingHours.add(reservation.getStartTime().getHour()));
         return todayReservationsStartingHours;
     }
 
@@ -91,7 +89,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    public Boolean create(Reservation reservation) throws Exception {
+    public Boolean create(Reservation reservation) {
         reservationRepository.save(reservation);
         return true;
     }

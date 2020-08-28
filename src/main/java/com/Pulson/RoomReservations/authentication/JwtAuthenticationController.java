@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class JwtAuthenticationController {
 
 
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
     public JwtAuthenticationController(AuthenticationService authenticationService) {
@@ -28,7 +28,7 @@ public class JwtAuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody JwtRegisterRequest registerRequest) throws Exception {
+    public ResponseEntity<?> register(@RequestBody JwtRegisterRequest registerRequest) {
         return authenticationService.handleRegistration(registerRequest);
     }
 }

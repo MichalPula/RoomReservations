@@ -12,14 +12,14 @@ import java.util.List;
 @Component
 public class CreateUpdateActivityMapper {
 
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @Autowired
     private CreateUpdateActivityMapper(RoleService roleService) {
         this.roleService = roleService;
     }
 
-    public Activity mapToActivity(ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) throws Exception {
+    public Activity mapToActivity(ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) {
         Activity activity = new Activity();
         activity.setName(activityCreateReadUpdateDTO.getName());
         activity.setAvailable(activityCreateReadUpdateDTO.getAvailable());

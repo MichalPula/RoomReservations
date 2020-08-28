@@ -15,9 +15,9 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class CreateUpdateReservationMapper {
 
-    private UserRepository userRepository;
-    private RoomRepository roomRepository;
-    private ActivityRepository activityRepository;
+    private final UserRepository userRepository;
+    private final RoomRepository roomRepository;
+    private final ActivityRepository activityRepository;
 
     @Autowired
     public CreateUpdateReservationMapper(UserRepository userRepository, RoomRepository roomRepository, ActivityRepository activityRepository) {
