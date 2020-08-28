@@ -18,7 +18,7 @@ public interface UserService extends UserDetailsService {
 
     Boolean create(User user);
 
-    Boolean updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo);
+    ResponseEntity<?> updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo);
 
     ResponseEntity<?> updateEmail(EmailChangeRequest emailChangeRequest);
 

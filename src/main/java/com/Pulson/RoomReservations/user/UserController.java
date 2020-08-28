@@ -26,13 +26,13 @@ public class UserController {
     }
 
     @GetMapping("/all/students")
-    public List<UserReadDTO> getAllStudents() {
-        return readUserMapper.mapToUserReadDTOsList(userService.getAllStudents());
+    public ResponseEntity<List<UserReadDTO>> getAllStudents() {
+        return ResponseEntity.ok().body(readUserMapper.mapToUserReadDTOsList(userService.getAllStudents()));
     }
 
     @GetMapping("/students/name/{firstName}/{lastName}")
-    public List<UserReadDTO> getStudentByName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) throws Exception {
-        return readUserMapper.mapToUserReadDTOsList(userService.getStudentByName(firstName, lastName));
+    public ResponseEntity<List<UserReadDTO>> getStudentByName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) throws Exception {
+        return ResponseEntity.ok().body(readUserMapper.mapToUserReadDTOsList(userService.getStudentByName(firstName, lastName)));
     }
 
     @GetMapping(value = "/getBasicAccountData/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/update/basicInfo", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean updateBasicInfo(@RequestBody BasicAccountDataChangeRequest basicAccountDataChangeRequest) {
+    public ResponseEntity<?> updateBasicInfo(@RequestBody BasicAccountDataChangeRequest basicAccountDataChangeRequest) {
         return userService.updateBasicInfo(basicAccountDataChangeRequest);
     }
 
@@ -53,7 +53,5 @@ public class UserController {
     @PutMapping(value = "/update/password", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updatePassword(@RequestBody PasswordChangeRequest passwordChangeRequest) {
         return userService.updatePassword(passwordChangeRequest);
-        //frontend opiera się na odbieraniu kodów, więc będę je wysyłał w response entity
     }
 }
-//pozmieniać żeby wszędzie było response entity zgodnie z pc shop projektem

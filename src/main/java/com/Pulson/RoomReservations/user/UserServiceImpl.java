@@ -15,21 +15,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final EntityManager entityManager;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(EntityManager entityManager, UserRepository userRepository, RoleRepository roleRepository) {
-        this.entityManager = entityManager;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
@@ -68,13 +64,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Boolean updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo) {
+    public ResponseEntity<?> updateBasicInfo(BasicAccountDataChangeRequest basicAccountInfo) {
         User user = userRepository.getOne(basicAccountInfo.getUserId());
         user.setFirstName(basicAccountInfo.getFirstName());
         user.setLastName(basicAccountInfo.getLastName());
         user.setPhoneNumber(basicAccountInfo.getPhoneNumber());
         userRepository.save(user);
-        return true;
+        return ResponseEntity.ok().body("Basic info changed");
     }
 
     @Override
