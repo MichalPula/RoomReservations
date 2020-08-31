@@ -2,6 +2,7 @@ package com.Pulson.RoomReservations.activity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,22 +26,22 @@ public class ActivityController {
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ActivityCreateReadUpdateDTO> getAll() {
-        return readActivityMapper.mapToActivityCreateReadUpdateDTOsList(activityService.getAll());
+    public ResponseEntity<List<ActivityCreateReadUpdateDTO>> getAll() {
+        return ResponseEntity.ok(readActivityMapper.mapToActivityCreateReadUpdateDTOsList(activityService.getAll()));
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean create(@RequestBody ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) throws Exception {
-        return activityService.create(createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO));
+    public ResponseEntity<String> create(@RequestBody ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) {
+        return ResponseEntity.ok(activityService.create(createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO)));
     }
 
     @DeleteMapping("/deactivate/{id}")
-    public boolean deactivate(@PathVariable("id") long id) throws Exception {
-        return activityService.deactivate(id);
+    public ResponseEntity<String> deactivate(@PathVariable("id") long id) throws Exception {
+        return ResponseEntity.ok(activityService.deactivate(id));
     }
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean update(@PathVariable("id") long id, @RequestBody ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) throws Exception {
-        return activityService.update(id, createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO));
+    public ResponseEntity<String> update(@PathVariable("id") long id, @RequestBody ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) {
+        return ResponseEntity.ok(activityService.update(id, createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO)));
     }
 }
