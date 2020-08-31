@@ -28,35 +28,30 @@ public class ActivityServiceImpl implements ActivityService {
         return activityRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
-    @Override
-    public Activity getById(long id) throws Exception {
-        return activityRepository.findById(id).orElseThrow(() -> new Exception("Activity " + id + " NOT found"));
-    }
-
     @Transactional
     @Override
-    public Boolean create(Activity activity) {
+    public String create(Activity activity) {
         activityRepository.save(activity);
-        return true;
+        return "Activity created";
     }
 
     @Override
     @Transactional
-    public Boolean deactivate(long id) {
+    public String deactivate(long id) {
         Query query = em.createNativeQuery("update activities set is_available = false where id = ?");
         query.setParameter(1, id);
         query.executeUpdate();
-        return true;
+        return "Activity deactivated";
     }
 
     @Transactional
     @Override
-    public Boolean update(long id, Activity activityDetails) throws Exception {
-        Activity activity = activityRepository.findById(id).orElseThrow(() -> new Exception("Activity NOT found"));
+    public String update(long id, Activity activityDetails) {
+        Activity activity = activityRepository.findById(id).orElseThrow(() -> new ActivityNotFoundException(id));
         activity.setName(activityDetails.getName());
         activity.setAuthorities(activityDetails.getAuthorities());
         activity.setAvailable(activityDetails.getAvailable());
         activityRepository.save(activity);
-        return true;
+        return "Activity updated";
     }
 }

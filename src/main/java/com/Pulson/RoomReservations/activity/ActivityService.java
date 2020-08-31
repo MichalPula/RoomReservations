@@ -8,11 +8,9 @@ import java.util.List;
 public interface ActivityService {
     List<Activity> getAll();
 
-    Activity getById(long id) throws Exception;
+    String create(Activity activity);
 
-    Boolean create(Activity activity);
+    String deactivate(long id);
 
-    Boolean deactivate(long id);
-
-    Boolean update(long id, Activity activityDetails) throws Exception;
+    String update(long id, Activity activityDetails);
 }
