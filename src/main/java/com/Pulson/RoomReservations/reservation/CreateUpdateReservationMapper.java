@@ -5,6 +5,7 @@ import com.Pulson.RoomReservations.activity.ActivityRepository;
 import com.Pulson.RoomReservations.room.Room;
 import com.Pulson.RoomReservations.room.RoomRepository;
 import com.Pulson.RoomReservations.user.User;
+import com.Pulson.RoomReservations.user.UserNotFoundException;
 import com.Pulson.RoomReservations.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,9 +27,10 @@ public class CreateUpdateReservationMapper {
         this.activityRepository = activityRepository;
     }
 
-    public Reservation mapToReservation(ReservationCreateUpdateDTO reservationCreateUpdateDTO) throws Exception {
+    public Reservation mapToReservation(ReservationCreateUpdateDTO reservationCreateUpdateDTO) {
         Reservation reservation = new Reservation();
-        User user = userRepository.findById(reservationCreateUpdateDTO.getUserId()).orElseThrow(() -> new Exception("User NOT found"));
+        User user = userRepository.findById(reservationCreateUpdateDTO.getUserId()).orElseThrow(()
+                -> new UserNotFoundException(reservationCreateUpdateDTO.getUserId()));
         reservation.setUser(user);
         Room room = roomRepository.findByName(reservationCreateUpdateDTO.getRoomName());
         reservation.setRoom(room);
