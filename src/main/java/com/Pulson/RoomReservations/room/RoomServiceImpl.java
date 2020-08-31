@@ -28,11 +28,6 @@ public class RoomServiceImpl implements RoomService {
         return roomRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
-    @Override
-    public Room getById(long id) {
-        return roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
-    }
-
     @Transactional
     @Override
     public String create(Room room) {

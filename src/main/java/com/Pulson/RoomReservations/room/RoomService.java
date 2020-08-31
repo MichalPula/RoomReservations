@@ -8,8 +8,6 @@ import java.util.List;
 public interface RoomService {
     List<Room> getAll();
 
-    Room getById(long id);
-
     String create(Room room);
 
     String deactivate(long id);
