@@ -10,9 +10,9 @@ public interface RoomService {
 
     Room getById(long id);
 
-    Boolean create(Room room);
+    String create(Room room);
 
-    Boolean deactivate(long id);
+    String deactivate(long id);
 
-    Boolean update(long id, Room roomDetails);
+    String update(long id, Room roomDetails);
 }

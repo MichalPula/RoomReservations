@@ -35,27 +35,27 @@ public class RoomServiceImpl implements RoomService {
 
     @Transactional
     @Override
-    public Boolean create(Room room) {
+    public String create(Room room) {
         roomRepository.save(room);
-        return true;
+        return "Room added";
     }
 
     @Transactional
     @Override
-    public Boolean deactivate(long id) {
+    public String deactivate(long id) {
         Query query = em.createNativeQuery("update rooms set is_available = false where id = ?");
         query.setParameter(1, id);
         query.executeUpdate();
-        return true;
+        return "Room deactivated";
     }
 
     @Transactional
     @Override
-    public Boolean update(long id, Room roomDetails) {
+    public String update(long id, Room roomDetails) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
         room.setName(roomDetails.getName());
         room.setAvailable(roomDetails.getAvailable());
         roomRepository.save(room);
-        return true;
+        return "Room updated";
     }
 }

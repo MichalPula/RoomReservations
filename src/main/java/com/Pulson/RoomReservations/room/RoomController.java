@@ -25,17 +25,17 @@ public class RoomController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean create(@RequestBody Room room) {
-        return roomService.create(room);
+    public ResponseEntity<?> create(@RequestBody Room room) {
+        return ResponseEntity.ok().body(roomService.create(room));
     }
 
     @DeleteMapping("/deactivate/{id}")
-    public boolean delete(@PathVariable("id") long id) throws Exception {
-        return roomService.deactivate(id);
+    public ResponseEntity<?> deactivate(@PathVariable("id") long id) {
+        return ResponseEntity.ok().body(roomService.deactivate(id));
     }
 
     @PutMapping("/update/{id}")
-    public boolean update(@PathVariable("id") long id, @RequestBody Room roomDetails) {
-        return roomService.update(id, roomDetails);
+    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Room roomDetails) {
+        return ResponseEntity.ok().body(roomService.update(id, roomDetails));
     }
 }
