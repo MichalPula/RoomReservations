@@ -29,8 +29,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room getById(long id) throws Exception {
-        return roomRepository.findById(id).orElseThrow(() -> new Exception("Room " + id + " NOT found"));
+    public Room getById(long id) {
+        return roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
     }
 
     @Transactional
@@ -51,8 +51,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Transactional
     @Override
-    public Boolean update(long id, Room roomDetails) throws Exception {
-        Room room = roomRepository.findById(id).orElseThrow(() -> new Exception("Room NOT found"));
+    public Boolean update(long id, Room roomDetails) {
+        Room room = roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
         room.setName(roomDetails.getName());
         room.setAvailable(roomDetails.getAvailable());
         roomRepository.save(room);

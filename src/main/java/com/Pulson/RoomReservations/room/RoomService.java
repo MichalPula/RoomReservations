@@ -8,11 +8,11 @@ import java.util.List;
 public interface RoomService {
     List<Room> getAll();
 
-    Room getById(long id) throws Exception;
+    Room getById(long id);
 
     Boolean create(Room room);
 
     Boolean deactivate(long id);
 
-    Boolean update(long id, Room roomDetails) throws Exception;
+    Boolean update(long id, Room roomDetails);
 }

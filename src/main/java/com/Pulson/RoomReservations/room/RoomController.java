@@ -2,6 +2,7 @@ package com.Pulson.RoomReservations.room;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public class RoomController {
     }
 
     @GetMapping("/all")
-    public List<Room> getAll() {
-        return roomService.getAll();
+    public ResponseEntity<List<Room>> getAll() {
+        return ResponseEntity.ok().body(roomService.getAll());
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +35,7 @@ public class RoomController {
     }
 
     @PutMapping("/update/{id}")
-    public boolean update(@PathVariable("id") long id, @RequestBody Room roomDetails) throws Exception {
+    public boolean update(@PathVariable("id") long id, @RequestBody Room roomDetails) {
         return roomService.update(id, roomDetails);
     }
 }
