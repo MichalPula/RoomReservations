@@ -6,7 +6,7 @@ import java.util.List;
 public interface StatisticsService {
     List<HoursPerActivityPerUser> getAmountOfHoursSpentOnParticularActivitiesByUser(long userId);
 
-    String getAmountOfHoursSpentInRoomsByMonth(long userId) throws Exception;
+    List<HoursPerMonthPerUser> getAmountOfHoursSpentInRoomsByMonth(long userId);
 
     BigDecimal getAverageHoursSpentInRoomsPerUser();
 

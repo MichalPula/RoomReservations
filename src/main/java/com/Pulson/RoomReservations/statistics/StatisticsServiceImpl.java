@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,7 +63,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public String getAmountOfHoursSpentInRoomsByMonth(long userId) throws Exception {
+    public List<HoursPerMonthPerUser> getAmountOfHoursSpentInRoomsByMonth(long userId) {
         Query query = entityManager.createNativeQuery("select" +
                 " date_trunc('month', start_time)," +
                 " count(1) as hours" +
@@ -75,22 +77,21 @@ public class StatisticsServiceImpl implements StatisticsService {
         query.setParameter(1, userId);
         query.setParameter(2, startAndEndTimestamp.get(0));
         query.setParameter(3, startAndEndTimestamp.get(1));
-
-        JSONArray objectsArray = new JSONArray();
         List<Object[]> resultList = query.getResultList();
 
+        ArrayList<HoursPerMonthPerUser> hoursPerMonthPerUsers = new ArrayList<>();
+
         for (int i = 0; i <= 11; i++) {
-            JSONObject json = new JSONObject();
+            HoursPerMonthPerUser hours = new HoursPerMonthPerUser();
             if (i < resultList.size()) {
                 Object[] record = resultList.get(i);
-                json.put("hours", record[1]);
+                hours = new HoursPerMonthPerUser(((BigInteger) record[1]).intValue());
             } else {
-                json.put("hours", 0);
+                hours = new HoursPerMonthPerUser(0);
             }
-            objectsArray.put(json);
+            hoursPerMonthPerUsers.add(hours);
         }
-
-        return objectsArray.toString();
+        return hoursPerMonthPerUsers;
     }
 
     @Override

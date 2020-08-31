@@ -2,8 +2,10 @@ package com.Pulson.RoomReservations.statistics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -19,27 +21,27 @@ public class StatisticsController {
     }
 
     @GetMapping(value = "/timeByActivity/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getHoursByActivityByUser(@PathVariable("id") long userId) throws Exception {
-        return statisticsService.getAmountOfHoursSpentOnParticularActivitiesByUser(userId);
+    public ResponseEntity<List<HoursPerActivityPerUser>> getHoursByActivityByUser(@PathVariable("id") long userId) {
+        return ResponseEntity.ok().body(statisticsService.getAmountOfHoursSpentOnParticularActivitiesByUser(userId));
     }
 
     @GetMapping(value = "/timeByMonth/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getHoursByMonthByUser(@PathVariable("id") long userId) throws Exception {
-        return statisticsService.getAmountOfHoursSpentInRoomsByMonth(userId);
+    public ResponseEntity<List<HoursPerMonthPerUser>> getHoursByMonthByUser(@PathVariable("id") long userId) throws Exception {
+        return ResponseEntity.ok().body(statisticsService.getAmountOfHoursSpentInRoomsByMonth(userId));
     }
 
     @GetMapping(value = "/averageHoursSpentInRoomsPerUser", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getAverageHoursSpentInRoomsPerUser() throws Exception {
-        return statisticsService.getAverageHoursSpentInRoomsPerUser();
+    public ResponseEntity<BigDecimal> getAverageHoursSpentInRoomsPerUser() {
+        return ResponseEntity.ok().body(statisticsService.getAverageHoursSpentInRoomsPerUser());
     }
 
     @GetMapping(value = "/all/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<HoursPerRoomStatistics> getHoursSpentInRooms() throws Exception {
-        return statisticsService.getHoursSpentInRooms();
+    public ResponseEntity<List<HoursPerRoomStatistics>> getHoursSpentInRooms() {
+        return ResponseEntity.ok().body(statisticsService.getHoursSpentInRooms());
     }
 
     @GetMapping(value = "/all/activities", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<HoursPerActivityStatistics> getHoursSpentOnActivities() throws Exception {
-        return statisticsService.getHoursSpentOnActivities();
+    public ResponseEntity<List<HoursPerActivityStatistics>> getHoursSpentOnActivities() {
+        return ResponseEntity.ok().body(statisticsService.getHoursSpentOnActivities());
     }
 }
