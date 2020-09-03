@@ -1,5 +1,6 @@
 package com.Pulson.RoomReservations.activity;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ public class ActivityController {
     private final ActivityService activityService;
     private final CreateUpdateActivityMapper createUpdateActivityMapper;
     private final ReadActivityMapper readActivityMapper;
+    private static final Gson gson = new Gson();
 
     @Autowired
     public ActivityController(ActivityService activityService, CreateUpdateActivityMapper createUpdateActivityMapper,
@@ -32,16 +34,16 @@ public class ActivityController {
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create(@RequestBody ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) {
-        return ResponseEntity.ok(activityService.create(createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO)));
+        return ResponseEntity.ok(gson.toJson(activityService.create(createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO))));
     }
 
     @DeleteMapping("/deactivate/{id}")
     public ResponseEntity<String> deactivate(@PathVariable("id") long id) throws Exception {
-        return ResponseEntity.ok(activityService.deactivate(id));
+        return ResponseEntity.ok(gson.toJson(activityService.deactivate(id)));
     }
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> update(@PathVariable("id") long id, @RequestBody ActivityCreateReadUpdateDTO activityCreateReadUpdateDTO) {
-        return ResponseEntity.ok(activityService.update(id, createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO)));
+        return ResponseEntity.ok(gson.toJson(activityService.update(id, createUpdateActivityMapper.mapToActivity(activityCreateReadUpdateDTO))));
     }
 }

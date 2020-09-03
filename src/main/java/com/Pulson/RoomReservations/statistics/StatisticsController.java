@@ -22,26 +22,26 @@ public class StatisticsController {
 
     @GetMapping(value = "/timeByActivity/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HoursPerActivityPerUser>> getHoursByActivityByUser(@PathVariable("id") long userId) {
-        return ResponseEntity.ok().body(statisticsService.getAmountOfHoursSpentOnParticularActivitiesByUser(userId));
+        return ResponseEntity.ok(statisticsService.getAmountOfHoursSpentOnParticularActivitiesByUser(userId));
     }
 
     @GetMapping(value = "/timeByMonth/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HoursPerMonthPerUser>> getHoursByMonthByUser(@PathVariable("id") long userId) throws Exception {
-        return ResponseEntity.ok().body(statisticsService.getAmountOfHoursSpentInRoomsByMonth(userId));
+    public ResponseEntity<List<HoursPerMonthPerUser>> getHoursByMonthByUser(@PathVariable("id") long userId) {
+        return ResponseEntity.ok(statisticsService.getAmountOfHoursSpentInRoomsByMonth(userId));
     }
 
     @GetMapping(value = "/averageHoursSpentInRoomsPerUser", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BigDecimal> getAverageHoursSpentInRoomsPerUser() {
-        return ResponseEntity.ok().body(statisticsService.getAverageHoursSpentInRoomsPerUser());
+        return ResponseEntity.ok(statisticsService.getAverageHoursSpentInRoomsPerUser());
     }
 
     @GetMapping(value = "/all/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HoursPerRoomStatistics>> getHoursSpentInRooms() {
-        return ResponseEntity.ok().body(statisticsService.getHoursSpentInRooms());
+        return ResponseEntity.ok(statisticsService.getHoursSpentInRooms());
     }
 
     @GetMapping(value = "/all/activities", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HoursPerActivityStatistics>> getHoursSpentOnActivities() {
-        return ResponseEntity.ok().body(statisticsService.getHoursSpentOnActivities());
+        return ResponseEntity.ok(statisticsService.getHoursSpentOnActivities());
     }
 }

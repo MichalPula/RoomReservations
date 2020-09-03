@@ -1,5 +1,6 @@
 package com.Pulson.RoomReservations.room;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,29 +14,30 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
+    private static final Gson gson = new Gson();
 
     @Autowired
     public RoomController(RoomService roomService) {
         this.roomService = roomService;
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Room>> getAll() {
         return ResponseEntity.ok().body(roomService.getAll());
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> create(@RequestBody Room room) {
-        return ResponseEntity.ok().body(roomService.create(room));
+    public ResponseEntity<String> create(@RequestBody Room room) {
+        return ResponseEntity.ok(gson.toJson(roomService.create(room)));
     }
 
-    @DeleteMapping("/deactivate/{id}")
-    public ResponseEntity<?> deactivate(@PathVariable("id") long id) {
-        return ResponseEntity.ok().body(roomService.deactivate(id));
+    @DeleteMapping(value = "/deactivate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deactivate(@PathVariable("id") long id) {
+        return ResponseEntity.ok(gson.toJson(roomService.deactivate(id)));
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Room roomDetails) {
-        return ResponseEntity.ok().body(roomService.update(id, roomDetails));
+    @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(@PathVariable("id") long id, @RequestBody Room roomDetails) {
+        return ResponseEntity.ok(gson.toJson(roomService.update(id, roomDetails)));
     }
 }

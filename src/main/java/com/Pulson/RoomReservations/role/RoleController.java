@@ -1,6 +1,7 @@
 package com.Pulson.RoomReservations.role;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,8 @@ public class RoleController {
         this.readRoleMapper = readRoleMapper;
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RoleReadDTO>> getAll() {
-        return ResponseEntity.ok().body(readRoleMapper.mapToRoleReadDTOsList(roleService.getAll()));
+        return ResponseEntity.ok(readRoleMapper.mapToRoleReadDTOsList(roleService.getAll()));
     }
 }

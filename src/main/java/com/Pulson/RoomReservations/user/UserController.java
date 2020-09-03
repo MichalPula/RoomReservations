@@ -25,19 +25,19 @@ public class UserController {
         this.readUserMapper = readUserMapper;
     }
 
-    @GetMapping("/all/students")
+    @GetMapping(value = "/all/students", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserReadDTO>> getAllStudents() {
-        return ResponseEntity.ok().body(readUserMapper.mapToUserReadDTOsList(userService.getAllStudents()));
+        return ResponseEntity.ok(readUserMapper.mapToUserReadDTOsList(userService.getAllStudents()));
     }
 
-    @GetMapping("/students/name/{firstName}/{lastName}")
-    public ResponseEntity<List<UserReadDTO>> getStudentByName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) throws Exception {
-        return ResponseEntity.ok().body(readUserMapper.mapToUserReadDTOsList(userService.getStudentByName(firstName, lastName)));
+    @GetMapping(value = "/students/name/{firstName}/{lastName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserReadDTO>> getStudentByName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
+        return ResponseEntity.ok(readUserMapper.mapToUserReadDTOsList(userService.getStudentByName(firstName, lastName)));
     }
 
     @GetMapping(value = "/getBasicAccountData/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserBasicAccountData> getBasicAccountData(@PathVariable("id") long userId) {
-        return ResponseEntity.ok().body(userService.getBasicAccountData(userId));
+        return ResponseEntity.ok(userService.getBasicAccountData(userId));
     }
 
     @PutMapping(value = "/update/basicInfo", consumes = MediaType.APPLICATION_JSON_VALUE)
