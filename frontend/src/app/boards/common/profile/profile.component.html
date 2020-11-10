@@ -1,0 +1,125 @@
+<ng-template #passwordChangeModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Change password</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form id="changePassword" (ngSubmit)="changePasswordForm.form.valid && passwordSubmit()" #changePasswordForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="currentPassword">Current password</label>
+        <input type="password" class="form-control" id="currentPassword" name="currentPassword" [(ngModel)]="passwordChangeForm.oldPassword" required #oldPassword="ngModel"/>
+        <div class="alert alert-danger" role="alert" *ngIf="changePasswordForm.submitted && oldPassword.invalid">Insert current password!</div>
+      </div>
+      <div class="form-group">
+        <label for="currentPassword">New password</label>
+        <input type="password" [(ngModel)]="passwordChangeForm.newPassword" name="password" class="form-control" required #newPassword="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+        <div  class="alert alert-danger" *ngIf="newPassword.invalid && (changePasswordForm.submitted || newPassword.touched)">
+          <div *ngIf="newPassword.errors.required"> Password is required!</div>
+          <div *ngIf="newPassword.errors.pattern"> Must contain at least one number, <br> one uppercase and lowercase letter, <br> and at least 8 or more character.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="currentPassword">Confirm password</label>
+        <input type="password" [(ngModel)]="newPasswordRepeat" name="confirmpassword" class="form-control" required #confirmNewPassword="ngModel" pattern="{{ newPassword.value }}" />
+        <div  class="alert alert-danger" *ngIf=" confirmNewPassword.invalid && (changePasswordForm.submitted || confirmNewPassword.touched)">
+          <div *ngIf="confirmNewPassword.errors.required">Confirm password is required!</div>
+          <div *ngIf="confirmNewPassword.errors.pattern">New password and cofirm password does not match!</div>
+        </div>
+      </div>
+      <div class="row"  *ngIf="showPasswordChangeErrorMessage">
+        <div class="col">
+          <p class="alert alert-danger">
+            <strong>{{message}}</strong>
+          </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit"  class="btn btn-primary btn-block">Confirm password change</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #emailChangeModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Change email</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form id="changeEmail" (ngSubmit)="changeEmailForm.form.valid && emailSubmit()" #changeEmailForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="currentEmail">New email</label>
+        <input autocomplete="off" type="text" class="form-control" id="currentEmail" name="currentEmail" [(ngModel)]="emailChangeForm.email"/>
+      </div>
+      <div class="row"  *ngIf="showEmailChangeErrorMessage">
+        <div class="col">
+          <p class="alert alert-danger">
+            <strong>{{message}}</strong>
+          </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit"  class="btn btn-primary btn-block">Confirm email change</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #successModal let-modal>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col">
+        <p class="alert alert-success">
+          <strong>{{message}}</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="refreshPage()">OK</button>
+  </div>
+</ng-template>
+
+<div class="container-fluid p-0" id="profileContainer">
+  <div class="row">
+    <div class="col-md-6">
+      <form id="changeBasicAccountData" (ngSubmit)="changeBasicAccountDataForm.form.valid && basicDataSubmit()" #changeBasicAccountDataForm="ngForm" novalidate>
+        <div class="form-group">
+          <label for="firstName">First name</label>
+          <input autocomplete="off" type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="basicDataChangeForm.firstName" required #firstName="ngModel"/>
+          <div class="alert alert-danger" role="alert" *ngIf="changeBasicAccountDataForm.submitted && firstName.invalid">First name is required!</div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last name</label>
+          <input autocomplete="off" type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="basicDataChangeForm.lastName" required #lastName="ngModel"/>
+          <div class="alert alert-danger" role="alert" *ngIf="changeBasicAccountDataForm.submitted && lastName.invalid">Last name is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNumber">Phone number</label>
+          <input autocomplete="off" type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="basicDataChangeForm.phoneNumber" required #phoneNumber="ngModel"/>
+          <div class="alert alert-danger" role="alert" *ngIf="changeBasicAccountDataForm.submitted && phoneNumber.invalid">Phone number is required</div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">Confirm changes</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6" id="passwordEmailChangeContainer">
+      <button class="btn btn-outline-primary mb-2 mr-2" (click)="openPasswordChangeModal(passwordChangeModal)">Change password</button>
+      <button class="btn btn-outline-primary mb-2 mr-2" (click)="openEmailChangeModal(emailChangeModal)">Change e-mail</button>
+    </div>
+  </div>
+</div>

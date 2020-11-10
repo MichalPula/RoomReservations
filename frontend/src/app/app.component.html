@@ -1,0 +1,59 @@
+<nav class="navbar nav-pills navbar-dark bg-dark p-0">
+  <ul class="nav nav-pills" routerLinkActive="active">
+    <li class="nav-item">
+      <a class="nav-link active" routerLink="home">Home </a>
+    </li>
+    <li class="nav-item dropdown" *ngIf="isLoggedIn">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Reservations</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" routerLink="reservations/active">My reservations</a>
+        <a class="dropdown-item" routerLink="reservations/history">History</a>
+        <a class="dropdown-item" routerLink="reservations/add">Add reservation</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" routerLink="reservations/all/date">Search reservations by date</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" *ngIf="loggedUserIsAdmin" routerLink="rooms">Rooms</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" *ngIf="loggedUserIsAdmin" routerLink="activities">Activities</a>
+    </li>
+    <li class="nav-item dropdown" *ngIf="loggedUserIsAdmin">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Users</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" routerLink="users/students/all">All students</a>
+        <a class="dropdown-item" routerLink="users/students/search">Search student by name</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item"  routerLink="users/add/admin">Add admin account</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" *ngIf="loggedUserIsAdmin" routerLink="statistics/all">Statistics</a>
+    </li>
+  </ul>
+
+  <ul class="nav nav-pills" *ngIf="!isLoggedIn">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="register">Sign Up</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="login">Login</a>
+    </li>
+  </ul>
+
+  <ul class="nav nav-pills align-self-end" *ngIf="isLoggedIn">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">{{username}}</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" routerLink="profile">My account</a>
+        <a class="dropdown-item" routerLink="statistics">Statistics</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="" (click)="logout()">LogOut</a>
+    </li>
+  </ul>
+</nav>
+
+<router-outlet></router-outlet>

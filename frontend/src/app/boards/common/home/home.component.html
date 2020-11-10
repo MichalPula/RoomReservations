@@ -1,0 +1,48 @@
+<ng-template #confirmCancelReservationModal let-modal>
+  <div class="modal-body">
+    <h1>Do you want to cancel this reservation?</h1>
+  </div>
+  <div class="modal-footer">
+    <div class="row w-100">
+      <div class="col text-center">
+        <button type="button" class="btn btn-success" (click)="modal.close('Close click'); cancelReservation()">Yes</button>
+      </div>
+      <div class="col text-center">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">No</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="container-fluid p-0" id="homeContainer">
+  <h1>Todays reservations(<mark class="red">past</mark>-<mark class="green">future</mark>):</h1>
+  <div class="col-md-8">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Room</th>
+        <th>Activity</th>
+        <th>Start time</th>
+        <th>End time</th>
+        <th *ngIf="isAdmin"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let markedReservation of markedActiveReservations | paginate : config"
+          [ngStyle]="{'color': markedReservation.color}">
+        <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.firstName + ' ' + markedReservation.reservation.lastName}}</td>
+        <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.roomName}}</td>
+        <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.activityName}}</td>
+        <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.startTime}}</td>
+        <td [ngStyle]="{'text-decoration': (markedReservation.color === 'red') ? 'line-through' : 'none'}">{{markedReservation.reservation.endTime}}</td>
+        <td *ngIf="markedReservation.color =='green' && isAdmin">
+          <button class="btn btn-danger" (click)="openConfirmCancelReservationModal(confirmCancelReservationModal,
+               markedReservation.reservation.id)">Cancel</button>
+        </td>
+      </tr>
+      <pagination-controls (pageChange)="changePage($event)" class="my-pagination"></pagination-controls>
+      </tbody>
+    </table>
+  </div>
+</div>

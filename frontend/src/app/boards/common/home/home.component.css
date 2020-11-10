@@ -1,0 +1,18 @@
+#homeContainer {
+  width: 100%;
+  height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+mark.red {
+  color: red;
+  background: none;
+}
+
+mark.green {
+  color: green;
+  background: none;
+}

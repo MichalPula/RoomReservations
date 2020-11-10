@@ -1,0 +1,16 @@
+#statisticsContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#timeSpentInRoomsChart {
+  margin-top: 30px;
+}
+
+#timeSpentOnParticularActivityChart {
+  margin-top: 50px;
+}
